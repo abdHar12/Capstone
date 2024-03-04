@@ -40,6 +40,17 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "manga_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    Set<MangaToRead> mangasToRead;
+
+    @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "manga_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    Set<RedManga> redMangas;
     public User(String username, String email, String password, String name, String surname, String avatar) {
         this.username = username;
         this.email = email;
@@ -49,13 +60,11 @@ public class User implements UserDetails {
         this.avatar = avatar;
         this.role = Role.USER;
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> list = Collections.singletonList(new SimpleGrantedAuthority(this.role.name()));
         return list;
     }
-
     @Override
     public String getPassword() {
         return this.password;
