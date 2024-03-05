@@ -33,4 +33,5 @@ public class MangadexService {
         String url= getBaseUrl() + "chapter?limit="+size+"&offset="+(((page+1)*size-size))+"&manga="+id;
         return stringToJson(url);
     }
+
 }

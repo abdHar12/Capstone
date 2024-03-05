@@ -13,6 +13,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { CommonModule } from '@angular/common';
+import { SingleAnimeComponent } from './components/single-anime/single-anime.component';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
     NavComponent,
     MainPageComponent,
     RegisterPageComponent,
+    SingleAnimeComponent,
   ],
   imports: [
     CommonModule,
