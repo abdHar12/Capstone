@@ -2,5 +2,5 @@ export interface Relationship {
   id: string;
   type: string;
   related: string;
-  attributes: Map<string, any>[];
+  attributes: Map<string, any>;
 }

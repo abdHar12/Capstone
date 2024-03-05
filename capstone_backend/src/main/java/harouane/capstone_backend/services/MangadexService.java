@@ -16,7 +16,7 @@ public class MangadexService {
         return env.getProperty("mangadex.baseUrl");
     }
 
-    private JsonObject stringToJson(String url){
+    JsonObject stringToJson(String url){
         RestTemplate restTemplate=new RestTemplate();
         String result= restTemplate.getForObject(url, String.class);
         JsonParser parser = new JsonParser();
@@ -33,5 +33,6 @@ public class MangadexService {
         String url= getBaseUrl() + "chapter?limit="+size+"&offset="+(((page+1)*size-size))+"&manga="+id;
         return stringToJson(url);
     }
+
 
 }
