@@ -1,7 +1,9 @@
-<nav class="navbar p-0">
-  <div class="container-fluid bg-black">
-    <a class="navbar-brand text-center"
-      ><img src="../../../assets/30958-4-energy-hd.png" alt=""
+<nav>
+  <div
+    class="container-fluid bg-white text-black d-flex p-2 justify-content-between"
+  >
+    <a class="navbar-brand text-center d-flex"
+      ><img class="my-auto" src="../../../assets/Kōdansha_logo.png" alt=""
     /></a>
     <ng-container [ngSwitch]="currentRoute" class="d-flex flex-row gap-2">
       <ng-container *ngSwitchCase="'/login-page'"
@@ -13,7 +15,7 @@
         >
       </ng-container>
       <ng-container *ngSwitchCase="'/'">
-        <div class="d-flex justify-content-between flex-grow-1">
+        <div class="d-flex">
           <div>
             <a class="btn btn-outline-danger" (click)="logOut()">Logout</a>
           </div>

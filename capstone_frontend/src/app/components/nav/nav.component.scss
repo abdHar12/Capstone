@@ -4,3 +4,12 @@ img {
 a {
   font-size: 12px;
 }
+nav {
+  margin-inline: auto;
+  position: sticky;
+  margin-top: 10px;
+  z-index: 1;
+  top: 10px;
+  width: 95%;
+  border: 2px solid black;
+}

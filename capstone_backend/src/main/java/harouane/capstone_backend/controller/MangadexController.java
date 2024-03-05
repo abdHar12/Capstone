@@ -25,4 +25,9 @@ public class MangadexController {
                                            @PathVariable String id){
         return mangadexService.getChaptersByMangaId(id, page, size);
     }
+
+    @GetMapping("/random")
+    public JsonObject getRandomManga(){
+        return mangadexService.getRandomManga();
+    }
 }

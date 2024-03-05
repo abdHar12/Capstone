@@ -12,46 +12,27 @@ import { environment } from 'src/environments/environment';
 })
 export class SingleAnimeComponent implements OnInit {
   @Input() manga!: Manga;
-  desc!: string;
-  title!: string;
-  urlImg!: string;
+  desc!: any;
+  title!: any;
+  urlImg!: any;
 
   constructor(private mangaSrv: MangaService) {}
 
   ngOnInit(): void {
-    let descMap: Map<string, string>;
-    let titleMap: Map<string, string>;
-    let idCover: string;
+    this.setUrlImg(this.manga);
+    this.setDesc(this.manga);
+    this.setTitle(this.manga);
+  }
 
-    descMap = this.manga.attributes.description;
-    titleMap = this.manga.attributes.title;
+  async setTitle(manga: Manga) {
+    this.title = await this.mangaSrv.getTitle(manga);
+  }
 
-    this.manga.relationships.forEach((el) => {
-      if (el.type === 'cover_art') {
-        idCover = el.id;
-        this.mangaSrv.getSingleCover(idCover).subscribe((cover) => {
-          let coverArt: CoverArt = cover.data;
-          let mangaId!: String;
-          cover.data.relationships.forEach((rel) => {
-            console.log(rel);
-            Object.entries(rel).forEach(([key, value]) => {
-              if (key === 'type' && value === 'manga') {
-                console.log(rel.id);
-                mangaId = rel.id;
-                this.urlImg = `https://uploads.mangadex.org/covers/${mangaId}/${coverArt.attributes.fileName}`;
-              }
-            });
-            console.log('-------------------------------------');
-          });
-        });
-      }
-    });
+  async setUrlImg(manga: Manga) {
+    this.urlImg = await this.mangaSrv.getUrlImg(manga);
+  }
 
-    Object.entries(descMap).forEach(([key, value]) => {
-      if (key === this.mangaSrv.language) this.desc = value;
-    });
-    Object.entries(titleMap).forEach(([key, value]) => {
-      if (key === this.mangaSrv.language) this.title = value;
-    });
+  async setDesc(manga: Manga) {
+    this.desc = await this.mangaSrv.getDescription(manga);
   }
 }

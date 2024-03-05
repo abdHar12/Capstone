@@ -15,4 +15,5 @@ public class CoverController {
     public JsonObject getSingleCover(@PathVariable String id){
         return coverService.getSingleCover(id);
     }
+
 }
