@@ -7,28 +7,19 @@
     /></a>
     <ng-container [ngSwitch]="currentRoute" class="d-flex flex-row gap-2">
       <ng-container *ngSwitchCase="'/login-page'"
-        ><a
-          class="btn btn-outline-danger"
+        ><button
+          class="btn"
           routerLink="/register-page"
           routerLinkActive="active"
-          >Registrati</a
         >
+          Registrati
+        </button>
       </ng-container>
       <ng-container *ngSwitchCase="'/'">
         <div class="d-flex">
           <div>
-            <a class="btn btn-outline-danger" (click)="logOut()">Logout</a>
+            <button class="logoutButton btn" (click)="logOut()">Logout</button>
           </div>
-        </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'/creation-client-page'">
-        <div>
-          <a
-            class="btn btn-outline-warning"
-            routerLinkActive="active"
-            routerLink="/"
-            >Home</a
-          >
         </div>
       </ng-container>
     </ng-container>

@@ -14,6 +14,7 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { CommonModule } from '@angular/common';
 import { SingleAnimeComponent } from './components/single-anime/single-anime.component';
+import { FastAverageColor } from 'fast-average-color';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },

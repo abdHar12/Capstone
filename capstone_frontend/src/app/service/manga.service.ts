@@ -6,6 +6,9 @@ import { Manga } from '../module/manga';
 import { CoverArtData } from '../module/cover-art-data';
 import { CoverArt } from '../module/cover-art';
 import { Observable, ReplaySubject } from 'rxjs';
+import { SingleMangaData } from '../module/single-manga-data';
+import { AuthorData } from '../module/author-data';
+import { Author } from '../module/author';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +19,10 @@ export class MangaService {
   language: String = 'en';
 
   constructor(private httpClient: HttpClient) {}
+
+  getSingleAuthor(idAuthor: string) {
+    return this.httpClient.get<AuthorData>(`${this.url}/author/${idAuthor}`);
+  }
 
   getSingleCover(idCover: string) {
     return this.httpClient.get<CoverArtData>(`${this.url}/cover/${idCover}`);
@@ -57,6 +64,54 @@ export class MangaService {
     });
   }
 
+  getAllThemesByManga(manga: Manga) {
+    return new Promise((resolve, reject) => {
+      let allThemes: string[] = [];
+      manga.attributes.tags.forEach((tag) => {
+        if (tag.attributes.group === 'theme') {
+          Object.entries(tag.attributes.name).forEach(([key, value]) => {
+            allThemes.push(value);
+            console.log(allThemes);
+          });
+        }
+      });
+      resolve(allThemes);
+    });
+  }
+
+  getAllGenresByManga(manga: Manga) {
+    return new Promise((resolve, reject) => {
+      let allGenres: string[] = [];
+      manga.attributes.tags.forEach((tag) => {
+        if (tag.attributes.group === 'genre') {
+          Object.entries(tag.attributes.name).forEach(([key, value]) => {
+            allGenres.push(value);
+            console.log(allGenres);
+          });
+        }
+      });
+      resolve(allGenres);
+    });
+  }
+
+  getAuthorOfManga(manga: Manga) {
+    return new Promise((resolve, reject) => {
+      let idAuthor!: string;
+      manga.relationships.forEach((relationship) => {
+        console.log(relationship);
+        if (relationship.type === 'author') {
+          idAuthor = relationship.id;
+          this.getSingleAuthor(idAuthor).subscribe((authorData) => {
+            console.log('fsdghj' + authorData);
+            let author: Author = authorData.data;
+            console.log(author);
+            resolve(author);
+          });
+        }
+      });
+    });
+  }
+
   getDescription(manga: Manga) {
     return new Promise((resolve, reject) => {
       let descMap: Map<string, string>;
@@ -75,5 +130,9 @@ export class MangaService {
         if (key === this.language) resolve(value);
       });
     });
+  }
+
+  getRandomManga() {
+    return this.httpClient.get<SingleMangaData>(this.url + '/manga/random');
   }
 }

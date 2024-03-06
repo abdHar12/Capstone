@@ -1,4 +1,19 @@
-<div class="container mt-3">
+<div id="randomMangaDiv">
+  <img id="i" [src]="urlRandomManga" />
+  <div id="div-info-random-manga" class="text-black bg-white">
+    <div>
+      <h4>Try to read this...</h4>
+      <div class="title-div">
+        <h2>{{ randomMangaTitle }}</h2>
+      </div>
+    </div>
+    <div id="div-button">
+      <span>{{ randomMangaAuthor.attributes.name }}</span>
+      <button>Per saperne di più...</button>
+    </div>
+  </div>
+</div>
+<div class="container mt-3 position-relative">
   <ng-container *ngFor="let manga of allmangas">
     <app-single-anime [manga]="manga"></app-single-anime>
   </ng-container>

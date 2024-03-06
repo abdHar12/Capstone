@@ -34,9 +34,8 @@ public class MangadexService {
         return stringToJson(url);
     }
 
-
     public JsonObject getRandomManga() {
-        String url= getBaseUrl() + "random";
+        String url= getBaseUrl() + "manga/random";
         return stringToJson(url);
     }
 }

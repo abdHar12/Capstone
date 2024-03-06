@@ -4,8 +4,8 @@ export interface Tag {
   id: string;
   type: string;
   attributes: {
-    name: { [key: string]: string };
-    description: { [key: string]: string };
+    name: Map<string, string>;
+    description: Map<string, string>;
     group: string;
     version: number;
   };
