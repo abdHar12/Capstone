@@ -1,6 +1,6 @@
-<div id="randomMangaDiv">
-  <img id="i" [src]="urlRandomManga" />
-  <div id="div-info-random-manga" class="text-black bg-white">
+<div id="randomMangaDiv" class="base-border">
+  <img id="i" [src]="urlRandomManga" class="img-border" />
+  <div id="div-info-random-manga" class="text-black bg-white base-border">
     <div>
       <h4>Try to read this...</h4>
       <div class="title-div">
@@ -9,7 +9,14 @@
     </div>
     <div id="div-button">
       <span>{{ randomMangaAuthor.attributes.name }}</span>
-      <button>Per saperne di più...</button>
+      <button
+        class=".buttons base-border"
+        routerLink="/manga-all-info"
+        routerLinkActive="active"
+        (click)="deleteRandomMangaFromLS()"
+      >
+        VIEW MORE INFO
+      </button>
     </div>
   </div>
 </div>

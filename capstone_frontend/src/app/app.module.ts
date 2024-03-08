@@ -15,6 +15,7 @@ import { RegisterPageComponent } from './components/register-page/register-page.
 import { CommonModule } from '@angular/common';
 import { SingleAnimeComponent } from './components/single-anime/single-anime.component';
 import { FastAverageColor } from 'fast-average-color';
+import { MangaAllInfoComponent } from './components/manga-all-info/manga-all-info.component';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },
@@ -23,6 +24,11 @@ const routes: Routes = [
     component: RegisterPageComponent,
   },
   { path: '', component: MainPageComponent, canActivate: [AuthGuard] },
+  {
+    path: 'manga-all-info',
+    component: MangaAllInfoComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 @NgModule({
   declarations: [
@@ -32,6 +38,7 @@ const routes: Routes = [
     MainPageComponent,
     RegisterPageComponent,
     SingleAnimeComponent,
+    MangaAllInfoComponent,
   ],
   imports: [
     CommonModule,

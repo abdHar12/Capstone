@@ -26,93 +26,34 @@ export class MainPageComponent implements OnInit {
   constructor(private router: Router, private mangaSrv: MangaService) {}
 
   ngOnInit(): void {
-    this.divOfImg != document.getElementById('randomMangaDiv');
     this.mangaSrv.getAllMangas().subscribe((allmangas) => {
       this.mangaSrv.setAllMangas(allmangas.data);
       this.allmangas = allmangas.data;
     });
     this.mangaSrv.getRandomManga().subscribe((manga) => {
       this.randomManga = manga.data;
+      if (localStorage.getItem('RandomManga') === null)
+        localStorage.setItem('RandomManga', JSON.stringify(this.randomManga));
       console.log(manga.data);
       this.setDesc(this.randomManga);
-      this.setUrlImg(this.randomManga).finally(() => {
-        const fac = new FastAverageColor();
-        const container = document.querySelector(
-          '#randomMangaDiv'
-        ) as HTMLDivElement;
-        fac
-          .getColorAsync(this.urlRandomManga)
-          .then((color) => {
-            console.log(color);
-            container.style.backgroundColor = color.rgba;
-            container.style.color = color.isDark ? '#fff' : '#000';
-            console.log(color);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-
-        // this.img = document.getElementById('i') as HTMLImageElement;
-
-        // this.img.onload = () => {
-        //   const { R, G, B } = this.getAverageColor(this.img, 4);
-        //   document.body.style.background = `rgb(${R}, ${G},${B})`;
-        // };
-      });
-
+      this.setUrlImg(this.randomManga).finally(() =>
+        this.mangaSrv.getAvgColor(this.urlRandomManga)
+      );
       this.setTitle(this.randomManga);
       this.setAuthor(this.randomManga);
       this.setRandomMangaAllThemes(this.randomManga);
       this.setRandomMangaAllGenres(this.randomManga);
     });
   }
-
-  getAverageColor(imageElement: HTMLImageElement, ratio: number) {
-    const canvas = document.createElement('canvas');
-
-    let height = (canvas.height = imageElement.naturalHeight);
-    let width = (canvas.width = imageElement.naturalWidth);
-
-    const context = canvas.getContext('2d');
-    context!.drawImage(imageElement, 0, 0);
-
-    let data, length;
-    let i = -4,
-      count = 0;
-
-    try {
-      data = context!.getImageData(0, 0, width, height);
-      length = data.data.length;
-    } catch (err) {
-      console.error(err);
-      return {
-        R: 0,
-        G: 0,
-        B: 0,
-      };
-    }
-    let R, G, B;
-    R = G = B = 0;
-
-    while ((i += ratio * 4) < length) {
-      ++count;
-
-      R += data.data[i];
-      G += data.data[i + 1];
-      B += data.data[i + 2];
-    }
-
-    R = ~~(R / count);
-    G = ~~(G / count);
-    B = ~~(B / count);
-
-    return {
-      R,
-      G,
-      B,
-    };
+  deleteRandomMangaFromLS() {
+    // if (!(localStorage.getItem('RandomManga') === null)) {
+    //   localStorage.removeItem('RandomManga');
+    // } else {
+    //   localStorage.setItem('RandomManga', JSON.stringify(this.randomManga));
+    // }
+    localStorage.setItem('RandomManga', JSON.stringify(this.randomManga));
+    console.log('questo' + this.randomManga);
   }
-
   async setTitle(manga: Manga) {
     this.randomMangaTitle = await this.mangaSrv.getTitle(manga);
   }

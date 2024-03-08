@@ -9,6 +9,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { SingleMangaData } from '../module/single-manga-data';
 import { AuthorData } from '../module/author-data';
 import { Author } from '../module/author';
+import { FastAverageColor } from 'fast-average-color';
 
 @Injectable({
   providedIn: 'root',
@@ -134,5 +135,23 @@ export class MangaService {
 
   getRandomManga() {
     return this.httpClient.get<SingleMangaData>(this.url + '/manga/random');
+  }
+
+  getAvgColor(urlRandomManga: string) {
+    const fac = new FastAverageColor();
+    const container = document.querySelector(
+      '#randomMangaDiv'
+    ) as HTMLDivElement;
+    fac
+      .getColorAsync(urlRandomManga)
+      .then((color) => {
+        console.log(color);
+        container.style.backgroundColor = color.rgba;
+        container.style.color = color.isDark ? '#fff' : '#000';
+        console.log(color);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 }
