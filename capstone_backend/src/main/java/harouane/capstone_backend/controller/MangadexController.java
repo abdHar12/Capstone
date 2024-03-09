@@ -18,16 +18,13 @@ public class MangadexController {
     {
         return mangadexService.getMangasFromApi(page, size);
     }
-
-    @GetMapping("/{id}/chapters")
-    public JsonObject getChaptersByMangaId(@RequestParam(defaultValue = "0") int page,
-                                           @RequestParam(defaultValue = "10") int size,
-                                           @PathVariable String id){
-        return mangadexService.getChaptersByMangaId(id, page, size);
-    }
-
     @GetMapping("/random")
     public JsonObject getRandomManga(){
         return mangadexService.getRandomManga();
+    }
+
+    @GetMapping("/{id}/chapters")
+    public JsonObject getChaptersByMangaId(@PathVariable String id){
+        return mangadexService.getChaptersByMangaId(id);
     }
 }

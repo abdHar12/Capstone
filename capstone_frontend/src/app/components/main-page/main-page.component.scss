@@ -1,11 +1,16 @@
-#randomMangaDiv {
-  transform: translateY(-63px);
+.div-with-avg-color {
+  transform: translateY(-70px);
   position: relative;
   display: flex;
+  border-bottom: 5px solid black;
+  top: 0;
+  width: 100%;
   img {
     height: 80vh;
     position: relative;
     margin-inline: auto;
+    border-left: 5px solid black;
+    border-right: 5px solid black;
   }
   #div-info-random-manga {
     position: absolute;
@@ -49,4 +54,17 @@
       font-size: 12px;
     }
   }
+}
+.notReady {
+  display: none;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.loading-ready {
+  display: none;
+}
+.loading-notReady {
+  position: absolute;
+  top: 0;
 }

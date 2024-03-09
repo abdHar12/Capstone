@@ -1,14 +1,18 @@
 .container {
   margin-top: 1rem;
-  #randomMangaDiv {
+  .div-with-avg-color {
     position: relative;
     display: flex;
+    height: 80vh;
+    @media screen and (max-width: 786px) {
+      height: 50vh;
+    }
     #i {
       height: 100%;
       margin-inline: auto;
+      width: auto;
       object-fit: fill;
     }
-    height: 80vh;
   }
   #info-div {
     h2 {
@@ -67,5 +71,9 @@
       font-size: 2rem;
       border-right: 2px solid black;
     }
+  }
+
+  #last-chapter-div {
+    height: 50%;
   }
 }

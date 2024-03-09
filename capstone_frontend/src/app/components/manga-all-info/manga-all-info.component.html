@@ -1,72 +1,110 @@
-<div class="container">
-  <div class="d-lg-flex">
-    <div id="randomMangaDiv" class="base-border flex-grow-1">
-      <img id="i" [src]="urlManga" class="img-borders h-100" />
-    </div>
-    <div
-      id="info-div"
-      class="d-lg-flex flex-column w-lg-50 p-md-3 p-lg-0 ps-lg-2"
-    >
-      <div>
-        <h2 class="fs-2">{{ mangaTitle }}</h2>
-        <span id="author">By {{ mangaAuthor.attributes.name }}</span>
+<ng-container *ngIf="allSettingsAreDone; else notReady">
+  <div class="container">
+    <div class="d-lg-flex">
+      <div class="div-with-avg-color base-border d-flex flex-grow-1">
+        <img id="i" [src]="urlManga" class="img-borders h-100" />
       </div>
       <div
-        class="w-lg-100 flex-column flex-grow-1 justify-content-between d-none d-lg-flex"
+        id="info-div"
+        class="d-lg-flex flex-column w-lg-50 p-md-3 p-lg-0 ps-lg-2 justify-content-between"
       >
-        <p class="mb-0">{{ mangaDesc }}</p>
+        <div>
+          <div>
+            <h2 class="fs-2">{{ mangaTitle }}</h2>
+            <span id="author">By {{ mangaAuthor.attributes.name }}</span>
+          </div>
+          <div
+            class="w-lg-100 flex-column flex-grow-1 justify-content-between d-none d-lg-flex"
+          >
+            <p class="mb-0">{{ mangaDesc }}</p>
+          </div>
+        </div>
+        <ng-container
+          *ngIf="
+            manga.attributes.latestUploadedChapter !== undefined &&
+            manga.attributes.latestUploadedChapter !== ''
+          "
+        >
+          <div id="last-chapter-div" class="d-flex align-self-end">
+            <app-last-chapter
+              [chapterId]="manga.attributes.latestUploadedChapter"
+              [urlImg]="urlManga"
+              [manga]="manga"
+            >
+            </app-last-chapter>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div
+      id="series-info"
+      class="d-flex flex-column flex-lg-row justify-content-between align-content-center mt-lg-4"
+    >
+      <div
+        class="title-div w-100 d-flex justify-content-center justify-content-lg-start"
+      >
+        <h1 class="fw-bold mb-0">Series Info</h1>
+      </div>
+      <div id="info-table" class="d-flex flex-column w-100">
+        <div class="base-border d-flex flex-row border-top-0 border-bottom-0">
+          <div class="base-border w-50 border-start-0 p-3">
+            <span class="name-of-section">Status: </span>
+            <span class="content-of-section rounded">{{
+              manga.attributes.status
+            }}</span>
+          </div>
+          <div class="base-border w-50 border-start-0 border-end-0 p-3">
+            <span class="name-of-section">Rating: </span>
+            <span class="content-of-section rounded">{{
+              manga.attributes.contentRating
+            }}</span>
+          </div>
+        </div>
+        <div class="d-flex base-border border-top-0">
+          <div class="p-3">
+            <span class="name-of-section align-self-center">Tags: </span>
+          </div>
+          <div class="p-3">
+            <span
+              *ngFor="let genre of mangaAllGenres"
+              class="content-of-section rounded"
+              >{{ genre }}</span
+            >
+            <span
+              *ngFor="let theme of mangaAllThemes"
+              class="content-of-section rounded"
+              >{{ theme }}</span
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        id="more-info-div"
+        class="d-block d-lg-none mb-5 mt-3 pe-1 pb-0 base-border"
+      >
+        <span>More info...</span>
+        <p class="pt-3">{{ mangaDesc }}</p>
+      </div>
+    </div>
+    <div id="chapters-div">
+      <div class="container mt-3 position-relative">
+        <ng-container *ngFor="let chapter of mangaChapters">
+          <app-chapter
+            [chapterId]="chapter.id"
+            [urlImg]="urlManga"
+            [manga]="manga"
+          ></app-chapter>
+        </ng-container>
       </div>
     </div>
   </div>
+</ng-container>
+<ng-template #notReady>
   <div
-    id="series-info"
-    class="d-flex flex-column flex-lg-row justify-content-between align-content-center mt-lg-4"
+    class="w-100 vh-100 d-flex justify-content-center flex-grow-1 position-absolute top-0"
   >
-    <div
-      class="title-div w-100 d-flex justify-content-center justify-content-lg-start"
-    >
-      <h1 class="fw-bold mb-0">Series Info</h1>
+    <div class="spinner-border text-dark align-self-center" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
-    <div id="info-table" class="d-flex flex-column w-100">
-      <div class="base-border d-flex flex-row border-top-0 border-bottom-0">
-        <div class="base-border w-50 border-start-0 p-3">
-          <span class="name-of-section">Status: </span>
-          <span class="content-of-section rounded">{{
-            manga.attributes.status
-          }}</span>
-        </div>
-        <div class="base-border w-50 border-start-0 border-end-0 p-3">
-          <span class="name-of-section">Rating: </span>
-          <span class="content-of-section rounded">{{
-            manga.attributes.contentRating
-          }}</span>
-        </div>
-      </div>
-      <div class="d-flex base-border border-top-0">
-        <div class="p-3">
-          <span class="name-of-section align-self-center">Tags: </span>
-        </div>
-        <div class="p-3">
-          <span
-            *ngFor="let genre of mangaAllGenres"
-            class="content-of-section rounded"
-            >{{ genre }}</span
-          >
-          <span
-            *ngFor="let theme of mangaAllThemes"
-            class="content-of-section rounded"
-            >{{ theme }}</span
-          >
-        </div>
-      </div>
-    </div>
-    <div
-      id="more-info-div"
-      class="d-block d-lg-none mb-5 mt-3 pe-1 pb-0 base-border"
-    >
-      <span>More info...</span>
-      <p class="pt-3">{{ mangaDesc }}</p>
-    </div>
-    <div id="chapters-div"></div>
   </div>
-</div>
+</ng-template>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { MangaData } from '../module/manga-data';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -10,6 +10,9 @@ import { SingleMangaData } from '../module/single-manga-data';
 import { AuthorData } from '../module/author-data';
 import { Author } from '../module/author';
 import { FastAverageColor } from 'fast-average-color';
+import { ChapterData } from '../module/chapter-data';
+import { DataFromChapterEndPoint } from '../module/data-from-chapter-end-point';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +35,16 @@ export class MangaService {
   getAllMangas() {
     return this.httpClient.get<MangaData>(this.url + '/manga/');
   }
+
+  getChaptersByMangaId(id: string) {
+    return this.httpClient.get<ChapterData>(`${this.url}/manga/${id}/chapters`);
+  }
+  getChapterById(id: string) {
+    return this.httpClient.get<DataFromChapterEndPoint>(
+      `${this.url}/chapter/${id}`
+    );
+  }
+
   setAllMangas(allMangas: Manga[]) {
     this.allMangas = allMangas;
   }
@@ -140,7 +153,7 @@ export class MangaService {
   getAvgColor(urlRandomManga: string) {
     const fac = new FastAverageColor();
     const container = document.querySelector(
-      '#randomMangaDiv'
+      '.div-with-avg-color'
     ) as HTMLDivElement;
     fac
       .getColorAsync(urlRandomManga)

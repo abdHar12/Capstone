@@ -1,27 +1,36 @@
-<div id="randomMangaDiv" class="base-border">
-  <img id="i" [src]="urlRandomManga" class="img-border" />
-  <div id="div-info-random-manga" class="text-black bg-white base-border">
-    <div>
-      <h4>Try to read this...</h4>
-      <div class="title-div">
-        <h2>{{ randomMangaTitle }}</h2>
+<div [class.notReady]="allSettingsAreDone === false">
+  <div #el class="div-with-avg-color">
+    <img [src]="urlRandomManga" class="img-border" />
+    <div id="div-info-random-manga" class="text-black bg-white base-border">
+      <div>
+        <h4>Try to read this...</h4>
+        <div class="title-div">
+          <h2>{{ randomMangaTitle }}</h2>
+        </div>
       </div>
-    </div>
-    <div id="div-button">
-      <span>{{ randomMangaAuthor.attributes.name }}</span>
-      <button
-        class=".buttons base-border"
-        routerLink="/manga-all-info"
-        routerLinkActive="active"
-        (click)="deleteRandomMangaFromLS()"
-      >
-        VIEW MORE INFO
-      </button>
+      <div id="div-button">
+        <span>{{ randomMangaAuthor.attributes.name }}</span>
+        <button
+          class=".buttons base-border"
+          routerLink="/manga-all-info"
+          routerLinkActive="active"
+          (click)="deleteRandomMangaFromLS()"
+        >
+          VIEW MORE INFO
+        </button>
+      </div>
     </div>
   </div>
 </div>
-<div class="container mt-3 position-relative">
-  <ng-container *ngFor="let manga of allmangas">
-    <app-single-anime [manga]="manga"></app-single-anime>
-  </ng-container>
-</div>
+<ng-container *ngIf="allSettingsAreDone === false; else onlyToHaveAnElse">
+  <div
+    class="w-100 vh-100 d-flex justify-content-center flex-grow-1 position-absolute top-0"
+  >
+    <div class="spinner-border text-dark align-self-center" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-container>
+<ng-template #onlyToHaveAnElse>
+  <span class="d-none"></span>
+</ng-template>

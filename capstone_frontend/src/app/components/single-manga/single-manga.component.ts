@@ -6,11 +6,11 @@ import { MangaService } from 'src/app/service/manga.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-single-anime',
-  templateUrl: './single-anime.component.html',
-  styleUrls: ['./single-anime.component.scss'],
+  selector: 'app-single-manga',
+  templateUrl: './single-manga.component.html',
+  styleUrls: ['./single-manga.component.scss'],
 })
-export class SingleAnimeComponent implements OnInit {
+export class SingleMangaComponent implements OnInit {
   @Input() manga!: Manga;
   desc!: any;
   title!: any;

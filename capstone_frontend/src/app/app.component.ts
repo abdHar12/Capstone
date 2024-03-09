@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { MangaService } from './service/manga.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
   title = 'capstone_frontend';
-  constructor(private authSrv: AuthService) {
+  constructor(private authSrv: AuthService, private mangaSrv: MangaService) {
     this.authSrv.restore();
   }
 }

@@ -1,6 +1,6 @@
 <nav>
   <div
-    class="container-fluid bg-white text-black d-flex p-2 justify-content-between"
+    class="container-fluid bg-white text-black d-flex p-2 justify-content-between base-border"
   >
     <a class="navbar-brand text-center d-flex"
       ><img class="my-auto" src="../../../assets/Kōdansha_logo.png" alt=""
@@ -18,7 +18,12 @@
       <ng-container *ngSwitchCase="'/'">
         <div class="d-flex">
           <div>
-            <button class=".buttons btn" (click)="logOut()">Logout</button>
+            <button
+              class=".buttons btn base-border rounded-0"
+              (click)="logOut()"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </ng-container>

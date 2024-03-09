@@ -1,0 +1,19 @@
+.card {
+  height: 100%;
+  .div-with-avg-color {
+    height: 60%;
+    img {
+      height: 100%;
+      object-fit: fill;
+      margin-inline: auto;
+      width: auto;
+    }
+  }
+  .card-body {
+    .card-title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}

@@ -1,6 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { timeout } from 'rxjs';
 import { Author } from 'src/app/module/author';
+import { Chapter } from 'src/app/module/chapter';
+import { ChapterData } from 'src/app/module/chapter-data';
+import { ChapterFromChapterEndPoint } from 'src/app/module/chapter-from-chapter-end-point';
 import { Manga } from 'src/app/module/manga';
+import { Volume } from 'src/app/module/volume';
 import { MangaService } from 'src/app/service/manga.service';
 
 @Component({
@@ -16,10 +21,26 @@ export class MangaAllInfoComponent implements OnInit {
   mangaAuthor!: Author;
   mangaAllThemes!: string[];
   mangaAllGenres!: string[];
+  mangaChapters: Chapter[] = [];
+  allSettingsAreDone!: boolean;
+  lastChapterId!: string;
 
   constructor(public mangaSrv: MangaService) {}
 
   ngOnInit(): void {
+    this.allSettingsAreDone = false;
+    this.doAllSettings();
+    setTimeout(() => {
+      this.allSettingsAreDone = true;
+    }, 5000);
+  }
+
+  doAllSettings() {
+    console.log(
+      'iiiiiiii ',
+      document.querySelector('.div-with-avg-color') as HTMLDivElement
+    );
+
     this.setManga().finally(() => {
       console.log(this.manga);
       this.setDesc(this.manga);
@@ -31,13 +52,20 @@ export class MangaAllInfoComponent implements OnInit {
       this.setAuthor(this.manga);
       this.setMangaAllThemes(this.manga);
       this.setMangaAllGenres(this.manga);
+      this.setChapters();
+      console.log('ultimo cap ' + this.manga.attributes.latestUploadedChapter);
     });
   }
-
-  // ngOnDestroy(): void {
-  //   localStorage.removeItem('RandomManga'); // to clear it again.
-  // }
-
+  setChapters() {
+    this.mangaSrv.getChaptersByMangaId(this.manga.id).subscribe((data) => {
+      Object.entries(data.volumes).forEach(([key, value1]) => {
+        Object.entries((value1 as Volume).chapters).forEach(([key, value2]) => {
+          this.mangaChapters.push(value2 as Chapter);
+        });
+      });
+      console.log(this.mangaChapters);
+    });
+  }
   async setManga() {
     this.manga = await JSON.parse(localStorage.getItem('RandomManga')!);
   }

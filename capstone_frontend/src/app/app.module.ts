@@ -13,9 +13,11 @@ import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { CommonModule } from '@angular/common';
-import { SingleAnimeComponent } from './components/single-anime/single-anime.component';
+import { SingleMangaComponent } from './components/single-manga/single-manga.component';
 import { FastAverageColor } from 'fast-average-color';
 import { MangaAllInfoComponent } from './components/manga-all-info/manga-all-info.component';
+import { ChapterComponent } from './components/chapter/chapter.component';
+import { LastChapterComponent } from './components/last-chapter/last-chapter.component';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },
@@ -37,8 +39,10 @@ const routes: Routes = [
     NavComponent,
     MainPageComponent,
     RegisterPageComponent,
-    SingleAnimeComponent,
+    SingleMangaComponent,
     MangaAllInfoComponent,
+    ChapterComponent,
+    LastChapterComponent,
   ],
   imports: [
     CommonModule,

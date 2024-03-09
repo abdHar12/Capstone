@@ -29,13 +29,14 @@ public class MangadexService {
         String url= getBaseUrl() + "manga?limit="+size+"&offset="+(((page+1)*size-size));
         return stringToJson(url);
     }
-    public JsonObject getChaptersByMangaId(String id, int page, int size){
-        String url= getBaseUrl() + "chapter?limit="+size+"&offset="+(((page+1)*size-size))+"&manga="+id;
-        return stringToJson(url);
-    }
 
     public JsonObject getRandomManga() {
         String url= getBaseUrl() + "manga/random";
         return stringToJson(url);
     }
+    public JsonObject getChaptersByMangaId(String id) {
+        String url= getBaseUrl() + "manga/"+id+"/aggregate";
+        return stringToJson(url);
+    }
+
 }
