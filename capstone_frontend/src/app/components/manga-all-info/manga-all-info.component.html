@@ -1,39 +1,41 @@
 <ng-container *ngIf="allSettingsAreDone; else notReady">
   <div class="container">
-    <div class="d-lg-flex">
-      <div class="div-with-avg-color base-border d-flex flex-grow-1">
-        <img id="i" [src]="urlManga" class="img-borders h-100" />
-      </div>
-      <div
-        id="info-div"
-        class="d-lg-flex flex-column w-lg-50 p-md-3 p-lg-0 ps-lg-2 justify-content-between"
-      >
-        <div>
-          <div>
-            <h2 class="fs-2">{{ mangaTitle }}</h2>
-            <span id="author">By {{ mangaAuthor.attributes.name }}</span>
-          </div>
-          <div
-            class="w-lg-100 flex-column flex-grow-1 justify-content-between d-none d-lg-flex"
-          >
-            <p class="mb-0">{{ mangaDesc }}</p>
-          </div>
+    <div class="w-100">
+      <div class="d-lg-flex flex-row">
+        <div class="div-with-avg-color base-border">
+          <img id="i" [src]="urlManga" class="img-borders h-100" />
         </div>
-        <ng-container
-          *ngIf="
-            manga.attributes.latestUploadedChapter !== undefined &&
-            manga.attributes.latestUploadedChapter !== ''
-          "
-        >
-          <div id="last-chapter-div" class="d-flex align-self-end">
-            <app-last-chapter
-              [chapterId]="manga.attributes.latestUploadedChapter"
-              [urlImg]="urlManga"
-              [manga]="manga"
-            >
-            </app-last-chapter>
+        <div class="d-flex flex-column justify-content-between flex-grow-1">
+          <div id="info-div" class="w-100 w-md-50 p-md-3 p-lg-0 ps-lg-2">
+            <div>
+              <div>
+                <h2 class="fs-2">{{ mangaTitle }}</h2>
+                <span id="author">By {{ mangaAuthor.attributes.name }}</span>
+              </div>
+              <div
+                class="w-lg-100 flex-column justify-content-between d-none d-lg-flex"
+              >
+                <p class="mb-0">{{ mangaDesc }}</p>
+              </div>
+            </div>
           </div>
-        </ng-container>
+          <ng-container
+            *ngIf="
+              manga.attributes.latestUploadedChapter !== undefined &&
+              manga.attributes.latestUploadedChapter !== ''
+            "
+          >
+            <div class="last-chapter-div d-none d-lg-inline-block">
+              <app-chapter
+                [chapterId]="manga.attributes.latestUploadedChapter"
+                [urlImg]="urlManga"
+                [manga]="manga"
+                [lastChapter]="true"
+              >
+              </app-chapter>
+            </div>
+          </ng-container>
+        </div>
       </div>
     </div>
     <div
@@ -84,17 +86,42 @@
       >
         <span>More info...</span>
         <p class="pt-3">{{ mangaDesc }}</p>
+        <ng-container
+          *ngIf="
+            manga.attributes.latestUploadedChapter !== undefined &&
+            manga.attributes.latestUploadedChapter !== ''
+          "
+        >
+          <div class="last-chapter-div d-lg-none d-inline-block w-100">
+            <app-chapter
+              class="w-100"
+              [chapterId]="manga.attributes.latestUploadedChapter"
+              [urlImg]="urlManga"
+              [manga]="manga"
+              [lastChapter]="true"
+            >
+            </app-chapter>
+          </div>
+        </ng-container>
       </div>
     </div>
+
     <div id="chapters-div">
       <div class="container mt-3 position-relative">
-        <ng-container *ngFor="let chapter of mangaChapters">
-          <app-chapter
-            [chapterId]="chapter.id"
-            [urlImg]="urlManga"
-            [manga]="manga"
-          ></app-chapter>
-        </ng-container>
+        <div class="row">
+          <ng-container *ngFor="let chapter of mangaChapters">
+            <div class="col-4">
+              <div>
+                <app-chapter
+                  [chapterId]="chapter.id"
+                  [urlImg]="urlManga"
+                  [manga]="manga"
+                  [lastChapter]="false"
+                ></app-chapter>
+              </div>
+            </div>
+          </ng-container>
+        </div>
       </div>
     </div>
   </div>

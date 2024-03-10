@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ChapterFromChapterEndPoint } from 'src/app/module/chapter-from-chapter-end-point';
 import { Manga } from 'src/app/module/manga';
 import { MangaService } from 'src/app/service/manga.service';
@@ -13,6 +13,7 @@ export class ChapterComponent implements OnInit {
   @Input() urlImg!: string;
   @Input() manga!: Manga;
   chapter!: ChapterFromChapterEndPoint;
+  @Input() lastChapter!: boolean;
 
   constructor(private mangaSrv: MangaService) {}
 

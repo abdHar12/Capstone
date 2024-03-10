@@ -13,6 +13,9 @@
       width: auto;
       object-fit: fill;
     }
+    .last-chapter-div {
+      height: 55%;
+    }
   }
   #info-div {
     h2 {
@@ -71,9 +74,5 @@
       font-size: 2rem;
       border-right: 2px solid black;
     }
-  }
-
-  #last-chapter-div {
-    height: 50%;
   }
 }

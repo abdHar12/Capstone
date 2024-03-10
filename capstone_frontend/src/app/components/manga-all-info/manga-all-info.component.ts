@@ -28,7 +28,7 @@ export class MangaAllInfoComponent implements OnInit {
   constructor(public mangaSrv: MangaService) {}
 
   ngOnInit(): void {
-    this.allSettingsAreDone = false;
+    this.allSettingsAreDone = true;
     this.doAllSettings();
     setTimeout(() => {
       this.allSettingsAreDone = true;
@@ -36,11 +36,6 @@ export class MangaAllInfoComponent implements OnInit {
   }
 
   doAllSettings() {
-    console.log(
-      'iiiiiiii ',
-      document.querySelector('.div-with-avg-color') as HTMLDivElement
-    );
-
     this.setManga().finally(() => {
       console.log(this.manga);
       this.setDesc(this.manga);

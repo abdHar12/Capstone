@@ -1,0 +1,63 @@
+.div-with-avg-color {
+  width: 100%;
+  img {
+    height: 100%;
+    object-fit: fill;
+    margin-inline: auto;
+    width: 100%;
+  }
+}
+.card-body {
+  .card-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.last-chapter {
+  @media screen and (max-width: 1199px) {
+    .card {
+      width: 35%;
+      height: 100%;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .card {
+      width: 25%;
+      height: 100%;
+    }
+  }
+  @media screen and (max-width: 992px) {
+    .card {
+      width: 40%;
+      margin-inline: auto;
+    }
+  }
+  .card {
+    display: flex;
+    border-bottom: 0;
+    .div-with-avg-color {
+      width: 100%;
+      height: 60%;
+      padding-inline: auto;
+      #i {
+        width: auto;
+        max-width: 100%;
+        margin-inline: auto;
+      }
+    }
+    .card-body {
+      border-top: 2px solid black;
+      height: 10%;
+      .card-title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      a {
+        border: 4px solid black;
+      }
+    }
+  }
+}
