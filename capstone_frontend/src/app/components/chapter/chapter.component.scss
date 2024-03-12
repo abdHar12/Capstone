@@ -62,25 +62,3 @@
     }
   }
 }
-.not-last-chapter {
-  display: flex;
-  border-bottom: 0;
-  .card-body {
-    border-right: 2px solid black;
-    border-left: 2px solid black;
-    height: 10%;
-    a {
-      border-top: 4px solid black;
-    }
-  }
-  .div-with-avg-color {
-    width: 100%;
-    height: 60%;
-    display: flex;
-    #i {
-      width: auto;
-      max-width: 100%;
-      margin-inline: auto;
-    }
-  }
-}

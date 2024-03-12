@@ -72,7 +72,6 @@ export class MangaAllInfoComponent implements OnInit, DoCheck {
   }
 
   divideChapters() {
-    this.dividedChapter = _.chunk(this.mangaChapters, this.forEachSlide);
     console.log(this.divideChapters);
   }
 
