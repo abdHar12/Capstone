@@ -1,11 +1,7 @@
 <ng-container *ngIf="!lastChapter; else isLastChapter">
-  <div class="not-last-chapter card mb-3">
-    <div class="div-with-avg-color base-border">
-      <img
-        id="i"
-        [src]="urlImg"
-        class="card-img-top w-50 img-borders rounded-0"
-      />
+  <div class="card border-0 mb-3">
+    <div class="div-with-avg-color">
+      <img id="i" [src]="urlImg" class="card-img-top w-100" />
     </div>
     <div class="card-body p-0 d-flex justify-content-between flex-column">
       <div class="p-1" style="height: 100px">
