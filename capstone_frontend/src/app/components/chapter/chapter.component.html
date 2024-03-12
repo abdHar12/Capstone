@@ -1,30 +1,36 @@
 <ng-container *ngIf="!lastChapter; else isLastChapter">
-  <div class="card border-0 mb-3">
-    <div class="div-with-avg-color">
-      <img id="i" [src]="urlImg" class="card-img-top w-100" />
+  <div class="not-last-chapter card mb-3">
+    <div class="div-with-avg-color base-border">
+      <img
+        id="i"
+        [src]="urlImg"
+        class="card-img-top w-50 img-borders rounded-0"
+      />
     </div>
-    <div class="border-2 card-body border-bottom-0 border-top-0 p-0">
-      <ng-container
-        *ngIf="chapter.attributes.title !== undefined; else noTitle"
-      >
-        <h5 class="card-title">
-          {{ chapter.attributes.title }}
-        </h5>
-      </ng-container>
-      <ng-template #noTitle>
-        {{ manga.attributes.title }}
-      </ng-template>
-      <ng-container
-        *ngIf="chapter.attributes.chapter !== undefined; else uniqueChapter"
-      >
-        <p class="card-text">Chapter n°: {{ chapter.attributes.chapter }}</p>
-      </ng-container>
-      <ng-template #uniqueChapter>
-        <p class="card-text">Unique Chapter</p>
-      </ng-template>
+    <div class="card-body p-0 d-flex justify-content-between flex-column">
+      <div class="p-1" style="height: 100px">
+        <ng-container
+          *ngIf="chapter.attributes.title !== undefined; else noTitle"
+        >
+          <h5 class="card-title">
+            {{ chapter.attributes.title }}
+          </h5>
+        </ng-container>
+        <ng-template #noTitle>
+          {{ manga.attributes.title }}
+        </ng-template>
+        <ng-container
+          *ngIf="chapter.attributes.chapter !== undefined; else uniqueChapter"
+        >
+          <p class="card-text">Chapter n°: {{ chapter.attributes.chapter }}</p>
+        </ng-container>
+        <ng-template #uniqueChapter>
+          <p class="card-text">Unique Chapter</p>
+        </ng-template>
+      </div>
       <a
         href="#"
-        class="btn w-100 border-4 border-black border-top-0 border-start-0 border-end-0 rounded-0"
+        class="btn w-100 border-4 border-black border-start-0 border-end-0 rounded-0"
         >Buy it</a
       >
     </div>
