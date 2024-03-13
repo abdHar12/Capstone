@@ -14,6 +14,7 @@ export class ChapterComponent implements OnInit {
   @Input() manga!: Manga;
   chapter!: ChapterFromChapterEndPoint;
   @Input() lastChapter!: boolean;
+  mangaTitle!: any;
 
   constructor(private mangaSrv: MangaService) {}
 
@@ -24,5 +25,10 @@ export class ChapterComponent implements OnInit {
       console.log(this.chapter);
       this.mangaSrv.getAvgColor(this.urlImg);
     });
+    this.setTitle(this.manga);
+  }
+
+  async setTitle(manga: Manga) {
+    this.mangaTitle = await this.mangaSrv.getTitle(manga);
   }
 }

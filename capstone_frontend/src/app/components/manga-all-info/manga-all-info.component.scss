@@ -4,7 +4,7 @@
     position: relative;
     display: flex;
     height: 80vh;
-    @media screen and (max-width: 786px) {
+    @media screen and (max-width: 768px) {
       height: 50vh;
     }
     #i {
@@ -73,6 +73,25 @@
       padding-left: 0;
       font-size: 2rem;
       border-right: 2px solid black;
+    }
+  }
+}
+.swiper-container {
+  height: auto;
+  overflow: auto;
+  overflow-x: scroll;
+  .swiper-slide {
+    @media screen and (max-width: 767px) {
+      width: 50%;
+    }
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+      width: 33%;
+    }
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
+      width: 25%;
+    }
+    @media screen and (min-width: 1200px) {
+      width: 20%;
     }
   }
 }

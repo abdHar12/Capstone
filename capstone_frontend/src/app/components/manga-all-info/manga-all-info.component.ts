@@ -1,4 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  DoCheck,
+  Host,
+  HostListener,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { timeout } from 'rxjs';
 import { Author } from 'src/app/module/author';
 import { Chapter } from 'src/app/module/chapter';
@@ -7,13 +16,15 @@ import { ChapterFromChapterEndPoint } from 'src/app/module/chapter-from-chapter-
 import { Manga } from 'src/app/module/manga';
 import { Volume } from 'src/app/module/volume';
 import { MangaService } from 'src/app/service/manga.service';
+import Swiper from 'swiper';
+import { SwiperModule } from 'swiper/angular';
 
 @Component({
   selector: 'app-manga-all-info',
   templateUrl: './manga-all-info.component.html',
   styleUrls: ['./manga-all-info.component.scss'],
 })
-export class MangaAllInfoComponent implements OnInit {
+export class MangaAllInfoComponent implements OnInit, DoCheck {
   manga!: Manga;
   urlManga!: any;
   mangaTitle!: any;
@@ -24,8 +35,13 @@ export class MangaAllInfoComponent implements OnInit {
   mangaChapters: Chapter[] = [];
   allSettingsAreDone!: boolean;
   lastChapterId!: string;
+  forEachSlide!: number;
+  dividedChapter!: any[][];
+  mySwiper!: Swiper;
 
   constructor(public mangaSrv: MangaService) {}
+
+  ngDoCheck(): void {}
 
   ngOnInit(): void {
     this.allSettingsAreDone = true;
@@ -47,19 +63,55 @@ export class MangaAllInfoComponent implements OnInit {
       this.setAuthor(this.manga);
       this.setMangaAllThemes(this.manga);
       this.setMangaAllGenres(this.manga);
-      this.setChapters();
+      this.setChapters().finally(() => {
+        this.divideChapters();
+      });
       console.log('ultimo cap ' + this.manga.attributes.latestUploadedChapter);
     });
   }
-  setChapters() {
-    this.mangaSrv.getChaptersByMangaId(this.manga.id).subscribe((data) => {
-      Object.entries(data.volumes).forEach(([key, value1]) => {
-        Object.entries((value1 as Volume).chapters).forEach(([key, value2]) => {
-          this.mangaChapters.push(value2 as Chapter);
+
+  @HostListener('window:resize')
+  setForEachSlide() {
+    if (window.innerWidth < 768) {
+      this.forEachSlide = 2;
+    } else if (window.innerWidth >= 768 && window.innerWidth < 992) {
+      this.forEachSlide = 3;
+    } else if (window.innerWidth >= 992 && window.innerWidth < 1200) {
+      this.forEachSlide = 4;
+    } else if (window.innerWidth >= 1200) {
+      this.forEachSlide = 6;
+    }
+  }
+
+  divideChapters() {
+    const size = 2;
+    const arr = this.mangaChapters;
+    const chunked = this.chunk(arr, size);
+    console.log(this.mangaChapters);
+  }
+
+  chunk(array: any, chunkSize: any) {
+    const chunks = Array.from({
+      length: Math.ceil(array.length / chunkSize),
+    }).map(() => array.splice(0, chunkSize));
+    console.log(typeof array);
+    console.log(chunks);
+    return chunks;
+  }
+
+  async setChapters() {
+    await this.mangaSrv
+      .getChaptersByMangaId(this.manga.id)
+      .subscribe((data) => {
+        Object.entries(data.volumes).forEach(([key, value1]) => {
+          Object.entries((value1 as Volume).chapters).forEach(
+            ([key, value2]) => {
+              this.mangaChapters.push(value2 as Chapter);
+            }
+          );
         });
+        console.log(this.mangaChapters);
       });
-      console.log(this.mangaChapters);
-    });
   }
   async setManga() {
     this.manga = await JSON.parse(localStorage.getItem('RandomManga')!);
