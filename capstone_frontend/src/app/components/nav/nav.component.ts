@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
 import {
   Router,
   NavigationStart,
@@ -6,6 +6,7 @@ import {
   NavigationError,
   Event,
 } from '@angular/router';
+import { ngbPositioning } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -37,9 +38,25 @@ export class NavComponent implements OnInit {
       }
     });
   }
+
   ngOnInit(): void {}
 
   logOut() {
     this.authSrv.logout();
+  }
+
+  styleOfButton(target: EventTarget | null): void {
+    if ((target as HTMLButtonElement)!.style.backgroundColor === 'white') {
+      (target as HTMLButtonElement)!.style.backgroundColor = 'black';
+      (target as HTMLButtonElement)!.style.color = 'white';
+      (target as HTMLButtonElement)!.style.border = '2px solid black';
+    } else {
+      (target as HTMLButtonElement)!.style.backgroundColor = 'white';
+      (target as HTMLButtonElement)!.style.color = 'black';
+    }
+    let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
+    cartDiv.style.display === 'none'
+      ? (cartDiv.style.display = 'block')
+      : (cartDiv.style.display = 'none');
   }
 }

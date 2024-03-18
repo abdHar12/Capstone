@@ -15,4 +15,5 @@ public class AuthorController {
     public JsonObject getSingleAuthor(@PathVariable String id){
         return authorService.getSingleAuthor(id);
     }
+
 }

@@ -8,4 +8,16 @@ nav {
   img {
     width: 80px;
   }
+  #cart-button {
+    position: relative;
+  }
+  #cart-div {
+    position: absolute;
+    border-top: 10px solid black;
+    pointer-events: none;
+    color: black;
+    right: 10px;
+    width: 400px;
+    background-color: white;
+  }
 }

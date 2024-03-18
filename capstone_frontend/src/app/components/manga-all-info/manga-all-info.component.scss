@@ -76,10 +76,14 @@
     }
   }
 }
+.swiper-container::-webkit-scrollbar {
+  display: none;
+}
 .swiper-container {
   height: auto;
   overflow: auto;
   overflow-x: scroll;
+
   .swiper-slide {
     @media screen and (max-width: 767px) {
       width: 50%;

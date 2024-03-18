@@ -1,11 +1,20 @@
 package harouane.capstone_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
+import org.hibernate.annotations.Cascade;
+import org.springframework.dao.DataAccessException;
+import org.springframework.orm.hibernate5.SessionFactoryUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +35,8 @@ import java.util.*;
         , "authorities"
         , "username"
         , "accountNonLocked"
-        , "enabled"})
+        , "enabled",
+})
 public class User implements UserDetails {
     @Id
     @GeneratedValue
@@ -40,17 +50,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "manga_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    Set<MangaToRead> mangasToRead;
-
-    @ManyToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "manga_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    Set<RedManga> redMangas;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @ToString.Exclude
+    List<CartProduct> productsToBuy;
     public User(String username, String email, String password, String name, String surname, String avatar) {
         this.username = username;
         this.email = email;
@@ -60,10 +63,13 @@ public class User implements UserDetails {
         this.avatar = avatar;
         this.role = Role.USER;
     }
+
+    public void addProductsToBuy(List<CartProduct> products){
+        getProductsToBuy().addAll(products);
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> list = Collections.singletonList(new SimpleGrantedAuthority(this.role.name()));
-        return list;
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
     @Override
     public String getPassword() {
@@ -94,4 +100,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

@@ -24,8 +24,10 @@
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.2.0",
     "fast-average-color": "^9.4.0",
+    "ngx-useful-swiper": "^10.0.1",
     "pixi.js": "^8.0.0",
     "rxjs": "~7.5.0",
+    "swiper": "^11.0.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

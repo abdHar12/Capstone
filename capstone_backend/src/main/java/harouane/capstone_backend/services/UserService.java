@@ -4,6 +4,7 @@ package harouane.capstone_backend.services;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import harouane.capstone_backend.DTO.RoleDTO;
+import harouane.capstone_backend.entities.CartProduct;
 import harouane.capstone_backend.entities.Role;
 import harouane.capstone_backend.entities.User;
 import harouane.capstone_backend.exceptions.NotFoundException;
@@ -49,7 +50,15 @@ public class UserService {
         return userDAO.save(found);
     }
 
-    public void deleteUser(UUID id) {
+    public void addProductToCart(UUID id, CartProduct cartProduct) {
+        User user= findById(id);
+        List<CartProduct> cartProductList = new ArrayList<>();
+        cartProductList.add(cartProduct);
+        user.addProductsToBuy(cartProductList);
+        userDAO.save(user);
+    }
+
+        public void deleteUser(UUID id) {
         User found = this.findById(id);
         userDAO.delete(found);
     }

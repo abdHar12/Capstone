@@ -17,6 +17,7 @@ import { SingleMangaComponent } from './components/single-manga/single-manga.com
 import { FastAverageColor } from 'fast-average-color';
 import { MangaAllInfoComponent } from './components/manga-all-info/manga-all-info.component';
 import { ChapterComponent } from './components/chapter/chapter.component';
+import { CartComponent } from './components/cart/cart.component';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
     SingleMangaComponent,
     MangaAllInfoComponent,
     ChapterComponent,
+    CartComponent,
   ],
   imports: [
     CommonModule,

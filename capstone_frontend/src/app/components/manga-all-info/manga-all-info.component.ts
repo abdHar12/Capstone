@@ -8,6 +8,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { timeout } from 'rxjs';
 import { Author } from 'src/app/module/author';
 import { Chapter } from 'src/app/module/chapter';
@@ -17,7 +18,6 @@ import { Manga } from 'src/app/module/manga';
 import { Volume } from 'src/app/module/volume';
 import { MangaService } from 'src/app/service/manga.service';
 import Swiper from 'swiper';
-import { SwiperModule } from 'swiper/angular';
 
 @Component({
   selector: 'app-manga-all-info',
@@ -38,12 +38,27 @@ export class MangaAllInfoComponent implements OnInit, DoCheck {
   forEachSlide!: number;
   dividedChapter!: any[][];
   mySwiper!: Swiper;
+  currentSwipe!: number;
+  prevSwipe!: number;
+
+  swiper: Swiper = new Swiper('.swiper', {
+    speed: 400,
+    spaceBetween: 100,
+    direction: 'horizontal',
+    allowSlideNext: true,
+    allowSlidePrev: false,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
 
   constructor(public mangaSrv: MangaService) {}
 
   ngDoCheck(): void {}
 
   ngOnInit(): void {
+    this.swiper.autoplay;
     this.allSettingsAreDone = true;
     this.doAllSettings();
     setTimeout(() => {
@@ -140,5 +155,47 @@ export class MangaAllInfoComponent implements OnInit, DoCheck {
 
   async setDesc(manga: Manga) {
     this.mangaDesc = await this.mangaSrv.getDescription(manga);
+  }
+  sideScroll(
+    element: Element,
+    direction: string,
+    speed: number,
+    distance: number,
+    step: number
+  ) {
+    let scrollAmount = 0;
+    let prevBtn: HTMLButtonElement;
+    let nextBtn: HTMLButtonElement;
+    let slideTimer = setInterval(() => {
+      if (direction === 'left') {
+        element.scrollLeft -= step;
+        prevBtn = document.querySelector('#prev-scroll')!;
+        nextBtn = document.querySelector('#next-scroll')!;
+        nextBtn.style.visibility = 'visible';
+        if (0 === element.scrollLeft) prevBtn.style.visibility = 'hidden';
+      } else {
+        element.scrollLeft += step;
+        console.log(element.scrollLeft);
+        console.log(this.prevSwipe);
+        prevBtn = document.querySelector('#prev-scroll')!;
+        nextBtn = document.querySelector('#next-scroll')!;
+        prevBtn.style.visibility = 'visible';
+        if (this.prevSwipe === element.scrollLeft)
+          nextBtn.style.visibility = 'hidden';
+      }
+      this.prevSwipe = element.scrollLeft;
+      scrollAmount += step;
+      if (scrollAmount >= distance) {
+        window.clearInterval(slideTimer);
+      }
+    }, speed);
+  }
+  scrollLeft() {
+    let swiper = document.querySelector('.swiper-container')!;
+    this.sideScroll(swiper, 'left', 25, 200, 10);
+  }
+  scrollRight() {
+    let swiper = document.querySelector('.swiper-container')!;
+    this.sideScroll(swiper, 'right', 25, 200, 10);
   }
 }
