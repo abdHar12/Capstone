@@ -22,4 +22,12 @@ export class CartService {
   getProductsByUser() {
     return this.http.get<CartProduct[]>(`${this.apiUrl}/products/cart`);
   }
+  deleteFromCart(id: string) {
+    return this.http.delete(`${this.apiUrl}/products/${id}`);
+  }
+  verifyExistence(titleManga: string, chapterNumber: string) {
+    return this.http.get<CartProduct[]>(
+      `${this.apiUrl}/products/verify-existence?titleManga=${titleManga}&chapterNumber=${chapterNumber}`
+    );
+  }
 }

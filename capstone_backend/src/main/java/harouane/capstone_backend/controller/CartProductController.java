@@ -15,17 +15,21 @@ import java.util.List;
 @RequestMapping("/products")
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-public class ProductController {
+public class CartProductController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("")
+    /*@GetMapping("")
+    @ResponseBody
     public Page<CartProduct> getAll(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
                                     @RequestParam(defaultValue = "id") String order) {
         System.out.println(productService.getMangaProducts(page, size, order));
         return productService.getMangaProducts(page, size, order);
-    }
+    }*/
+    @GetMapping("")
+    public List<ProductDTOResponse> getAll() {
+        return productService.getMangaProducts();}
     @PostMapping("")
     public ProductDTOResponse addElement(@RequestBody ProductDTO productDTO, @AuthenticationPrincipal User user){
         System.out.println(user);
@@ -35,5 +39,17 @@ public class ProductController {
     @GetMapping("/cart")
     public List<ProductDTOResponse> getProductsByUser(@AuthenticationPrincipal User user){
         return productService.getProductByUser(user);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable String id){
+        productService.deleteById(id);
+    }
+
+    @GetMapping("verify-existence")
+    @ResponseBody
+    public List<ProductDTOResponse> findByTitleMangaAndChapterNumber(@RequestParam String titleManga, @RequestParam String chapterNumber)
+    {
+        System.out.println(titleManga+chapterNumber);
+        return productService.findByTitleMangaAndChapterNumber(titleManga,chapterNumber);
     }
 }

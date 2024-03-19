@@ -16,31 +16,53 @@ export class ChapterComponent implements OnInit {
   chapter!: ChapterFromChapterEndPoint;
   @Input() lastChapter!: boolean;
   mangaTitle!: any;
+  alreadyBought: boolean = false;
   price!: number;
   constructor(private mangaSrv: MangaService, private cartSrv: CartService) {}
 
   ngOnInit(): void {
-    this.price = Math.round(Math.random() * (20 - 7) + 7);
-
     this.mangaSrv.getChapterById(this.chapterId).subscribe((chapterData) => {
       this.chapter = chapterData.data;
       console.log(this.chapter);
       this.mangaSrv.getAvgColor(this.urlImg);
+      this.cartSrv
+        .verifyExistence(this.mangaTitle, this.chapter.attributes.chapter)
+        .subscribe((elements) => {
+          if (elements.length !== 0) {
+            this.price = Number.parseFloat(elements[0].price);
+            this.alreadyBought = true;
+          } else {
+            this.price = Math.round(
+              (Math.random() * (2000.0 - 700.0) + 700.0) / 100
+            );
+          }
+        });
     });
     this.setTitle(this.manga);
   }
 
   addToCart() {
-    const data = {
-      titleManga: this.mangaTitle,
-      chapterTitle: this.chapter.attributes.title,
-      chapterNumber: this.chapter.attributes.chapter,
-      price: this.price.toString(),
-      imgManga: this.urlImg,
-    };
-    this.cartSrv.addArticleToCart(data).subscribe((el) => {
-      console.log(el);
-    });
+    let data = null;
+    this.cartSrv
+      .verifyExistence(this.mangaTitle, this.chapter.attributes.chapter)
+      .subscribe((elements) => {
+        if (elements.length === 0) {
+          data = {
+            titleManga: this.mangaTitle,
+            chapterTitle: this.chapter.attributes.title,
+            chapterNumber:
+              this.chapter.attributes.chapter === undefined
+                ? 'Unique Chapter'
+                : this.chapter.attributes.chapter,
+            price: this.price.toString(),
+            imgManga: this.urlImg,
+          };
+          this.cartSrv.addArticleToCart(data).subscribe((el) => {
+            console.log(el);
+            window.location.reload();
+          });
+        }
+      });
   }
 
   async setTitle(manga: Manga) {

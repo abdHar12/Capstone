@@ -1,4 +1,10 @@
-import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  HostListener,
+  Input,
+  OnInit,
+} from '@angular/core';
 import {
   Router,
   NavigationStart,
@@ -58,5 +64,28 @@ export class NavComponent implements OnInit {
     cartDiv.style.display === 'none'
       ? (cartDiv.style.display = 'block')
       : (cartDiv.style.display = 'none');
+    let nav = document.querySelector('#nav-bar') as HTMLElement;
+    cartDiv.style.setProperty('top', nav.offsetHeight.toString());
+    cartDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(even: any) {
+    let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
+    let nav = document.querySelector('#nav-bar') as HTMLElement;
+    cartDiv.style.setProperty('top', nav.offsetHeight.toString());
+    cartDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
+  }
+  dnoneCart() {
+    let target = document.getElementById('cart-button') as HTMLButtonElement;
+    if ((target as HTMLButtonElement)!.style.backgroundColor === 'white') {
+      (target as HTMLButtonElement)!.style.backgroundColor = 'black';
+      (target as HTMLButtonElement)!.style.color = 'white';
+      (target as HTMLButtonElement)!.style.border = '2px solid black';
+    } else {
+      (target as HTMLButtonElement)!.style.backgroundColor = 'white';
+      (target as HTMLButtonElement)!.style.color = 'black';
+    }
+    let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
+    cartDiv.style.display = 'none';
   }
 }

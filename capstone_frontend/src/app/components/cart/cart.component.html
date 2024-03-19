@@ -1,1 +1,47 @@
-<div class="w-100 h-100"></div>
+<div class="w-100 h-100 cart">
+  <div class="ps-3 pt-3">
+    <h2 class="d-flex mb-0">Cart:</h2>
+  </div>
+  <div class="p-3">
+    <ng-container *ngIf="products.length > 0; else emptyCart">
+      <ng-container *ngFor="let product of products">
+        <div class="d-flex flex-row single-product base-border mb-2">
+          <img [src]="product.imgManga" />
+          <div class="d-flex flex-grow-1 justify-content-between">
+            <div id="manga-name-div" class="info-div p-1">
+              <span class="flex-grow-1 my-auto">{{ product.titleManga }}</span>
+            </div>
+            <div class="d-flex info-div p-1 flex-grow-1">
+              <span class="flex-grow-1">
+                {{
+                  product.chapterNumber === "Unique Chapter"
+                    ? "Unique Chapter"
+                    : "Chapter: " + product.chapterNumber
+                }}</span
+              >
+            </div>
+            <div class="d-flex p-1 info-div flex-grow-1">
+              <span class="flex-grow-1">{{ product.price }}0€</span>
+            </div>
+          </div>
+          <div>
+            <button
+              (click)="deleteFromCart(product.UUID)"
+              class="w-100 h-100 bg-white text-black border-0 px-3"
+            >
+              <i class="bi bi-trash3-fill"></i>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  <ng-template #emptyCart>
+    <div
+      id="empty-cart"
+      class="h-100 d-flex flex-column justify-content-center"
+    >
+      <p class="text-center">Empty Cart</p>
+    </div>
+  </ng-template>
+</div>

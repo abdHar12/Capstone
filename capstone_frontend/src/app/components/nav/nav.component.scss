@@ -1,4 +1,5 @@
 nav {
+  position: relative;
   margin-inline: auto;
   position: sticky;
   margin-top: 10px;
@@ -8,16 +9,17 @@ nav {
   img {
     width: 80px;
   }
-  #cart-button {
-    position: relative;
-  }
   #cart-div {
     position: absolute;
+    right: 0;
     border-top: 10px solid black;
-    pointer-events: none;
+    display: flex;
     color: black;
-    right: 10px;
-    width: 400px;
     background-color: white;
+  }
+  #close-cart {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }

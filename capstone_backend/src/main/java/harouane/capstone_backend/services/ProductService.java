@@ -4,6 +4,7 @@ import harouane.capstone_backend.DTO.ProductDTO;
 import harouane.capstone_backend.DTO.ProductDTOResponse;
 import harouane.capstone_backend.entities.CartProduct;
 import harouane.capstone_backend.entities.User;
+import harouane.capstone_backend.exceptions.NotFoundException;
 import harouane.capstone_backend.repositories.ProductRepository;
 import harouane.capstone_backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -25,23 +27,39 @@ public class ProductService {
     @Autowired
     UserService userService;
 
+    public CartProduct findById(UUID id) {
+        return productDAO.findById(id).orElseThrow(()-> new NotFoundException(id));
+    }
 
-    public Page<CartProduct> getMangaProducts(int pageN, int pageS, String OrderBy) {
-        if (pageS > 20) pageS = 20;
-        Pageable pageable = PageRequest.of(pageN, pageS, Sort.by(OrderBy));
-        return productDAO.findAll(pageable);
+    public List<ProductDTOResponse> findByTitleMangaAndChapterNumber(String mangaTitle, String chapterNumber){
+        List<ProductDTOResponse> responseList=new ArrayList<>();
+        productDAO.findByTitleMangaAndChapterNumber(mangaTitle, chapterNumber).forEach(el->{
+            responseList.add(createProductDTO(el));
+        });
+        return responseList;
+    }
+    public List<ProductDTOResponse> getMangaProducts() {
+/*        if (pageS > 20) pageS = 20;
+        Pageable pageable = PageRequest.of(pageN, pageS, Sort.by(OrderBy));*/
+        List<ProductDTOResponse> responseList=new ArrayList<>();
+        productDAO.findAll().forEach(el->{
+            responseList.add(createProductDTO(el));
+        });
+        return responseList;
     }
 
     public ProductDTOResponse addElement(ProductDTO productDTO, User user) {
         CartProduct cartProduct =new CartProduct();
-        cartProduct.setImgManga(productDTO.imgManga());
-        cartProduct.setTitleManga(productDTO.titleManga());
-        cartProduct.setChapterTitle(productDTO.chapterTitle());
-        cartProduct.setChapterNumber(productDTO.chapterNumber());
-        cartProduct.setPrice(Double.parseDouble(productDTO.price()));
-        cartProduct.setUser(user);
-        productDAO.save(cartProduct);
-        return createProductDTO(cartProduct);
+        if(findByTitleMangaAndChapterNumber(productDTO.titleManga(), productDTO.chapterNumber()).isEmpty()) {
+            cartProduct.setImgManga(productDTO.imgManga());
+            cartProduct.setTitleManga(productDTO.titleManga());
+            cartProduct.setChapterTitle(productDTO.chapterTitle());
+            cartProduct.setChapterNumber(productDTO.chapterNumber());
+            cartProduct.setPrice(Double.parseDouble(productDTO.price()));
+            cartProduct.setUser(user);
+            productDAO.save(cartProduct);
+            return createProductDTO(cartProduct);
+        } else return null;
     }
 
     public List<ProductDTOResponse> getProductByUser(User user) {
@@ -55,6 +73,10 @@ public class ProductService {
     }
 
     public ProductDTOResponse createProductDTO(CartProduct cartProduct){
-        return new ProductDTOResponse(cartProduct.getId().toString(), cartProduct.getTitleManga(), cartProduct.getChapterTitle(), cartProduct.getChapterNumber(), Double.toString(cartProduct.getPrice()), cartProduct.getImgManga(), cartProduct.getUser().getId().toString());
+            return new ProductDTOResponse(cartProduct.getId().toString(), cartProduct.getTitleManga(), cartProduct.getChapterTitle(), cartProduct.getChapterNumber(), Double.toString(cartProduct.getPrice()), cartProduct.getImgManga(), cartProduct.getUser().getId().toString());
+    }
+
+    public void deleteById(String id) {
+        productDAO.delete(findById(UUID.fromString(id)));
     }
 }

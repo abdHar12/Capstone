@@ -36,9 +36,10 @@
       </div>
       <div>
         <div class="d-flex justify-content-end mb-2 pe-3">
-          <span>Price: {{ price.toFixed(2) }}€</span>
+          <span>Price: {{ price }}€</span>
         </div>
         <a
+          [ngClass]="{ 'bought-chapter': alreadyBought }"
           class="btn w-100 border-4 border-black border-start-0 border-end-0 rounded-0"
           (click)="addToCart()"
           >Buy it</a
@@ -66,7 +67,9 @@
             </h5>
           </ng-container>
           <ng-template #noTitle>
-            {{ mangaTitle }}
+            <h5 class="card-title">
+              {{ mangaTitle }}
+            </h5>
           </ng-template>
           <ng-container
             *ngIf="chapter.attributes.chapter !== undefined; else uniqueChapter"
@@ -81,7 +84,6 @@
         </div>
 
         <a
-          href="#"
           class="btn w-100 p-0 border-black border-start-0 border-end-0 rounded-0"
           >Buy it</a
         >
