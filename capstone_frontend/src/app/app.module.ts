@@ -18,6 +18,7 @@ import { FastAverageColor } from 'fast-average-color';
 import { MangaAllInfoComponent } from './components/manga-all-info/manga-all-info.component';
 import { ChapterComponent } from './components/chapter/chapter.component';
 import { CartComponent } from './components/cart/cart.component';
+import { OrderPageComponent } from './components/order-page/order-page.component';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },
@@ -29,6 +30,11 @@ const routes: Routes = [
   {
     path: 'manga-all-info',
     component: MangaAllInfoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'creation-order',
+    component: OrderPageComponent,
     canActivate: [AuthGuard],
   },
 ];
@@ -43,6 +49,7 @@ const routes: Routes = [
     MangaAllInfoComponent,
     ChapterComponent,
     CartComponent,
+    OrderPageComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,58 @@
+.single-product {
+  height: 50px;
+  border-top: 0;
+}
+#order-products-table {
+  border-top: 2px solid black;
+}
+.manga-name-div {
+  position: relative;
+  width: 45%;
+  flex-direction: row;
+  align-items: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  span {
+    position: absolute;
+  }
+}
+span {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.info-div {
+  border-right: 2px solid black;
+}
+#empty-cart {
+  height: 100%;
+  width: 100%;
+  p {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #make-order-div {
+    width: 75%;
+  }
+  #amount-div {
+    width: 75%;
+    border-top: 0;
+  }
+}
+@media screen and (max-width: 767px) {
+  #amount-div {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 992px) {
+  #amount-div {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  #amount-div {
+    width: 25%;
+  }
+}

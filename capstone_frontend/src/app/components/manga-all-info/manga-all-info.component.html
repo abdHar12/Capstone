@@ -107,13 +107,21 @@
     </div>
   </div>
   <ng-container *ngIf="mangaChapters.length > 0; else noChapters">
-    <div class="container">
-      <h2 class="fs-2 fw-bold">All the chapters:</h2>
+    <div class="bg-black text-white mt-4">
+      <div class="container py-3">
+        <h2 class="fs-2 fw-bold mb-0 mt-2">All the chapters:</h2>
+      </div>
     </div>
-    <div class="d-flex flex-row align-items-center justify-content-around">
+    <div
+      class="d-flex flex-row align-items-center justify-content-around bg-black"
+    >
       <div class="flex-grow-1 text-center fs-3 d-none d-lg-block">
         <div class="w-100 h-100">
-          <button id="prev-scroll" class="w-100 h100" (click)="scrollLeft()">
+          <button
+            id="prev-scroll"
+            class="w-100 h100 bg-black border-0 text-white"
+            (click)="scrollLeft()"
+          >
             <i class="bi bi-chevron-left"></i>
           </button>
         </div>
@@ -139,7 +147,11 @@
       </div>
       <div class="flex-grow-1 text-center fs-3 d-none d-lg-block">
         <div class="w-100 h-100">
-          <button id="next-scroll" class="w-100 h100" (click)="scrollRight()">
+          <button
+            id="next-scroll"
+            class="w-100 h100 text-white bg-black border-0"
+            (click)="scrollRight()"
+          >
             <i class="bi bi-chevron-right"></i>
           </button>
         </div>
@@ -147,7 +159,9 @@
     </div>
   </ng-container>
   <ng-template #noChapters>
-    <h2 class="fs-2 fw-bold">No chapters Available</h2>
+    <div class="container">
+      <h2 class="fs-2 fw-bold">No chapters Available</h2>
+    </div>
   </ng-template>
 </ng-container>
 <ng-template #notReady>

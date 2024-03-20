@@ -3,7 +3,7 @@ nav {
   margin-inline: auto;
   position: sticky;
   margin-top: 10px;
-  z-index: 1;
+  z-index: 99;
   top: 10px;
   width: 95%;
   img {
@@ -16,6 +16,7 @@ nav {
     display: flex;
     color: black;
     background-color: white;
+    z-index: 99;
   }
   #close-cart {
     position: absolute;

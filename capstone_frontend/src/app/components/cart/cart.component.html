@@ -8,7 +8,7 @@
         <div class="d-flex flex-row single-product base-border mb-2">
           <img [src]="product.imgManga" />
           <div class="d-flex flex-grow-1 justify-content-between">
-            <div id="manga-name-div" class="info-div p-1">
+            <div class="manga-name-div info-div p-1">
               <span class="flex-grow-1 my-auto">{{ product.titleManga }}</span>
             </div>
             <div class="d-flex info-div p-1 flex-grow-1">
@@ -21,7 +21,7 @@
               >
             </div>
             <div class="d-flex p-1 info-div flex-grow-1">
-              <span class="flex-grow-1">{{ product.price }}0€</span>
+              <span class="flex-grow-1">{{ product.price }}€</span>
             </div>
           </div>
           <div>
@@ -34,6 +34,11 @@
           </div>
         </div>
       </ng-container>
+      <div class="d-flex mt-3">
+        <button (click)="goToTheOrder()" class="mx-auto">
+          Buy your Mangas
+        </button>
+      </div>
     </ng-container>
   </div>
   <ng-template #emptyCart>

@@ -28,12 +28,13 @@ export class ChapterComponent implements OnInit {
       this.cartSrv
         .verifyExistence(this.mangaTitle, this.chapter.attributes.chapter)
         .subscribe((elements) => {
+          console.log(elements);
           if (elements.length !== 0) {
             this.price = Number.parseFloat(elements[0].price);
             this.alreadyBought = true;
           } else {
-            this.price = Math.round(
-              (Math.random() * (2000.0 - 700.0) + 700.0) / 100
+            this.price = parseFloat(
+              ((Math.random() * (2000.0 - 700.0) + 700.0) / 100).toFixed(2)
             );
           }
         });

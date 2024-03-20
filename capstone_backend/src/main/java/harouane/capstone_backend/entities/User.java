@@ -54,6 +54,10 @@ public class User implements UserDetails {
     @JsonIgnore
     @ToString.Exclude
     List<CartProduct> productsToBuy;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @ToString.Exclude
+    List<Order> orders;
     public User(String username, String email, String password, String name, String surname, String avatar) {
         this.username = username;
         this.email = email;

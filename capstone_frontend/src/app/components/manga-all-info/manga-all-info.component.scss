@@ -1,5 +1,4 @@
 .container {
-  margin-top: 1rem;
   .div-with-avg-color {
     position: relative;
     display: flex;
@@ -83,7 +82,6 @@
   height: auto;
   overflow: auto;
   overflow-x: scroll;
-
   .swiper-slide {
     @media screen and (max-width: 767px) {
       width: 50%;

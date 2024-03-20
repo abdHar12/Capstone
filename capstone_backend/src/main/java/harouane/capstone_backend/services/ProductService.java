@@ -3,6 +3,7 @@ package harouane.capstone_backend.services;
 import harouane.capstone_backend.DTO.ProductDTO;
 import harouane.capstone_backend.DTO.ProductDTOResponse;
 import harouane.capstone_backend.entities.CartProduct;
+import harouane.capstone_backend.entities.Order;
 import harouane.capstone_backend.entities.User;
 import harouane.capstone_backend.exceptions.NotFoundException;
 import harouane.capstone_backend.repositories.ProductRepository;
@@ -78,5 +79,11 @@ public class ProductService {
 
     public void deleteById(String id) {
         productDAO.delete(findById(UUID.fromString(id)));
+    }
+
+    public void updateOrder(UUID uuid, Order order) {
+        CartProduct product= findById(uuid);
+        product.setOrder(order);
+        productDAO.save(product);
     }
 }

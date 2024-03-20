@@ -8,6 +8,7 @@ import { CartProduct } from '../module/cart-product';
 })
 export class CartService {
   apiUrl = environment.apiURL;
+  products: CartProduct[] = [];
 
   constructor(private http: HttpClient) {}
   addArticleToCart(data: {
@@ -19,6 +20,9 @@ export class CartService {
   }) {
     return this.http.post<CartProduct>(`${this.apiUrl}/products`, data);
   }
+  getProducts(): CartProduct[] {
+    return this.products;
+  }
   getProductsByUser() {
     return this.http.get<CartProduct[]>(`${this.apiUrl}/products/cart`);
   }
@@ -27,7 +31,11 @@ export class CartService {
   }
   verifyExistence(titleManga: string, chapterNumber: string) {
     return this.http.get<CartProduct[]>(
-      `${this.apiUrl}/products/verify-existence?titleManga=${titleManga}&chapterNumber=${chapterNumber}`
+      `${
+        this.apiUrl
+      }/products/verify-existence?titleManga=${titleManga}&chapterNumber=${
+        chapterNumber === undefined ? 'Unique Chapter' : chapterNumber
+      }`
     );
   }
 }

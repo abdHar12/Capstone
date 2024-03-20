@@ -29,12 +29,10 @@ public class CartProduct {
     @JsonIgnore
     @JoinColumn(name = "user_id")
     User user;
-    public CartProduct(String titleManga, String chapterTitle, String chapterNumber, double price, String imgManga, User user) {
-        this.titleManga = titleManga;
-        this.chapterTitle = chapterTitle;
-        this.chapterNumber = chapterNumber;
-        this.price = price;
-        this.imgManga=imgManga;
-        this.user=user;
-    }
+    
+    @ManyToOne()
+    @JsonIgnore
+    @JoinColumn(name = "order_id")
+    Order order;
+
 }
