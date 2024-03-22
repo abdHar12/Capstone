@@ -37,8 +37,8 @@ public class CartProductController {
     }
 
     @GetMapping("/cart")
-    public List<ProductDTOResponse> getProductsByUser(@AuthenticationPrincipal User user){
-        return productService.getProductByUser(user);
+    public List<ProductDTOResponse> getProductByUserAndOrder(@AuthenticationPrincipal User user){
+        return productService.getProductByUserAndOrder(user, null);
     }
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable String id){
@@ -47,9 +47,9 @@ public class CartProductController {
 
     @GetMapping("verify-existence")
     @ResponseBody
-    public List<ProductDTOResponse> findByTitleMangaAndChapterNumber(@RequestParam String titleManga, @RequestParam String chapterNumber)
+    public List<ProductDTOResponse> findByTitleMangaAndChapterNumber(@RequestParam String titleManga, @RequestParam String chapterNumber, @AuthenticationPrincipal User user)
     {
         System.out.println(titleManga+chapterNumber);
-        return productService.findByTitleMangaAndChapterNumber(titleManga,chapterNumber);
+        return productService.findByTitleMangaAndChapterNumber(titleManga,chapterNumber, user);
     }
 }

@@ -12,7 +12,7 @@ public class MangadexController {
     @Autowired
     MangadexService mangadexService;
 
-    @GetMapping("/")
+    @GetMapping("")
     private JsonObject getMangasFromApi(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "10") int size)
     {

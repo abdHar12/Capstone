@@ -1,6 +1,7 @@
 import {
   AfterViewChecked,
   Component,
+  DoCheck,
   HostListener,
   Input,
   OnInit,
@@ -14,32 +15,37 @@ import {
 } from '@angular/router';
 import { ngbPositioning } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { AuthService } from 'src/app/auth/auth.service';
+import { CartProduct } from 'src/app/module/cart-product';
+import { CartService } from 'src/app/service/cart.service';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss'],
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, DoCheck {
   currentRoute!: string;
-  constructor(private router: Router, private authSrv: AuthService) {
+  prevRoute!: string;
+  products: CartProduct[] = [];
+  constructor(
+    private router: Router,
+    private authSrv: AuthService,
+    private cartSrv: CartService
+  ) {}
+  ngDoCheck(): void {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
-        // Show progress spinner or progress bar
+        this.prevRoute = this.currentRoute;
         console.log('Route change detected');
+        this.currentRoute = event.url;
       }
 
       if (event instanceof NavigationEnd) {
-        // Hide progress spinner or progress bar
-        this.currentRoute = event.url;
         console.log(this.currentRoute);
         console.log(event);
       }
 
       if (event instanceof NavigationError) {
-        // Hide progress spinner or progress bar
-
-        // Present error to user
         console.log(event.error);
       }
     });
@@ -49,9 +55,18 @@ export class NavComponent implements OnInit {
 
   logOut() {
     this.authSrv.logout();
+    let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
+    cartDiv.style.display = 'none';
   }
-
+  getProducts() {
+    this.cartSrv.getProductsInCart().subscribe((el) => {
+      this.products = el;
+      this.cartSrv.products = el;
+      el.forEach((e) => console.log(e));
+    });
+  }
   styleOfButton(target: EventTarget | null): void {
+    this.getProducts();
     if ((target as HTMLButtonElement)!.style.backgroundColor === 'white') {
       (target as HTMLButtonElement)!.style.backgroundColor = 'black';
       (target as HTMLButtonElement)!.style.color = 'white';

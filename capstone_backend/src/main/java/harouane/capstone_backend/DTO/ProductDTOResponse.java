@@ -11,6 +11,7 @@ public class ProductDTOResponse {
         String chapterTitle;
         String chapterNumber;
         String price;
+        String orderId;
         String imgManga;
         String userId;
 }

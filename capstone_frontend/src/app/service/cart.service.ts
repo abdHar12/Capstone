@@ -23,7 +23,7 @@ export class CartService {
   getProducts(): CartProduct[] {
     return this.products;
   }
-  getProductsByUser() {
+  getProductsInCart() {
     return this.http.get<CartProduct[]>(`${this.apiUrl}/products/cart`);
   }
   deleteFromCart(id: string) {

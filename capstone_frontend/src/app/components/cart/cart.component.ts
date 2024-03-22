@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartProduct } from 'src/app/module/cart-product';
 import { CartService } from 'src/app/service/cart.service';
@@ -10,19 +10,9 @@ import { NavComponent } from '../nav/nav.component';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  products: CartProduct[] = [];
+  @Input() products: CartProduct[] = [];
   constructor(private cartSrv: CartService, private router: Router) {}
-  ngOnInit(): void {
-    this.getProducts();
-  }
-
-  getProducts() {
-    this.cartSrv.getProductsByUser().subscribe((el) => {
-      this.products = el;
-      this.cartSrv.products = el;
-      el.forEach((e) => console.log(e));
-    });
-  }
+  ngOnInit(): void {}
 
   goToTheOrder() {
     this.router.navigateByUrl('/creation-order');
@@ -43,6 +33,7 @@ export class CartComponent implements OnInit {
     this.cartSrv.deleteFromCart(id).subscribe(() => {
       this.products.forEach((el, index) => {
         if (el.UUID === id) this.products.splice(index, 1);
+        window.location.reload();
       });
     });
   }

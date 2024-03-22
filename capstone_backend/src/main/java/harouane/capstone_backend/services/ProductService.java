@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -32,10 +33,11 @@ public class ProductService {
         return productDAO.findById(id).orElseThrow(()-> new NotFoundException(id));
     }
 
-    public List<ProductDTOResponse> findByTitleMangaAndChapterNumber(String mangaTitle, String chapterNumber){
+    public List<ProductDTOResponse> findByTitleMangaAndChapterNumber(String mangaTitle, String chapterNumber, User user){
         List<ProductDTOResponse> responseList=new ArrayList<>();
         productDAO.findByTitleMangaAndChapterNumber(mangaTitle, chapterNumber).forEach(el->{
-            responseList.add(createProductDTO(el));
+            ProductDTOResponse dto=createProductDTO(el);
+            if(Objects.equals(user.getId().toString(), dto.getUserId())) responseList.add(createProductDTO(el));
         });
         return responseList;
     }
@@ -44,6 +46,7 @@ public class ProductService {
         Pageable pageable = PageRequest.of(pageN, pageS, Sort.by(OrderBy));*/
         List<ProductDTOResponse> responseList=new ArrayList<>();
         productDAO.findAll().forEach(el->{
+
             responseList.add(createProductDTO(el));
         });
         return responseList;
@@ -51,7 +54,7 @@ public class ProductService {
 
     public ProductDTOResponse addElement(ProductDTO productDTO, User user) {
         CartProduct cartProduct =new CartProduct();
-        if(findByTitleMangaAndChapterNumber(productDTO.titleManga(), productDTO.chapterNumber()).isEmpty()) {
+        if(findByTitleMangaAndChapterNumber(productDTO.titleManga(), productDTO.chapterNumber(), user).isEmpty()) {
             cartProduct.setImgManga(productDTO.imgManga());
             cartProduct.setTitleManga(productDTO.titleManga());
             cartProduct.setChapterTitle(productDTO.chapterTitle());
@@ -63,10 +66,9 @@ public class ProductService {
         } else return null;
     }
 
-    public List<ProductDTOResponse> getProductByUser(User user) {
+    public List<ProductDTOResponse> getProductByUserAndOrder(User user, Order order) {
         List<ProductDTOResponse> products=new ArrayList<>();
-        productDAO.findByUser(user).forEach(el->{
-            System.out.println(el);
+        productDAO.findByUserAndOrder(user, order).forEach(el->{
             products.add(createProductDTO(el));
         });
         System.out.println(products);
@@ -74,7 +76,7 @@ public class ProductService {
     }
 
     public ProductDTOResponse createProductDTO(CartProduct cartProduct){
-            return new ProductDTOResponse(cartProduct.getId().toString(), cartProduct.getTitleManga(), cartProduct.getChapterTitle(), cartProduct.getChapterNumber(), Double.toString(cartProduct.getPrice()), cartProduct.getImgManga(), cartProduct.getUser().getId().toString());
+            return new ProductDTOResponse(cartProduct.getId().toString(), cartProduct.getTitleManga(), cartProduct.getChapterTitle(), cartProduct.getChapterNumber(), Double.toString(cartProduct.getPrice()), cartProduct.getOrder()==null?"null":cartProduct.getOrder().getId().toString() ,cartProduct.getImgManga(), cartProduct.getUser().getId().toString());
     }
 
     public void deleteById(String id) {

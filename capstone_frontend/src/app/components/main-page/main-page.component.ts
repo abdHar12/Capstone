@@ -35,6 +35,9 @@ export class MainPageComponent implements OnInit {
   divOfImg!: HTMLDivElement;
   img!: HTMLImageElement;
   allSettingsAreDone!: boolean;
+  forEachSlide!: number;
+  currentSwipe!: number;
+  prevSwipe!: number;
 
   constructor(private router: Router, private mangaSrv: MangaService) {}
 
@@ -104,5 +107,59 @@ export class MainPageComponent implements OnInit {
 
   changePage(id: string) {
     this.router.navigate([`/details/${id}`]);
+  }
+  @HostListener('window:resize')
+  setForEachSlide() {
+    if (window.innerWidth < 768) {
+      this.forEachSlide = 2;
+    } else if (window.innerWidth >= 768 && window.innerWidth < 992) {
+      this.forEachSlide = 3;
+    } else if (window.innerWidth >= 992 && window.innerWidth < 1200) {
+      this.forEachSlide = 4;
+    } else if (window.innerWidth >= 1200) {
+      this.forEachSlide = 6;
+    }
+  }
+  sideScroll(
+    element: Element,
+    direction: string,
+    speed: number,
+    distance: number,
+    step: number
+  ) {
+    let scrollAmount = 0;
+    let prevBtn: HTMLButtonElement;
+    let nextBtn: HTMLButtonElement;
+    let slideTimer = setInterval(() => {
+      if (direction === 'left') {
+        element.scrollLeft -= step;
+        prevBtn = document.querySelector('#prev-scroll')!;
+        nextBtn = document.querySelector('#next-scroll')!;
+        nextBtn.style.visibility = 'visible';
+        if (0 === element.scrollLeft) prevBtn.style.visibility = 'hidden';
+      } else {
+        element.scrollLeft += step;
+        console.log(element.scrollLeft);
+        console.log(this.prevSwipe);
+        prevBtn = document.querySelector('#prev-scroll')!;
+        nextBtn = document.querySelector('#next-scroll')!;
+        prevBtn.style.visibility = 'visible';
+        if (this.prevSwipe === element.scrollLeft)
+          nextBtn.style.visibility = 'hidden';
+      }
+      this.prevSwipe = element.scrollLeft;
+      scrollAmount += step;
+      if (scrollAmount >= distance) {
+        window.clearInterval(slideTimer);
+      }
+    }, speed);
+  }
+  scrollLeft() {
+    let swiper = document.querySelector('.swiper-container')!;
+    this.sideScroll(swiper, 'left', 25, 200, 10);
+  }
+  scrollRight() {
+    let swiper = document.querySelector('.swiper-container')!;
+    this.sideScroll(swiper, 'right', 25, 200, 10);
   }
 }

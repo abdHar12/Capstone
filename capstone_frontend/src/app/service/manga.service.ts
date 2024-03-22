@@ -33,7 +33,7 @@ export class MangaService {
   }
 
   getAllMangas() {
-    return this.httpClient.get<MangaData>(this.url + '/manga/');
+    return this.httpClient.get<MangaData>(this.url + '/manga');
   }
 
   getChaptersByMangaId(id: string) {

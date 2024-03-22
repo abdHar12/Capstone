@@ -54,6 +54,7 @@ export class AuthService {
   }) {
     return this.http.post(`${this.apiURL}/register`, data).pipe(
       tap(() => {
+        alert('Registrazione effettuata');
         this.router.navigate(['/login-page']), catchError(this.errors);
       })
     );

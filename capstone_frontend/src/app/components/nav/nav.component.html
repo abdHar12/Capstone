@@ -74,7 +74,7 @@
     </ng-container>
   </div>
   <div id="cart-div" class="base-border" style="display: none">
-    <app-cart class="w-100 h-100"></app-cart>
+    <app-cart [products]="products" class="w-100 h-100"></app-cart>
     <div id="close-cart" class="pt-3 pe-3">
       <button (click)="dnoneCart()" class="border-0 bg-white text-black fs-3">
         <i class="bi bi-x-lg"></i>
