@@ -19,6 +19,7 @@ import { MangaAllInfoComponent } from './components/manga-all-info/manga-all-inf
 import { ChapterComponent } from './components/chapter/chapter.component';
 import { CartComponent } from './components/cart/cart.component';
 import { OrderPageComponent } from './components/order-page/order-page.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },
@@ -50,6 +51,7 @@ const routes: Routes = [
     ChapterComponent,
     CartComponent,
     OrderPageComponent,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
