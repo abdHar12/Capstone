@@ -8,8 +8,9 @@
   }
 }
 .card-body {
-  border-right: 6px solid black;
-  border-left: 6px solid black;
+  border-right: 6px solid white;
+  border-left: 6px solid white;
+  border-top: 2px solid white;
   .card-title {
     overflow: hidden;
     white-space: nowrap;
@@ -37,6 +38,8 @@
       margin-bottom: 8px;
     }
   }
+}
+.not-last-chapter {
   .card {
     display: flex;
     border-bottom: 0;
@@ -44,14 +47,14 @@
       width: 100%;
       height: 60%;
       padding-inline: auto;
-      #i {
+      .i {
         width: auto;
         max-width: 100%;
         margin-inline: auto;
       }
     }
     .card-body {
-      border-top: 2px solid black;
+      border-top: 2px solid white;
       height: 10%;
       .card-title {
         overflow: hidden;
@@ -59,27 +62,18 @@
         text-overflow: ellipsis;
       }
       a {
-        border: 4px solid black;
+        border: 4px solid white;
       }
     }
   }
 }
+.bought-chapter {
+  pointer-events: none;
+  background-color: #ccc;
+  color: #666;
+}
 
-.not-last-chapter {
-  display: flex;
-  border-bottom: 0;
-  .card {
-    height: 100%;
-    .card-body {
-      a {
-        border-top: 4px solid black;
-      }
-    }
-  }
-
-  .bought-chapter {
-    pointer-events: none;
-    background-color: #ccc;
-    color: #666;
-  }
+.buy-btn-not-last-chapter:hover {
+  background-color: #ccc;
+  color: black;
 }

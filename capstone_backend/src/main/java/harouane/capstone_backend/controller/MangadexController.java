@@ -14,7 +14,8 @@ public class MangadexController {
 
     @GetMapping("")
     private JsonObject getMangasFromApi(@RequestParam(defaultValue = "0") int page,
-                                        @RequestParam(defaultValue = "10") int size)
+                                        @RequestParam(defaultValue = "10") int size
+                                        )
     {
         return mangadexService.getMangasFromApi(page, size);
     }

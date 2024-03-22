@@ -21,6 +21,8 @@ export class MangaService {
   url = environment.apiURL;
   allMangas!: Manga[];
   language: String = 'en';
+  lastChapterId!: string;
+  priceLastChapter!: number;
 
   constructor(private httpClient: HttpClient) {}
 

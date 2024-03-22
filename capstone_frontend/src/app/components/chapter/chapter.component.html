@@ -1,13 +1,14 @@
 <ng-container *ngIf="!lastChapter; else isLastChapter">
-  <div class="not-last-chapter card">
+  <div
+    class="not-last-chapter card base-border border-white bg-black text-white"
+  >
     <div class="d-flex">
       <img
-        id="i"
         [src]="urlImg"
-        class="card-img-top w-50 img-borders rounded-0 mx-auto"
+        class="i card-img-top w-50 img-borders rounded-0 mx-auto"
       />
     </div>
-    <div class="card-body p-0 d-flex justify-content-between flex-column">
+    <div class="card-body p-1 d-flex justify-content-between flex-column">
       <div class="p-1" style="height: 100px">
         <ng-container
           *ngIf="
@@ -40,7 +41,7 @@
         </div>
         <a
           [ngClass]="{ 'bought-chapter': alreadyBought }"
-          class="btn w-100 border-4 border-black border-start-0 border-end-0 rounded-0"
+          class="buy-btn-not-last-chapter btn w-100 border-4 border-black border-start-0 border-end-0 rounded-0 border-white text-white"
           (click)="addToCart()"
           >Buy it</a
         >
@@ -57,8 +58,10 @@
       <div class="div-with-avg-color d-flex">
         <img id="i" [src]="urlImg" class="card-img-top img-borders rounded-0" />
       </div>
-      <div class="card-body p-0 flex-column justify-content-between d-flex">
-        <div class="px-1">
+      <div
+        class="card-body p-0 flex-column justify-content-between d-flex border-end-0 border-start-0"
+      >
+        <div>
           <ng-container
             *ngIf="chapter.attributes.title !== undefined; else noTitle"
           >
@@ -82,11 +85,19 @@
             <p class="card-text">Unique Chapter</p>
           </ng-template>
         </div>
-
-        <a
-          class="btn w-100 p-0 border-black border-start-0 border-end-0 rounded-0"
-          >Buy it</a
-        >
+        <div>
+          <div class="d-flex">
+            <span class="ms-auto">Price: {{ price }}€</span>
+          </div>
+          <button
+            [ngClass]="{ 'bought-chapter': alreadyBought }"
+            (click)="addToCart()"
+            class="btn w-100 p-0 border-black border-start-0 border-end-0 rounded-0"
+            style="border-top: 4px solid black; border-bottom: 4px solid black"
+          >
+            Buy it
+          </button>
+        </div>
       </div>
     </div>
   </div>

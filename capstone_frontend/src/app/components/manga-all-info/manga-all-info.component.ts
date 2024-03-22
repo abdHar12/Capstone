@@ -36,29 +36,14 @@ export class MangaAllInfoComponent implements OnInit, DoCheck {
   allSettingsAreDone!: boolean;
   lastChapterId!: string;
   forEachSlide!: number;
-  dividedChapter!: any[][];
-  mySwiper!: Swiper;
   currentSwipe!: number;
   prevSwipe!: number;
-
-  swiper: Swiper = new Swiper('.swiper', {
-    speed: 400,
-    spaceBetween: 100,
-    direction: 'horizontal',
-    allowSlideNext: true,
-    allowSlidePrev: false,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-  });
 
   constructor(public mangaSrv: MangaService) {}
 
   ngDoCheck(): void {}
 
   ngOnInit(): void {
-    this.swiper.autoplay;
     this.allSettingsAreDone = true;
     this.doAllSettings();
     setTimeout(() => {
@@ -78,9 +63,7 @@ export class MangaAllInfoComponent implements OnInit, DoCheck {
       this.setAuthor(this.manga);
       this.setMangaAllThemes(this.manga);
       this.setMangaAllGenres(this.manga);
-      this.setChapters().finally(() => {
-        this.divideChapters();
-      });
+      this.setChapters();
       console.log('ultimo cap ' + this.manga.attributes.latestUploadedChapter);
     });
   }
@@ -96,22 +79,6 @@ export class MangaAllInfoComponent implements OnInit, DoCheck {
     } else if (window.innerWidth >= 1200) {
       this.forEachSlide = 6;
     }
-  }
-
-  divideChapters() {
-    const size = 2;
-    const arr = this.mangaChapters;
-    const chunked = this.chunk(arr, size);
-    console.log(this.mangaChapters);
-  }
-
-  chunk(array: any, chunkSize: any) {
-    const chunks = Array.from({
-      length: Math.ceil(array.length / chunkSize),
-    }).map(() => array.splice(0, chunkSize));
-    console.log(typeof array);
-    console.log(chunks);
-    return chunks;
   }
 
   async setChapters() {
@@ -156,6 +123,7 @@ export class MangaAllInfoComponent implements OnInit, DoCheck {
   async setDesc(manga: Manga) {
     this.mangaDesc = await this.mangaSrv.getDescription(manga);
   }
+
   sideScroll(
     element: Element,
     direction: string,

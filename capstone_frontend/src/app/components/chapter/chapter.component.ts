@@ -33,9 +33,21 @@ export class ChapterComponent implements OnInit {
             this.price = Number.parseFloat(elements[0].price);
             this.alreadyBought = true;
           } else {
-            this.price = parseFloat(
+            let prevPrice = parseFloat(
               ((Math.random() * (2000.0 - 700.0) + 700.0) / 100).toFixed(2)
             );
+            if (this.lastChapter) {
+              this.mangaSrv.priceLastChapter = prevPrice;
+              this.price = prevPrice;
+              this.mangaSrv.lastChapterId = this.chapterId;
+            } else {
+              if (this.chapterId === this.mangaSrv.lastChapterId) {
+                this.price = this.mangaSrv.priceLastChapter;
+              } else {
+                console.log(this.chapterId + ' ' + this.mangaSrv.lastChapterId);
+                this.price = prevPrice;
+              }
+            }
           }
         });
     });

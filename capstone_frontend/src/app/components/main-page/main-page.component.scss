@@ -68,3 +68,26 @@
   position: absolute;
   top: 0;
 }
+.swiper-container::-webkit-scrollbar {
+  display: none;
+}
+.swiper-container {
+  height: auto;
+  overflow: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  .swiper-slide {
+    @media screen and (max-width: 767px) {
+      width: 50%;
+    }
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+      width: 33%;
+    }
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
+      width: 25%;
+    }
+    @media screen and (min-width: 1200px) {
+      width: 20%;
+    }
+  }
+}
