@@ -24,7 +24,9 @@ import { MangaService } from 'src/app/service/manga.service';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent implements OnInit {
-  allmangas!: Manga[];
+  allmangas1!: Manga[];
+  allmangas2!: Manga[];
+  allmangas3!: Manga[];
   randomManga!: Manga;
   urlRandomManga!: any;
   randomMangaTitle!: any;
@@ -44,9 +46,17 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     this.allSettingsAreDone = false;
     console.log(this.allSettingsAreDone);
-    this.mangaSrv.getAllMangas().subscribe((allmangas) => {
+    this.mangaSrv.getAllMangas('0').subscribe((allmangas) => {
       this.mangaSrv.setAllMangas(allmangas.data);
-      this.allmangas = allmangas.data;
+      this.allmangas1 = allmangas.data;
+    });
+    this.mangaSrv.getAllMangas('3').subscribe((allmangas) => {
+      this.mangaSrv.setAllMangas(allmangas.data);
+      this.allmangas2 = allmangas.data;
+    });
+    this.mangaSrv.getAllMangas('8').subscribe((allmangas) => {
+      this.mangaSrv.setAllMangas(allmangas.data);
+      this.allmangas3 = allmangas.data;
     });
     console.log(
       document.querySelector('.div-with-avg-color') as HTMLDivElement
@@ -108,24 +118,14 @@ export class MainPageComponent implements OnInit {
   changePage(id: string) {
     this.router.navigate([`/details/${id}`]);
   }
-  @HostListener('window:resize')
-  setForEachSlide() {
-    if (window.innerWidth < 768) {
-      this.forEachSlide = 2;
-    } else if (window.innerWidth >= 768 && window.innerWidth < 992) {
-      this.forEachSlide = 3;
-    } else if (window.innerWidth >= 992 && window.innerWidth < 1200) {
-      this.forEachSlide = 4;
-    } else if (window.innerWidth >= 1200) {
-      this.forEachSlide = 6;
-    }
-  }
+
   sideScroll(
     element: Element,
     direction: string,
     speed: number,
     distance: number,
-    step: number
+    step: number,
+    numberOfScroll: string
   ) {
     let scrollAmount = 0;
     let prevBtn: HTMLButtonElement;
@@ -133,16 +133,16 @@ export class MainPageComponent implements OnInit {
     let slideTimer = setInterval(() => {
       if (direction === 'left') {
         element.scrollLeft -= step;
-        prevBtn = document.querySelector('#prev-scroll')!;
-        nextBtn = document.querySelector('#next-scroll')!;
+        prevBtn = document.querySelector('#prev-scroll' + numberOfScroll)!;
+        nextBtn = document.querySelector('#next-scroll' + numberOfScroll)!;
         nextBtn.style.visibility = 'visible';
         if (0 === element.scrollLeft) prevBtn.style.visibility = 'hidden';
       } else {
         element.scrollLeft += step;
         console.log(element.scrollLeft);
         console.log(this.prevSwipe);
-        prevBtn = document.querySelector('#prev-scroll')!;
-        nextBtn = document.querySelector('#next-scroll')!;
+        prevBtn = document.querySelector('#prev-scroll' + numberOfScroll)!;
+        nextBtn = document.querySelector('#next-scroll' + numberOfScroll)!;
         prevBtn.style.visibility = 'visible';
         if (this.prevSwipe === element.scrollLeft)
           nextBtn.style.visibility = 'hidden';
@@ -154,12 +154,12 @@ export class MainPageComponent implements OnInit {
       }
     }, speed);
   }
-  scrollLeft() {
-    let swiper = document.querySelector('.swiper-container')!;
-    this.sideScroll(swiper, 'left', 25, 200, 10);
+  scrollLeft(numberOfScroll: string) {
+    let swiper = document.querySelector('.swiper-container' + numberOfScroll)!;
+    this.sideScroll(swiper, 'left', 25, 200, 10, numberOfScroll);
   }
-  scrollRight() {
-    let swiper = document.querySelector('.swiper-container')!;
-    this.sideScroll(swiper, 'right', 25, 200, 10);
+  scrollRight(numberOfScroll: string) {
+    let swiper = document.querySelector('.swiper-container' + numberOfScroll)!;
+    this.sideScroll(swiper, 'right', 25, 200, 10, numberOfScroll);
   }
 }

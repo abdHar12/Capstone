@@ -55,6 +55,9 @@
     }
   }
 }
+i {
+  pointer-events: none;
+}
 .notReady {
   display: none;
   margin: 0;
@@ -68,10 +71,57 @@
   position: absolute;
   top: 0;
 }
-.swiper-container::-webkit-scrollbar {
+
+.swiper-container1 {
+  height: auto;
+  overflow: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  .swiper-slide {
+    @media screen and (max-width: 767px) {
+      width: 50%;
+    }
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+      width: 33%;
+    }
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
+      width: 25%;
+    }
+    @media screen and (min-width: 1200px) {
+      width: 20%;
+    }
+  }
+}
+.swiper-container1::-webkit-scrollbar {
   display: none;
 }
-.swiper-container {
+.swiper-container2::-webkit-scrollbar {
+  display: none;
+}
+.swiper-container2 {
+  height: auto;
+  overflow: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  .swiper-slide {
+    @media screen and (max-width: 767px) {
+      width: 50%;
+    }
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+      width: 33%;
+    }
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
+      width: 25%;
+    }
+    @media screen and (min-width: 1200px) {
+      width: 20%;
+    }
+  }
+}
+.swiper-container3::-webkit-scrollbar {
+  display: none;
+}
+.swiper-container3 {
   height: auto;
   overflow: auto;
   overflow-x: scroll;

@@ -34,8 +34,8 @@ export class MangaService {
     return this.httpClient.get<CoverArtData>(`${this.url}/cover/${idCover}`);
   }
 
-  getAllMangas() {
-    return this.httpClient.get<MangaData>(this.url + '/manga');
+  getAllMangas(page: string) {
+    return this.httpClient.get<MangaData>(this.url + '/manga?page=' + page);
   }
 
   getChaptersByMangaId(id: string) {
