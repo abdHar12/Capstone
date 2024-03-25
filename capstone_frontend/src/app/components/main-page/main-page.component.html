@@ -46,7 +46,10 @@
           <div class="swiper-container1">
             <div class="swiper-wrapper w-100">
               <div class="swiper-slide me-2" *ngFor="let manga of allmangas1">
-                <app-single-manga [manga]="manga"></app-single-manga>
+                <app-single-manga
+                  [searchManga]="false"
+                  [manga]="manga"
+                ></app-single-manga>
               </div>
             </div>
           </div>
@@ -90,7 +93,10 @@
           <div class="swiper-container2">
             <div class="swiper-wrapper w-100">
               <div class="swiper-slide me-2" *ngFor="let manga of allmangas2">
-                <app-single-manga [manga]="manga"></app-single-manga>
+                <app-single-manga
+                  [searchManga]="false"
+                  [manga]="manga"
+                ></app-single-manga>
               </div>
             </div>
           </div>
@@ -134,7 +140,10 @@
           <div class="swiper-container3">
             <div class="swiper-wrapper w-100">
               <div class="swiper-slide me-2" *ngFor="let manga of allmangas3">
-                <app-single-manga [manga]="manga"></app-single-manga>
+                <app-single-manga
+                  [searchManga]="false"
+                  [manga]="manga"
+                ></app-single-manga>
               </div>
             </div>
           </div>

@@ -1,0 +1,51 @@
+<div
+  class="position-sticky top-0 bg-white z-3 pb-2 border-top-0 border-end-0 border-start-0"
+>
+  <form class="mx-auto" #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)">
+    <div class="input-group flex-grow-1 mt-3 mb-3 flex-column">
+      <label for="inputTitle">SEARCH BY TITLE</label>
+
+      <div class="d-flex">
+        <input
+          type="text"
+          name="title"
+          id="inputTitle"
+          required
+          ngModel
+          type="text"
+          class="w-100 flex-grow-1 form-control rounded-0 base-border"
+        />
+        <button
+          class="border-0 ms-2 bg-white"
+          type="submit"
+          [disabled]="!searchForm.valid"
+        >
+          <i
+            class="fs-4 text-black bi bi-search"
+            style="pointer-events: none"
+          ></i>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div id="close-search" class="pt-3 pe-3">
+    <button
+      (click)="dnoneDiv('search-div', 'search-button')"
+      class="border-0 bg-white text-black fs-3"
+    >
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+</div>
+<div class="w-75 mx-auto position-relative h-100">
+  <div id="results-div ">
+    <ng-container *ngFor="let manga of allMangasFound; let i = index">
+      <div [ngClass]="{ 'mt-2': i === 0 }">
+        <app-single-manga
+          [searchManga]="true"
+          [manga]="manga"
+        ></app-single-manga>
+      </div>
+    </ng-container>
+  </div>
+</div>

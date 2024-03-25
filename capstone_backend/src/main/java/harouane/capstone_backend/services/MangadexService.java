@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 public class MangadexService {
     @Autowired
     private Environment env;
+
+    String filter="&contentRating[]=safe&contentRating[]=suggestive";
     String getBaseUrl(){
         return env.getProperty("mangadex.baseUrl");
     }
@@ -26,16 +28,20 @@ public class MangadexService {
         return JSONObject;
     }
     public JsonObject getMangasFromApi(int page, int size){
-        String url= getBaseUrl() + "manga?limit="+size+"&offset="+(((page+1)*size-size));
+        String url= getBaseUrl() + "manga?limit="+size+"&offset="+(((page+1)*size-size))+filter;
         return stringToJson(url);
     }
 
     public JsonObject getRandomManga() {
-        String url= getBaseUrl() + "manga/random";
+        String url= getBaseUrl() + "manga/random?contentRating[]=safe&contentRating[]=suggestive";
         return stringToJson(url);
     }
     public JsonObject getChaptersByMangaId(String id) {
         String url= getBaseUrl() + "manga/"+id+"/aggregate";
+        return stringToJson(url);
+    }
+    public JsonObject getChaptersByTitle(String title) {
+        String url= getBaseUrl() + "manga?limit=20&title="+title+filter;
         return stringToJson(url);
     }
 

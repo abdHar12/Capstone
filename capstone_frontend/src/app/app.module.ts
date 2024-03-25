@@ -14,12 +14,12 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { CommonModule } from '@angular/common';
 import { SingleMangaComponent } from './components/single-manga/single-manga.component';
-import { FastAverageColor } from 'fast-average-color';
 import { MangaAllInfoComponent } from './components/manga-all-info/manga-all-info.component';
 import { ChapterComponent } from './components/chapter/chapter.component';
 import { CartComponent } from './components/cart/cart.component';
 import { OrderPageComponent } from './components/order-page/order-page.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },
@@ -52,6 +52,7 @@ const routes: Routes = [
     CartComponent,
     OrderPageComponent,
     FooterComponent,
+    SearchComponent,
   ],
   imports: [
     CommonModule,

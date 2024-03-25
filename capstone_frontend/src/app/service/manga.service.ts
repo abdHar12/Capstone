@@ -21,9 +21,9 @@ export class MangaService {
   url = environment.apiURL;
   allMangas!: Manga[];
   language: String = 'en';
-  lastChapterId!: string;
+  lastChapterNumber!: string;
   priceLastChapter!: number;
-
+  countOfChapter = 0;
   constructor(private httpClient: HttpClient) {}
 
   getSingleAuthor(idAuthor: string) {
@@ -36,6 +36,12 @@ export class MangaService {
 
   getAllMangas(page: string) {
     return this.httpClient.get<MangaData>(this.url + '/manga?page=' + page);
+  }
+
+  getAllMangasByTitle(title: string) {
+    return this.httpClient.get<MangaData>(
+      this.url + '/manga/search?title=' + title
+    );
   }
 
   getChaptersByMangaId(id: string) {

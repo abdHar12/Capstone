@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { count } from 'rxjs';
 import { ChapterFromChapterEndPoint } from 'src/app/module/chapter-from-chapter-end-point';
 import { Manga } from 'src/app/module/manga';
 import { CartService } from 'src/app/service/cart.service';
@@ -24,7 +25,6 @@ export class ChapterComponent implements OnInit {
     this.mangaSrv.getChapterById(this.chapterId).subscribe((chapterData) => {
       this.chapter = chapterData.data;
       console.log(this.chapter);
-      this.mangaSrv.getAvgColor(this.urlImg);
       this.cartSrv
         .verifyExistence(this.mangaTitle, this.chapter.attributes.chapter)
         .subscribe((elements) => {
@@ -36,15 +36,33 @@ export class ChapterComponent implements OnInit {
             let prevPrice = parseFloat(
               ((Math.random() * (2000.0 - 700.0) + 700.0) / 100).toFixed(2)
             );
+            console.log(this.lastChapter);
             if (this.lastChapter) {
-              this.mangaSrv.priceLastChapter = prevPrice;
-              this.price = prevPrice;
-              this.mangaSrv.lastChapterId = this.chapterId;
+              if (this.mangaSrv.countOfChapter === 0) {
+                this.price = prevPrice;
+                this.mangaSrv.priceLastChapter = this.price;
+                this.mangaSrv.lastChapterNumber =
+                  this.chapter.attributes.chapter;
+                console.log(this.mangaSrv.priceLastChapter);
+              }
+              this.mangaSrv.countOfChapter++;
             } else {
-              if (this.chapterId === this.mangaSrv.lastChapterId) {
+              if (
+                this.chapter.attributes.chapter ===
+                this.mangaSrv.lastChapterNumber
+              ) {
                 this.price = this.mangaSrv.priceLastChapter;
+                console.log(
+                  this.mangaSrv.lastChapterNumber +
+                    ' ' +
+                    this.chapter.attributes.chapter
+                );
               } else {
-                console.log(this.chapterId + ' ' + this.mangaSrv.lastChapterId);
+                console.log(
+                  this.mangaSrv.lastChapterNumber +
+                    ' ' +
+                    this.chapter.attributes.chapter
+                );
                 this.price = prevPrice;
               }
             }

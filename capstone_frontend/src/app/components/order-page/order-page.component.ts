@@ -1,5 +1,6 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CartProduct } from 'src/app/module/cart-product';
 import { Order, PaymentType } from 'src/app/module/order';
 import { CartService } from 'src/app/service/cart.service';
@@ -23,7 +24,8 @@ export class OrderPageComponent implements OnInit, DoCheck {
   constructor(
     private fb: FormBuilder,
     private cartSrv: CartService,
-    private orderSrv: OrderService
+    private orderSrv: OrderService,
+    private router: Router
   ) {}
   ngDoCheck(): void {
     this.products = this.cartSrv.getProducts();
@@ -54,7 +56,9 @@ export class OrderPageComponent implements OnInit, DoCheck {
       products: this.products,
     };
     console.log(data);
-    this.orderSrv.sendOrder(data).subscribe((el: any) => console.log(el));
+    this.orderSrv
+      .sendOrder(data)
+      .subscribe((el: any) => this.router.navigate(['/manga-all-info']));
   }
 
   changeTypeOfPayment(e: any) {

@@ -27,6 +27,7 @@ export class NavComponent implements OnInit, DoCheck {
   currentRoute!: string;
   prevRoute!: string;
   products: CartProduct[] = [];
+
   constructor(
     private router: Router,
     private authSrv: AuthService,
@@ -57,6 +58,8 @@ export class NavComponent implements OnInit, DoCheck {
     this.authSrv.logout();
     let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
     cartDiv.style.display = 'none';
+    let searchDiv = document.querySelector('#search-div') as HTMLDivElement;
+    searchDiv.style.display = 'none';
   }
   getProducts() {
     this.cartSrv.getProductsInCart().subscribe((el) => {
@@ -65,8 +68,9 @@ export class NavComponent implements OnInit, DoCheck {
       el.forEach((e) => console.log(e));
     });
   }
-  styleOfButton(target: EventTarget | null): void {
+  styleOfButton(target: EventTarget | null, divId: string): void {
     this.getProducts();
+
     if ((target as HTMLButtonElement)!.style.backgroundColor === 'white') {
       (target as HTMLButtonElement)!.style.backgroundColor = 'black';
       (target as HTMLButtonElement)!.style.color = 'white';
@@ -75,23 +79,36 @@ export class NavComponent implements OnInit, DoCheck {
       (target as HTMLButtonElement)!.style.backgroundColor = 'white';
       (target as HTMLButtonElement)!.style.color = 'black';
     }
-    let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
-    cartDiv.style.display === 'none'
-      ? (cartDiv.style.display = 'block')
-      : (cartDiv.style.display = 'none');
+    let div = document.getElementById(divId) as HTMLDivElement;
+    if (div.id === 'cart-div') {
+      document.getElementById('search-div')!.style.display = 'none';
+      document.getElementById('search-button')!.style.backgroundColor = 'white';
+      document.getElementById('search-button')!.style.color = 'black';
+    } else {
+      document.getElementById('cart-div')!.style.display = 'none';
+      document.getElementById('cart-button')!.style.backgroundColor = 'white';
+      document.getElementById('cart-button')!.style.color = 'black';
+    }
+    div.style.display === 'none'
+      ? (div.style.display = 'block')
+      : (div.style.display = 'none');
     let nav = document.querySelector('#nav-bar') as HTMLElement;
-    cartDiv.style.setProperty('top', nav.offsetHeight.toString());
-    cartDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
+    div.style.setProperty('top', nav.offsetHeight.toString());
+    div.style.setProperty('width', nav.offsetWidth.toString() + 'px');
   }
+
   @HostListener('window:resize', ['$event'])
   onResize(even: any) {
     let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
+    let searchDiv = document.querySelector('#search-div') as HTMLDivElement;
     let nav = document.querySelector('#nav-bar') as HTMLElement;
     cartDiv.style.setProperty('top', nav.offsetHeight.toString());
     cartDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
+    searchDiv.style.setProperty('top', nav.offsetHeight.toString());
+    searchDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
   }
-  dnoneCart() {
-    let target = document.getElementById('cart-button') as HTMLButtonElement;
+  dnoneDiv(divId: string, buttonId: string) {
+    let target = document.getElementById(buttonId) as HTMLButtonElement;
     if ((target as HTMLButtonElement)!.style.backgroundColor === 'white') {
       (target as HTMLButtonElement)!.style.backgroundColor = 'black';
       (target as HTMLButtonElement)!.style.color = 'white';
@@ -100,7 +117,7 @@ export class NavComponent implements OnInit, DoCheck {
       (target as HTMLButtonElement)!.style.backgroundColor = 'white';
       (target as HTMLButtonElement)!.style.color = 'black';
     }
-    let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
-    cartDiv.style.display = 'none';
+    let div = document.getElementById(divId) as HTMLDivElement;
+    div.style.display = 'none';
   }
 }

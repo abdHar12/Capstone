@@ -28,4 +28,10 @@ public class MangadexController {
     public JsonObject getChaptersByMangaId(@PathVariable String id){
         return mangadexService.getChaptersByMangaId(id);
     }
+    @GetMapping("/search")
+    public JsonObject getChaptersByTitle(@RequestParam String title){
+        return mangadexService.getChaptersByTitle(title);
+    }
+
+
 }

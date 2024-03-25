@@ -20,8 +20,18 @@
           <div class="d-flex me-2">
             <div>
               <button
+                id="search-button"
+                (click)="styleOfButton($event.target, 'search-div')"
+                class=".buttons btn base-border rounded-0 position-relative"
+                style="background-color: white; padding-inline: 32px"
+              >
+                <i class="bi bi-search" style="pointer-events: none"></i>
+              </button>
+            </div>
+            <div>
+              <button
                 id="cart-button"
-                (click)="styleOfButton($event.target)"
+                (click)="styleOfButton($event.target, 'cart-div')"
                 class=".buttons btn base-border rounded-0 position-relative"
                 style="background-color: white; padding-inline: 32px"
               >
@@ -31,14 +41,14 @@
                 ></i>
               </button>
             </div>
-          </div>
-          <div>
-            <button
-              class=".buttons btn base-border rounded-0"
-              (click)="logOut()"
-            >
-              Logout
-            </button>
+            <div>
+              <button
+                class=".buttons btn base-border rounded-0"
+                (click)="logOut()"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </ng-container>
@@ -47,8 +57,18 @@
           <div class="d-flex me-2">
             <div>
               <button
+                id="search-button"
+                (click)="styleOfButton($event.target, 'search-div')"
+                class=".buttons btn base-border rounded-0 position-relative"
+                style="background-color: white; padding-inline: 32px"
+              >
+                <i class="bi bi-search" style="pointer-events: none"></i>
+              </button>
+            </div>
+            <div>
+              <button
                 id="cart-button"
-                (click)="styleOfButton($event.target)"
+                (click)="styleOfButton($event.target, 'cart-div')"
                 class=".buttons btn base-border rounded-0 position-relative"
                 style="background-color: white; padding-inline: 32px"
               >
@@ -58,8 +78,6 @@
                 ></i>
               </button>
             </div>
-          </div>
-          <div class="d-flex">
             <div>
               <button
                 class=".buttons btn base-border rounded-0"
@@ -76,9 +94,15 @@
   <div id="cart-div" class="base-border" style="display: none">
     <app-cart [products]="products" class="w-100 h-100"></app-cart>
     <div id="close-cart" class="pt-3 pe-3">
-      <button (click)="dnoneCart()" class="border-0 bg-white text-black fs-3">
+      <button
+        (click)="dnoneDiv('cart-div', 'cart-button')"
+        class="border-0 bg-white text-black fs-3"
+      >
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
+  </div>
+  <div id="search-div" class="base-border" style="display: none">
+    <app-search></app-search>
   </div>
 </nav>

@@ -15,6 +15,7 @@ export class SingleMangaComponent implements OnInit {
   desc!: any;
   title!: any;
   urlImg!: any;
+  @Input() searchManga!: boolean;
 
   constructor(private mangaSrv: MangaService) {}
 
@@ -23,10 +24,23 @@ export class SingleMangaComponent implements OnInit {
     this.setDesc(this.manga);
     this.setTitle(this.manga);
   }
-
+  dnoneDiv(divId: string, buttonId: string) {
+    let target = document.getElementById(buttonId) as HTMLButtonElement;
+    if ((target as HTMLButtonElement)!.style.backgroundColor === 'white') {
+      (target as HTMLButtonElement)!.style.backgroundColor = 'black';
+      (target as HTMLButtonElement)!.style.color = 'white';
+      (target as HTMLButtonElement)!.style.border = '2px solid black';
+    } else {
+      (target as HTMLButtonElement)!.style.backgroundColor = 'white';
+      (target as HTMLButtonElement)!.style.color = 'black';
+    }
+    let div = document.getElementById(divId) as HTMLDivElement;
+    div.style.display = 'none';
+  }
   deleteRandomMangaFromLS() {
     localStorage.setItem('RandomManga', JSON.stringify(this.manga));
     console.log('questo' + this.manga);
+    window.location.reload();
   }
 
   async setTitle(manga: Manga) {
