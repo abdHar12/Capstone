@@ -28,6 +28,8 @@ public class ConfigSecurity {
 
     @Autowired
     JWTFilter jwtFilter;
+    @Autowired
+    TokenFilter tokenFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -40,6 +42,7 @@ public class ConfigSecurity {
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.cors(Customizer.withDefaults());
 
+        httpSecurity.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/**").permitAll());

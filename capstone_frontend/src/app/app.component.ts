@@ -14,5 +14,13 @@ export class AppComponent {
     private authSrv: AuthService,
     private mangaSrv: MangaService,
     private cartSrv: CartService
-  ) {}
+  ) {
+    if (localStorage.getItem('user')) {
+      this.authSrv.restore();
+      this.cartSrv.products = [];
+      cartSrv
+        .getProductsInCart()
+        .subscribe((el) => (this.cartSrv.products = el));
+    }
+  }
 }

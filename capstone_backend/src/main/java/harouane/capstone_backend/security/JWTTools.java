@@ -2,7 +2,7 @@ package harouane.capstone_backend.security;
 
 
 import harouane.capstone_backend.entities.User;
-import harouane.capstone_backend.exceptions.UnauthorizedExeption;
+import harouane.capstone_backend.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +30,7 @@ public class JWTTools {
         try {
             Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8))).build().parse(token);
         }catch (Exception ex){
-            throw new UnauthorizedExeption("Problemi con il token. Effettua il login!");
+            throw new UnauthorizedException("Problemi con il token. Effettua il login!");
         }
     }
 

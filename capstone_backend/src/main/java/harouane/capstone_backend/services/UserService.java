@@ -4,6 +4,7 @@ package harouane.capstone_backend.services;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import harouane.capstone_backend.DTO.RoleDTO;
+import harouane.capstone_backend.DTO.UserDTO;
 import harouane.capstone_backend.entities.CartProduct;
 import harouane.capstone_backend.entities.Role;
 import harouane.capstone_backend.entities.User;
@@ -85,5 +86,10 @@ public class UserService {
         }else {
             throw new Exception("Invalid role");
         }
+    }
+
+    public UserDTO currentUser(User currentUser) {
+        UserDTO userDTO=new UserDTO(currentUser.getId().toString(), currentUser.getUsername(), currentUser.getEmail(), currentUser.getPassword(), currentUser.getName(), currentUser.getSurname(), currentUser.getAvatar());
+        return userDTO;
     }
 }

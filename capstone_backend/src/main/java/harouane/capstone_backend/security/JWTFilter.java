@@ -2,7 +2,7 @@ package harouane.capstone_backend.security;
 
 
 import harouane.capstone_backend.entities.User;
-import harouane.capstone_backend.exceptions.UnauthorizedExeption;
+import harouane.capstone_backend.exceptions.UnauthorizedException;
 import harouane.capstone_backend.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,7 +32,7 @@ public class JWTFilter  extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer")) throw new UnauthorizedExeption("Include the token in the header or check for the presence of the Bearer");
+        if (authHeader == null || !authHeader.startsWith("Bearer")) throw new UnauthorizedException("Include the token in the header or check for the presence of the Bearer");
         String accessToken = authHeader.substring(7);
         jwtTools.verifyToken(accessToken);
         String id = jwtTools.takeIdByToken(accessToken);

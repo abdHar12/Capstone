@@ -28,6 +28,17 @@ nav {
     overflow-y: scroll;
     max-height: 80vh;
   }
+  #user-div {
+    position: absolute;
+    right: 0;
+    border-top: 10px solid black;
+    display: flex;
+    color: black;
+    background-color: white;
+    z-index: 99;
+    overflow-y: scroll;
+    max-height: 80vh;
+  }
   #close-cart {
     position: absolute;
     top: 0;

@@ -45,8 +45,7 @@ public class CartProductController {
         productService.deleteById(id);
     }
 
-    @GetMapping("verify-existence")
-    @ResponseBody
+    @GetMapping("/verify-existence")
     public List<ProductDTOResponse> findByTitleMangaAndChapterNumber(@RequestParam String titleManga, @RequestParam String chapterNumber, @AuthenticationPrincipal User user)
     {
         System.out.println(titleManga+chapterNumber);

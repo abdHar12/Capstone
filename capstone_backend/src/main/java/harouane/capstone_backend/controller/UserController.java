@@ -2,6 +2,7 @@ package harouane.capstone_backend.controller;
 
 
 import harouane.capstone_backend.DTO.RoleDTO;
+import harouane.capstone_backend.DTO.UserDTO;
 import harouane.capstone_backend.entities.User;
 import harouane.capstone_backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public User getProfile(@AuthenticationPrincipal User currentUser) {
-        return currentUser;
+    public UserDTO getProfile(@AuthenticationPrincipal User currentUser) {
+        return this.userService.currentUser(currentUser);
     }
 
     @GetMapping("/{id}")
