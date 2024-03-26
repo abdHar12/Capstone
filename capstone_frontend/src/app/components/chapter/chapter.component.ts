@@ -25,75 +25,81 @@ export class ChapterComponent implements OnInit {
     this.mangaSrv.getChapterById(this.chapterId).subscribe((chapterData) => {
       this.chapter = chapterData.data;
       console.log(this.chapter);
-      this.cartSrv
-        .verifyExistence(this.mangaTitle, this.chapter.attributes.chapter)
-        .subscribe((elements) => {
-          console.log(elements);
-          if (elements.length !== 0) {
-            this.price = Number.parseFloat(elements[0].price);
-            this.alreadyBought = true;
-          } else {
-            let prevPrice = parseFloat(
-              ((Math.random() * (2000.0 - 700.0) + 700.0) / 100).toFixed(2)
-            );
-            console.log(this.lastChapter);
-            if (this.lastChapter) {
-              if (this.mangaSrv.countOfChapter === 0) {
-                this.price = prevPrice;
-                this.mangaSrv.priceLastChapter = this.price;
-                this.mangaSrv.lastChapterNumber =
-                  this.chapter.attributes.chapter;
-                console.log(this.mangaSrv.priceLastChapter);
-              }
-              this.mangaSrv.countOfChapter++;
+      if (localStorage.getItem('user')) {
+        this.cartSrv
+          .verifyExistence(this.mangaTitle, this.chapter.attributes.chapter)
+          .subscribe((elements) => {
+            console.log(elements);
+            if (elements.length !== 0) {
+              this.price = Number.parseFloat(elements[0].price);
+              this.alreadyBought = true;
             } else {
-              if (
-                this.chapter.attributes.chapter ===
-                this.mangaSrv.lastChapterNumber
-              ) {
-                this.price = this.mangaSrv.priceLastChapter;
-                console.log(
-                  this.mangaSrv.lastChapterNumber +
-                    ' ' +
-                    this.chapter.attributes.chapter
-                );
-              } else {
-                console.log(
-                  this.mangaSrv.lastChapterNumber +
-                    ' ' +
-                    this.chapter.attributes.chapter
-                );
-                this.price = prevPrice;
-              }
+              this.setPrice();
             }
-          }
-        });
+          });
+      } else {
+        this.setPrice();
+      }
     });
     this.setTitle(this.manga);
   }
-
+  setPrice() {
+    let prevPrice = parseFloat(
+      ((Math.random() * (2000.0 - 700.0) + 700.0) / 100).toFixed(2)
+    );
+    console.log(this.lastChapter);
+    if (this.lastChapter) {
+      if (this.mangaSrv.countOfChapter === 0) {
+        this.price = prevPrice;
+        this.mangaSrv.priceLastChapter = this.price;
+        this.mangaSrv.lastChapterNumber = this.chapter.attributes.chapter;
+        console.log(this.mangaSrv.priceLastChapter);
+      }
+      this.mangaSrv.countOfChapter++;
+    } else {
+      if (this.chapter.attributes.chapter === this.mangaSrv.lastChapterNumber) {
+        this.price = this.mangaSrv.priceLastChapter;
+        console.log(
+          this.mangaSrv.lastChapterNumber +
+            ' ' +
+            this.chapter.attributes.chapter
+        );
+      } else {
+        console.log(
+          this.mangaSrv.lastChapterNumber +
+            ' ' +
+            this.chapter.attributes.chapter
+        );
+        this.price = prevPrice;
+      }
+    }
+  }
   addToCart() {
-    let data = null;
-    this.cartSrv
-      .verifyExistence(this.mangaTitle, this.chapter.attributes.chapter)
-      .subscribe((elements) => {
-        if (elements.length === 0) {
-          data = {
-            titleManga: this.mangaTitle,
-            chapterTitle: this.chapter.attributes.title,
-            chapterNumber:
-              this.chapter.attributes.chapter === undefined
-                ? 'Unique Chapter'
-                : this.chapter.attributes.chapter,
-            price: this.price.toString(),
-            imgManga: this.urlImg,
-          };
-          this.cartSrv.addArticleToCart(data).subscribe((el) => {
-            console.log(el);
-            window.location.reload();
-          });
-        }
-      });
+    if (localStorage.getItem('user')) {
+      let data = null;
+      this.cartSrv
+        .verifyExistence(this.mangaTitle, this.chapter.attributes.chapter)
+        .subscribe((elements) => {
+          if (elements.length === 0) {
+            data = {
+              titleManga: this.mangaTitle,
+              chapterTitle: this.chapter.attributes.title,
+              chapterNumber:
+                this.chapter.attributes.chapter === undefined
+                  ? 'Unique Chapter'
+                  : this.chapter.attributes.chapter,
+              price: this.price.toString(),
+              imgManga: this.urlImg,
+            };
+            this.cartSrv.addArticleToCart(data).subscribe((el) => {
+              console.log(el);
+              window.location.reload();
+            });
+          }
+        });
+    } else {
+      alert('You have to login');
+    }
   }
 
   async setTitle(manga: Manga) {

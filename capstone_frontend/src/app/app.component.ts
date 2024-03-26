@@ -14,9 +14,5 @@ export class AppComponent {
     private authSrv: AuthService,
     private mangaSrv: MangaService,
     private cartSrv: CartService
-  ) {
-    this.authSrv.restore();
-    this.cartSrv.products = [];
-    cartSrv.getProductsInCart().subscribe((el) => (this.cartSrv.products = el));
-  }
+  ) {}
 }

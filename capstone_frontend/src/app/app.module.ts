@@ -20,6 +20,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { OrderPageComponent } from './components/order-page/order-page.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchComponent } from './components/search/search.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },
@@ -27,11 +28,10 @@ const routes: Routes = [
     path: 'register-page',
     component: RegisterPageComponent,
   },
-  { path: '', component: MainPageComponent, canActivate: [AuthGuard] },
+  { path: '', component: MainPageComponent },
   {
     path: 'manga-all-info',
     component: MangaAllInfoComponent,
-    canActivate: [AuthGuard],
   },
   {
     path: 'creation-order',
@@ -53,6 +53,7 @@ const routes: Routes = [
     OrderPageComponent,
     FooterComponent,
     SearchComponent,
+    UserInfoComponent,
   ],
   imports: [
     CommonModule,

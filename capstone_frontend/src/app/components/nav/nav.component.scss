@@ -35,10 +35,20 @@ nav {
     z-index: 99;
   }
 }
+
+#user-button {
+  font-size: 1.3rem;
+  padding-top: 2.5px;
+  padding-bottom: 2.5px;
+  i {
+    pointer-events: none;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
-
+.user
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;

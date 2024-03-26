@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CartProduct } from 'src/app/module/cart-product';
 import { CartService } from 'src/app/service/cart.service';
 import { NavComponent } from '../nav/nav.component';
+import { AuthData } from 'src/app/module/authdata';
 
 @Component({
   selector: 'app-cart',
@@ -11,6 +12,7 @@ import { NavComponent } from '../nav/nav.component';
 })
 export class CartComponent implements OnInit {
   @Input() products: CartProduct[] = [];
+  @Input() auth!: string;
   constructor(private cartSrv: CartService, private router: Router) {}
   ngOnInit(): void {}
 

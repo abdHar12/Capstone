@@ -43,10 +43,11 @@
             </div>
             <div>
               <button
+                id="user-button"
                 class=".buttons btn base-border rounded-0"
-                (click)="logOut()"
+                (click)="styleOfButton($event.target, 'user-div')"
               >
-                Logout
+                <i class="bi bi-person-fill"></i>
               </button>
             </div>
           </div>
@@ -80,10 +81,11 @@
             </div>
             <div>
               <button
+                id="user-button"
                 class=".buttons btn base-border rounded-0"
-                (click)="logOut()"
+                (click)="styleOfButton($event.target, 'user-div')"
               >
-                Logout
+                <i class="bi bi-person-fill"></i>
               </button>
             </div>
           </div>
@@ -92,7 +94,11 @@
     </ng-container>
   </div>
   <div id="cart-div" class="base-border" style="display: none">
-    <app-cart [products]="products" class="w-100 h-100"></app-cart>
+    <app-cart
+      [auth]="auth"
+      [products]="products"
+      class="w-100 h-100"
+    ></app-cart>
     <div id="close-cart" class="pt-3 pe-3">
       <button
         (click)="dnoneDiv('cart-div', 'cart-button')"
@@ -104,5 +110,8 @@
   </div>
   <div id="search-div" class="base-border" style="display: none">
     <app-search></app-search>
+  </div>
+  <div id="user-div" class="base-border" style="display: none">
+    <app-user-info></app-user-info>
   </div>
 </nav>

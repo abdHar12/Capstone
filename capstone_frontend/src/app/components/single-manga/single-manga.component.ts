@@ -40,7 +40,6 @@ export class SingleMangaComponent implements OnInit {
   deleteRandomMangaFromLS() {
     localStorage.setItem('RandomManga', JSON.stringify(this.manga));
     console.log('questo' + this.manga);
-    window.location.reload();
   }
 
   async setTitle(manga: Manga) {

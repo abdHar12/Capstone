@@ -27,7 +27,7 @@ export class NavComponent implements OnInit, DoCheck {
   currentRoute!: string;
   prevRoute!: string;
   products: CartProduct[] = [];
-
+  auth!: string;
   constructor(
     private router: Router,
     private authSrv: AuthService,
@@ -51,9 +51,6 @@ export class NavComponent implements OnInit, DoCheck {
       }
     });
   }
-
-  ngOnInit(): void {}
-
   logOut() {
     this.authSrv.logout();
     let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
@@ -61,12 +58,17 @@ export class NavComponent implements OnInit, DoCheck {
     let searchDiv = document.querySelector('#search-div') as HTMLDivElement;
     searchDiv.style.display = 'none';
   }
+  ngOnInit(): void {}
+
   getProducts() {
-    this.cartSrv.getProductsInCart().subscribe((el) => {
-      this.products = el;
-      this.cartSrv.products = el;
-      el.forEach((e) => console.log(e));
-    });
+    this.auth = localStorage.getItem('user')!;
+    if (this.auth) {
+      this.cartSrv.getProductsInCart().subscribe((el) => {
+        this.products = el;
+        this.cartSrv.products = el;
+        el.forEach((e) => console.log(e));
+      });
+    }
   }
   styleOfButton(target: EventTarget | null, divId: string): void {
     this.getProducts();
@@ -84,10 +86,23 @@ export class NavComponent implements OnInit, DoCheck {
       document.getElementById('search-div')!.style.display = 'none';
       document.getElementById('search-button')!.style.backgroundColor = 'white';
       document.getElementById('search-button')!.style.color = 'black';
+      document.getElementById('user-div')!.style.display = 'none';
+      document.getElementById('user-button')!.style.backgroundColor = 'white';
+      document.getElementById('user-button')!.style.color = 'black';
+    } else if (div.id === 'search-div') {
+      document.getElementById('cart-div')!.style.display = 'none';
+      document.getElementById('cart-button')!.style.backgroundColor = 'white';
+      document.getElementById('cart-button')!.style.color = 'black';
+      document.getElementById('user-div')!.style.display = 'none';
+      document.getElementById('user-button')!.style.backgroundColor = 'white';
+      document.getElementById('user-button')!.style.color = 'black';
     } else {
       document.getElementById('cart-div')!.style.display = 'none';
       document.getElementById('cart-button')!.style.backgroundColor = 'white';
       document.getElementById('cart-button')!.style.color = 'black';
+      document.getElementById('search-div')!.style.display = 'none';
+      document.getElementById('search-button')!.style.backgroundColor = 'white';
+      document.getElementById('search-button')!.style.color = 'black';
     }
     div.style.display === 'none'
       ? (div.style.display = 'block')
