@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthData } from '../module/authdata';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
@@ -68,24 +68,27 @@ export class AuthService {
     this.router.navigate(['/login-page']);
   }
 
-  private errors(err: any) {
+  private errors(err: HttpErrorResponse) {
     console.log(err);
-    switch (err.error) {
-      case 'Email already exists':
-        return throwError('Email già registrata');
-        break;
+    alert(err.error.message);
+    return throwError(err.message);
 
-      case 'Email format is invalid':
-        return throwError('Formato mail non valido');
-        break;
+    // switch (err.error) {
+    //   case 'Email already exists':
+    //     return throwError('Email già registrata');
+    //     break;
 
-      case 'Cannot find user':
-        return throwError('Utente inesistente');
-        break;
+    //   case 'Email format is invalid':
+    //     return throwError('Formato mail non valido');
+    //     break;
 
-      default:
-        return throwError('Errore nella chiamata');
-        break;
-    }
+    //   case 'Cannot find user':
+    //     return throwError('Utente inesistente');
+    //     break;
+
+    //   default:
+    //     return throwError('Errore nella chiamata');
+    //     break;
+    // }
   }
 }

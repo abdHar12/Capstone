@@ -65,7 +65,7 @@ public class UserService {
     }
 
     public User findByEmail(String email){
-        return userDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Email "+ email + " non trovata"));
+        return userDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Email "+ email + " not found"));
     }
 
     public User uploadAvatar(User currentUser, MultipartFile image) throws IOException {

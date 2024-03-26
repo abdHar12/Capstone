@@ -23,7 +23,6 @@ export class LoginPageComponent implements OnInit {
     try {
       this.authSrv.login(data).subscribe();
     } catch (error) {
-      alert('login errato');
       console.log(error);
       this.router.navigate(['/login-page']);
     }
