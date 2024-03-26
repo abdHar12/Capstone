@@ -2,6 +2,7 @@ package harouane.capstone_backend.controller;
 
 
 import harouane.capstone_backend.DTO.LoginDTO;
+import harouane.capstone_backend.DTO.UserDTO;
 import harouane.capstone_backend.DTO.UserRegisterDTO;
 import harouane.capstone_backend.DTO.UserLoginDTO;
 import harouane.capstone_backend.entities.User;
@@ -28,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User register(@RequestBody @Validated UserRegisterDTO body, BindingResult validation) {
+    public UserRegisterDTO register(@RequestBody @Validated UserRegisterDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
             throw new BadRequestException(validation.getAllErrors());
         }

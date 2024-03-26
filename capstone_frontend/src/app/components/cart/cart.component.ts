@@ -1,9 +1,18 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  TemplateRef,
+  inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { CartProduct } from 'src/app/module/cart-product';
 import { CartService } from 'src/app/service/cart.service';
 import { NavComponent } from '../nav/nav.component';
 import { AuthData } from 'src/app/module/authdata';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NavService } from 'src/app/service/nav.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,9 +22,21 @@ import { AuthData } from 'src/app/module/authdata';
 export class CartComponent implements OnInit {
   @Input() products: CartProduct[] = [];
   @Input() auth!: string;
-  constructor(private cartSrv: CartService, private router: Router) {}
-  ngOnInit(): void {}
+  viewModal!: boolean;
+  private modalService = inject(NgbModal);
 
+  constructor(
+    private cartSrv: CartService,
+    private router: Router,
+    private navSrv: NavService
+  ) {}
+  ngOnInit(): void {
+    this.viewModal = false;
+  }
+  openVerticallyCentered(content: TemplateRef<any>) {
+    this.modalService.open(content, { centered: true });
+    this.navSrv.dnoneDiv('cart-div', 'cart-button');
+  }
   goToTheOrder() {
     this.router.navigateByUrl('/creation-order');
     let target = document.getElementById('cart-button') as HTMLButtonElement;

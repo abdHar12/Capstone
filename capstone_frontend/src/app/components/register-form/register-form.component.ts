@@ -4,11 +4,11 @@ import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
-  selector: 'app-register-page',
-  templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.scss'],
+  selector: 'app-register-form',
+  templateUrl: './register-form.component.html',
+  styleUrls: ['./register-form.component.scss'],
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterFormComponent implements OnInit {
   subscribeForm!: FormGroup;
   confirmPass$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   constructor(private fb: FormBuilder, private authSrv: AuthService) {}

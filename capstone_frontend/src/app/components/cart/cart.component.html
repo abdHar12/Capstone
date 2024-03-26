@@ -56,5 +56,20 @@
 </ng-container>
 <ng-template #makeTheAuth>
   <p>You have to login to see the cart!</p>
-  <a href="/login-page">Login</a>
+  <button (click)="openVerticallyCentered(content)">Login</button>
+</ng-template>
+<ng-template #content let-modal>
+  <div class="modal-header bg-black text-white">
+    <h4 class="modal-title">Login:</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white border-2 border-wi"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-login-form></app-login-form>
+  </div>
+  <div class="modal-footer bg-black"></div>
 </ng-template>

@@ -17,6 +17,7 @@ import { ngbPositioning } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CartProduct } from 'src/app/module/cart-product';
 import { CartService } from 'src/app/service/cart.service';
+import { NavService } from 'src/app/service/nav.service';
 
 @Component({
   selector: 'app-nav',
@@ -31,7 +32,8 @@ export class NavComponent implements OnInit, DoCheck {
   constructor(
     private router: Router,
     private authSrv: AuthService,
-    private cartSrv: CartService
+    private cartSrv: CartService,
+    private navSrv: NavService
   ) {}
   ngDoCheck(): void {
     this.router.events.subscribe((event: Event) => {
@@ -51,14 +53,11 @@ export class NavComponent implements OnInit, DoCheck {
       }
     });
   }
-  logOut() {
-    this.authSrv.logout();
-    let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
-    cartDiv.style.display = 'none';
-    let searchDiv = document.querySelector('#search-div') as HTMLDivElement;
-    searchDiv.style.display = 'none';
-  }
   ngOnInit(): void {}
+
+  dnoneDiv(divId: string, buttonId: string) {
+    this.navSrv.dnoneDiv(divId, buttonId);
+  }
 
   getProducts() {
     this.auth = localStorage.getItem('user')!;
@@ -121,18 +120,5 @@ export class NavComponent implements OnInit, DoCheck {
     cartDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
     searchDiv.style.setProperty('top', nav.offsetHeight.toString());
     searchDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
-  }
-  dnoneDiv(divId: string, buttonId: string) {
-    let target = document.getElementById(buttonId) as HTMLButtonElement;
-    if ((target as HTMLButtonElement)!.style.backgroundColor === 'white') {
-      (target as HTMLButtonElement)!.style.backgroundColor = 'black';
-      (target as HTMLButtonElement)!.style.color = 'white';
-      (target as HTMLButtonElement)!.style.border = '2px solid black';
-    } else {
-      (target as HTMLButtonElement)!.style.backgroundColor = 'white';
-      (target as HTMLButtonElement)!.style.color = 'black';
-    }
-    let div = document.getElementById(divId) as HTMLDivElement;
-    div.style.display = 'none';
   }
 }

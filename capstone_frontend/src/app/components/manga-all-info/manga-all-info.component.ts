@@ -17,7 +17,6 @@ import { ChapterFromChapterEndPoint } from 'src/app/module/chapter-from-chapter-
 import { Manga } from 'src/app/module/manga';
 import { Volume } from 'src/app/module/volume';
 import { MangaService } from 'src/app/service/manga.service';
-import Swiper from 'swiper';
 
 @Component({
   selector: 'app-manga-all-info',

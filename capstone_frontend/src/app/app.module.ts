@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Routes, RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoginPageComponent } from './components/login-page/login-page.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
 import { NavComponent } from './components/nav/nav.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token.interceptor';
-import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { CommonModule } from '@angular/common';
 import { SingleMangaComponent } from './components/single-manga/single-manga.component';
 import { MangaAllInfoComponent } from './components/manga-all-info/manga-all-info.component';
@@ -21,13 +19,11 @@ import { OrderPageComponent } from './components/order-page/order-page.component
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { RouterModule, Routes } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
 
 const routes: Routes = [
-  { path: 'login-page', component: LoginPageComponent },
-  {
-    path: 'register-page',
-    component: RegisterPageComponent,
-  },
   { path: '', component: MainPageComponent },
   {
     path: 'manga-all-info',
@@ -42,10 +38,10 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
+    LoginFormComponent,
     NavComponent,
     MainPageComponent,
-    RegisterPageComponent,
+    RegisterFormComponent,
     SingleMangaComponent,
     MangaAllInfoComponent,
     ChapterComponent,
@@ -64,6 +60,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
+    BrowserAnimationsModule,
   ],
   providers: [
     {

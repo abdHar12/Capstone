@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-user-info',
@@ -7,14 +8,10 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./user-info.component.scss'],
 })
 export class UserInfoComponent implements OnInit {
-  constructor(private authSrv: AuthService) {}
+  constructor(private authSrv: AuthService, private userSrv: UserService) {}
 
   ngOnInit(): void {}
   logOut() {
-    this.authSrv.logout();
-    let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
-    cartDiv.style.display = 'none';
-    let searchDiv = document.querySelector('#search-div') as HTMLDivElement;
-    searchDiv.style.display = 'none';
+    this.userSrv.logOut();
   }
 }

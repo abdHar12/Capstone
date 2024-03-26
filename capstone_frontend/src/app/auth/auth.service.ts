@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthData } from '../module/authdata';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
 import { BehaviorSubject, throwError, tap, catchError } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +55,7 @@ export class AuthService {
     return this.http.post(`${this.apiURL}/register`, data).pipe(
       tap(() => {
         alert('Registrazione effettuata');
-        this.router.navigate(['/login-page']), catchError(this.errors);
+        window.location.reload();
       })
     );
   }

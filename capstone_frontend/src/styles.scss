@@ -1,12 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
-
 /* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
 @import "swiper/scss";
-
-body {
-  font-family: "Kode Mono", monospace;
-}
 
 .buttons {
   font-size: 12px;
@@ -20,4 +13,15 @@ body {
 .img-borders {
   border-left: 6px solid black;
   border-right: 6px solid black;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
 }

@@ -1,0 +1,70 @@
+<!-- <div
+  class="center vh-100 d-flex flex-column align-items-center justify-content-center"
+></div> -->
+
+<div class="p-3 base-border">
+  <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+    <div class="mb-3">
+      <label for="inputEmail" class="form-label">Email address</label>
+      <input
+        type="email"
+        name="email"
+        class="form-control"
+        id="inputEmail"
+        email
+        required
+        ngModel
+      />
+    </div>
+    <div class="mb-3">
+      <label for="inputPassword" class="form-label">Password</label>
+      <input
+        type="password"
+        name="password"
+        class="form-control"
+        id="inputPassword"
+        required
+        ngModel
+      />
+    </div>
+    <div class="mt-4 d-flex justify-content-center">
+      <button
+        type="submit"
+        class="btn base-border rounded-0 text-black bg-white"
+        [disabled]="!loginForm.valid"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+  <button
+    type="submit"
+    class="btn base-border rounded-0 text-black bg-white"
+    (click)="openScrollableContent(longContent)"
+  >
+    Register
+  </button>
+</div>
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-register-form></app-register-form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.close('Close click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>
