@@ -16,8 +16,10 @@ import {
 import { ngbPositioning } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CartProduct } from 'src/app/module/cart-product';
+import { User } from 'src/app/module/user';
 import { CartService } from 'src/app/service/cart.service';
 import { NavService } from 'src/app/service/nav.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-nav',
@@ -29,11 +31,13 @@ export class NavComponent implements OnInit, DoCheck {
   prevRoute!: string;
   products: CartProduct[] = [];
   auth!: string;
+  currentUser!: User;
   constructor(
     private router: Router,
     private authSrv: AuthService,
     private cartSrv: CartService,
-    private navSrv: NavService
+    private navSrv: NavService,
+    private usrSrv: UserService
   ) {}
   ngDoCheck(): void {
     this.router.events.subscribe((event: Event) => {
@@ -58,7 +62,12 @@ export class NavComponent implements OnInit, DoCheck {
   dnoneDiv(divId: string, buttonId: string) {
     this.navSrv.dnoneDiv(divId, buttonId);
   }
-
+  getCurrentUser() {
+    this.usrSrv.getCurrentUser().subscribe((el) => {
+      this.currentUser = el;
+      console.log(this.currentUser);
+    });
+  }
   getProducts() {
     this.auth = localStorage.getItem('user')!;
     if (this.auth) {
@@ -70,8 +79,6 @@ export class NavComponent implements OnInit, DoCheck {
     }
   }
   styleOfButton(target: EventTarget | null, divId: string): void {
-    this.getProducts();
-
     if ((target as HTMLButtonElement)!.style.backgroundColor === 'white') {
       (target as HTMLButtonElement)!.style.backgroundColor = 'black';
       (target as HTMLButtonElement)!.style.color = 'white';
@@ -115,10 +122,13 @@ export class NavComponent implements OnInit, DoCheck {
   onResize(even: any) {
     let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
     let searchDiv = document.querySelector('#search-div') as HTMLDivElement;
+    let userDiv = document.querySelector('#user-div') as HTMLDivElement;
     let nav = document.querySelector('#nav-bar') as HTMLElement;
     cartDiv.style.setProperty('top', nav.offsetHeight.toString());
     cartDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
     searchDiv.style.setProperty('top', nav.offsetHeight.toString());
     searchDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
+    userDiv.style.setProperty('top', nav.offsetHeight.toString());
+    userDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
   }
 }

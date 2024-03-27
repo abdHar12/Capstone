@@ -66,7 +66,7 @@ public class UserController {
     }
 
     @PatchMapping("/profile/upload")
-    public User uploadAvatar(@AuthenticationPrincipal User currentUser, @RequestParam("avatar") MultipartFile image) throws IOException {
+    public UserDTO uploadAvatar(@AuthenticationPrincipal User currentUser, @RequestParam("avatar") MultipartFile image) throws IOException {
         return this.userService.uploadAvatar(currentUser, image);
     }
 

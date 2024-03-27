@@ -22,8 +22,8 @@
               <button
                 id="search-button"
                 (click)="styleOfButton($event.target, 'search-div')"
-                class=".buttons btn border-0 rounded-0 position-relative"
-                style="background-color: white; padding-inline: 32px"
+                class="buttons btn border-0 rounded-0"
+                style="background-color: white"
               >
                 <i class="bi bi-search" style="pointer-events: none"></i>
               </button>
@@ -31,9 +31,11 @@
             <div>
               <button
                 id="cart-button"
-                (click)="styleOfButton($event.target, 'cart-div')"
-                class=".buttons btn border-0 rounded-0 position-relative"
-                style="background-color: white; padding-inline: 32px"
+                (click)="
+                  styleOfButton($event.target, 'cart-div'); getProducts()
+                "
+                class="buttons btn border-0 rounded-0"
+                style="background-color: white"
               >
                 <i
                   class="fas fa-shopping-cart"
@@ -44,8 +46,11 @@
             <div>
               <button
                 id="user-button"
-                class=".buttons btn border-0 rounded-0"
-                (click)="styleOfButton($event.target, 'user-div')"
+                class="buttons btn border-0 rounded-0"
+                style="background-color: white"
+                (click)="
+                  styleOfButton($event.target, 'user-div'); getCurrentUser()
+                "
               >
                 <i class="bi bi-person-fill"></i>
               </button>
@@ -60,8 +65,8 @@
               <button
                 id="search-button"
                 (click)="styleOfButton($event.target, 'search-div')"
-                class=".buttons btn border-0 rounded-0 position-relative"
-                style="background-color: white; padding-inline: 32px"
+                class="buttons btn border-0 rounded-0"
+                style="background-color: white"
               >
                 <i class="bi bi-search" style="pointer-events: none"></i>
               </button>
@@ -69,9 +74,11 @@
             <div>
               <button
                 id="cart-button"
-                (click)="styleOfButton($event.target, 'cart-div')"
-                class=".buttons btn border-0 rounded-0 position-relative"
-                style="background-color: white; padding-inline: 32px"
+                (click)="
+                  styleOfButton($event.target, 'cart-div'); getProducts()
+                "
+                class="buttons btn border-0 rounded-0"
+                style="background-color: white"
               >
                 <i
                   class="fas fa-shopping-cart"
@@ -82,8 +89,11 @@
             <div>
               <button
                 id="user-button"
-                class=".buttons btn border-0 rounded-0"
-                (click)="styleOfButton($event.target, 'user-div')"
+                class="buttons btn border-0 rounded-0"
+                style="background-color: white"
+                (click)="
+                  styleOfButton($event.target, 'user-div'); getCurrentUser()
+                "
               >
                 <i class="bi bi-person-fill"></i>
               </button>
@@ -112,6 +122,6 @@
     <app-search></app-search>
   </div>
   <div id="user-div" class="base-border" style="display: none">
-    <app-user-info></app-user-info>
+    <app-user-info [user]="currentUser"></app-user-info>
   </div>
 </nav>

@@ -55,7 +55,9 @@ nav {
     pointer-events: none;
   }
 }
-
+.buttons {
+  padding-inline: 32px;
+}
 ::-webkit-scrollbar {
   width: 10px;
 }

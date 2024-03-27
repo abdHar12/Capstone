@@ -68,11 +68,11 @@ public class UserService {
         return userDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Email "+ email + " not found"));
     }
 
-    public User uploadAvatar(User currentUser, MultipartFile image) throws IOException {
+    public UserDTO uploadAvatar(User currentUser, MultipartFile image) throws IOException {
         String avatarUrl = (String) cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap()).get("url");
         currentUser.setAvatar(avatarUrl);
         this.userDAO.save(currentUser);
-        return currentUser;
+        return new UserDTO(currentUser.getId().toString(), currentUser.getUsername(), currentUser.getEmail(), currentUser.getPassword(), currentUser.getName(), currentUser.getSurname(), currentUser.getAvatar());
     }
 
     public User updateRole(UUID id, RoleDTO role) throws Exception {
@@ -89,7 +89,6 @@ public class UserService {
     }
 
     public UserDTO currentUser(User currentUser) {
-        UserDTO userDTO=new UserDTO(currentUser.getId().toString(), currentUser.getUsername(), currentUser.getEmail(), currentUser.getPassword(), currentUser.getName(), currentUser.getSurname(), currentUser.getAvatar());
-        return userDTO;
+        return new UserDTO(currentUser.getId().toString(), currentUser.getUsername(), currentUser.getEmail(), currentUser.getPassword(), currentUser.getName(), currentUser.getSurname(), currentUser.getAvatar());
     }
 }

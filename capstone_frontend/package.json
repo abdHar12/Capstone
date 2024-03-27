@@ -26,6 +26,7 @@
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.2.0",
     "fast-average-color": "^9.4.0",
+    "ng-angular-popup": "^0.5.2",
     "pixi.js": "^8.0.0",
     "rxjs": "~7.5.0",
     "swiper": "^11.0.7",

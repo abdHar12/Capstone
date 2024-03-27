@@ -42,4 +42,8 @@ export class LoginFormComponent implements OnInit {
   openScrollableContent(longContent: TemplateRef<any>) {
     this.modalService.open(longContent, { scrollable: true });
   }
+
+  ngOnDestroy(): void {
+    this.modalService.dismissAll();
+  }
 }

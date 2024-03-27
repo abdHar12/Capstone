@@ -1,1 +1,53 @@
-<p>user-info-div works!</p>
+<ng-container *ngIf="user"
+  ><div class="w-50 mx-auto">
+    <div id="avatar-div" class="mx-auto pb-5 position-relative">
+      <div class="position-relative">
+        <img class="w-100" [src]="user.avatar" />
+        <button
+          class="bg-black text-white border-0 position-absolute bottom-0 end-0"
+          (click)="openVerticallyCentered(content)"
+        >
+          <i class="bi bi-pencil"></i>
+        </button>
+      </div>
+      <ng-template #content let-modal>
+        <div class="modal-header bg-black text-white">
+          <h4 class="modal-title e">Modify your profile image</h4>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          ></button>
+        </div>
+        <div class="modal-body bg-black">
+          <label for="file-upload" class="custom-file-upload text-white">
+            <ng-container *ngIf="!file; else fileName">
+              <i class="bi bi-cloud-arrow-up"></i> Custom Upload
+            </ng-container>
+            <ng-template #fileName>
+              {{ file.name }}
+            </ng-template>
+          </label>
+          <input
+            type="file"
+            id="file-upload"
+            class="file-upload"
+            (change)="onFileSelected($event)"
+            #fileUpload
+          />
+        </div>
+        <div class="modal-footer bg-black">
+          <button
+            class="base-border border-white btn bg-white text-black buttons"
+            [disabled]="!file"
+            (click)="confirmTheImg()"
+          >
+            Confirm the Img!
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div></ng-container
+>
+<ng-toast></ng-toast>

@@ -12,10 +12,14 @@ export class UserService {
 
   constructor(private http: HttpClient, private authSrv: AuthService) {}
   getCurrentUser() {
-    this.http.get(`${this.apiUrl}/profile`);
+    return this.http.get<User>(`${this.apiUrl}/users/profile`);
   }
 
   logOut() {
     this.authSrv.logout();
+  }
+
+  uploadAvatar(data: FormData) {
+    return this.http.patch<User>(`${this.apiUrl}/users/profile/upload`, data);
   }
 }
