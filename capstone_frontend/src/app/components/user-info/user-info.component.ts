@@ -1,10 +1,18 @@
 import { Target } from '@angular/compiler';
-import { Component, Input, OnInit, TemplateRef, inject } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  inject,
+} from '@angular/core';
+import { NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject, debounceTime } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/module/user';
+import { NavService } from 'src/app/service/nav.service';
 import { UserService } from 'src/app/service/user.service';
-import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-user-info',
@@ -12,6 +20,9 @@ import { NgToastService } from 'ng-angular-popup';
   styleUrls: ['./user-info.component.scss'],
 })
 export class UserInfoComponent implements OnInit {
+  private _success = new Subject<string>();
+  @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert!: NgbAlert;
+  successMessage = '';
   @Input() user!: User;
   private modalService = inject(NgbModal);
 
@@ -21,9 +32,17 @@ export class UserInfoComponent implements OnInit {
   constructor(
     private authSrv: AuthService,
     private userSrv: UserService,
-    private toast: NgToastService
+    private navSrv: NavService
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._success.subscribe((message) => (this.successMessage = message));
+    this._success.pipe(debounceTime(3000)).subscribe(() => {
+      if (this.selfClosingAlert) {
+        this.selfClosingAlert.close();
+        this.modalService.dismissAll();
+      }
+    });
+  }
 
   openVerticallyCentered(content: TemplateRef<any>) {
     this.modalService.open(content, { centered: true });
@@ -48,10 +67,13 @@ export class UserInfoComponent implements OnInit {
       formData.append('avatar', this.file);
 
       this.userSrv.uploadAvatar(formData).subscribe(() => {
-        this.toast.success({ detail: 'Success' });
+        this._success.next(`Image updated successfully`);
+        this.modalService.dismissAll();
+        this.navSrv.dnoneDiv('user-div', 'user-button');
       });
     }
   }
+
   logOut() {
     this.userSrv.logOut();
   }

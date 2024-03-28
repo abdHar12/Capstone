@@ -13,7 +13,11 @@
     }
   }
 }
-
+.alerts {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+}
 input[type="file"] {
   display: none;
 }

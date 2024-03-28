@@ -39,14 +39,13 @@ nav {
     overflow-y: scroll;
     max-height: 80vh;
   }
-  #close-cart {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 99;
-  }
 }
-
+.close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 99;
+}
 #user-button {
   font-size: 1.3rem;
   padding-top: 2.5px;

@@ -54,6 +54,8 @@ export class ChapterComponent implements OnInit {
         this.mangaSrv.priceLastChapter = this.price;
         this.mangaSrv.lastChapterNumber = this.chapter.attributes.chapter;
         console.log(this.mangaSrv.priceLastChapter);
+      } else {
+        this.price = this.mangaSrv.priceLastChapter;
       }
       this.mangaSrv.countOfChapter++;
     } else {

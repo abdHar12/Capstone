@@ -22,7 +22,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
-import { NgToastModule } from 'ng-angular-popup';
+import { ToastrModule } from 'ngx-toastr';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
@@ -62,7 +62,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
-    NgToastModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {

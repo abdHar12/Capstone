@@ -1,15 +1,23 @@
 <!-- <div
   class="center vh-100 d-flex flex-column align-items-center justify-content-center"
 ></div> -->
+<ngb-alert
+  #selfClosingAlertSuccess
+  *ngIf="successMessage"
+  type="success"
+  class="alerts"
+  (closed)="successMessage = ''"
+  >{{ successMessage }}</ngb-alert
+>
 
-<div class="p-3 base-border">
+<div class="p-3 bg-black text-white">
   <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
     <div class="mb-3">
       <label for="inputEmail" class="form-label">Email address</label>
       <input
         type="email"
         name="email"
-        class="form-control"
+        class="form-control bg-black border-2 border-white rounded-0 text-white"
         id="inputEmail"
         email
         required
@@ -21,7 +29,7 @@
       <input
         type="password"
         name="password"
-        class="form-control"
+        class="form-control bg-black border-2 border-white rounded-0 text-white"
         id="inputPassword"
         required
         ngModel
@@ -30,41 +38,33 @@
     <div class="mt-4 d-flex justify-content-center">
       <button
         type="submit"
-        class="btn base-border rounded-0 text-black bg-white"
+        class="btn base-border rounded-0 bg-black text-white border-white"
         [disabled]="!loginForm.valid"
       >
-        Submit
+        Login
       </button>
     </div>
   </form>
   <button
     type="submit"
-    class="btn base-border rounded-0 text-black bg-white"
+    class="btn base-border rounded-0 bg-black text-white border-white"
     (click)="openScrollableContent(longContent)"
   >
     Register
   </button>
 </div>
 <ng-template #longContent let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Modal title</h4>
+  <div class="modal-header bg-black text-white">
+    <h4 class="modal-title">Registration:</h4>
     <button
       type="button"
-      class="btn-close"
+      class="btn-close btn-close-white"
       aria-label="Close"
       (click)="modal.dismiss('Cross click')"
     ></button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body bg-black text-white">
     <app-register-form></app-register-form>
   </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="modal.close('Close click')"
-    >
-      Close
-    </button>
-  </div>
+  <div class="modal-footer bg-black"></div>
 </ng-template>

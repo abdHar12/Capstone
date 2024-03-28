@@ -13,7 +13,7 @@ public class MangadexService {
     @Autowired
     private Environment env;
 
-    String filter="&contentRating[]=safe&contentRating[]=suggestive";
+    String filter="&contentRating[]=safe";
     String getBaseUrl(){
         return env.getProperty("mangadex.baseUrl");
     }
@@ -33,7 +33,7 @@ public class MangadexService {
     }
 
     public JsonObject getRandomManga() {
-        String url= getBaseUrl() + "manga/random?contentRating[]=safe&contentRating[]=suggestive";
+        String url= getBaseUrl() + "manga/random?contentRating[]=safe";
         return stringToJson(url);
     }
     public JsonObject getChaptersByMangaId(String id) {

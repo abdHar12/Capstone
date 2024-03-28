@@ -1,7 +1,14 @@
-import { Component, OnInit, TemplateRef, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject, debounceTime } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { NavService } from 'src/app/service/nav.service';
 
@@ -12,6 +19,10 @@ import { NavService } from 'src/app/service/nav.service';
 })
 export class LoginFormComponent implements OnInit {
   private modalService = inject(NgbModal);
+  private _success = new Subject<string>();
+  @ViewChild('selfClosingAlertSuccess', { static: false })
+  selfClosingAlertSuccess!: NgbAlert;
+  successMessage = '';
 
   constructor(
     private authSrv: AuthService,
@@ -19,7 +30,15 @@ export class LoginFormComponent implements OnInit {
     private navSrv: NavService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._success.subscribe((message) => (this.successMessage = message));
+    this._success.pipe(debounceTime(3000)).subscribe(() => {
+      if (this.selfClosingAlertSuccess) {
+        this.selfClosingAlertSuccess.close();
+        this.modalService.dismissAll();
+      }
+    });
+  }
 
   onLogin(form: NgForm) {
     console.log(form);
@@ -27,16 +46,16 @@ export class LoginFormComponent implements OnInit {
       email: form.value.email,
       password: form.value.password,
     };
+    this.navSrv.dnoneDiv('cart-div', 'cart-button');
+    this.navSrv.dnoneDiv('user-div', 'user-button');
     console.log(data);
     try {
       this.authSrv.login(data).subscribe(() => {
-        window.location.reload();
+        this._success.next('Login succeded');
       });
     } catch (error) {
       console.log(error);
     }
-    this.navSrv.dnoneDiv('cart-div', 'cart-button');
-    this.navSrv.dnoneDiv('user-div', 'user-button');
   }
 
   openScrollableContent(longContent: TemplateRef<any>) {

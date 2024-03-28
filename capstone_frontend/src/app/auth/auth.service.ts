@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject, throwError, tap, catchError } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,11 @@ export class AuthService {
   user$ = this.authSubj.asObservable();
   utente!: AuthData;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   login(data: { email: string; password: string }) {
     return this.http.post<AuthData>(`${this.apiURL}/login`, data).pipe(
@@ -25,7 +30,6 @@ export class AuthService {
         this.utente = loggato;
         localStorage.setItem('user', JSON.stringify(loggato));
         console.log(this.user$);
-        alert('Login effettuato');
         this.router.navigate(['/']);
       }),
       catchError(this.errors)
@@ -56,7 +60,8 @@ export class AuthService {
       tap(() => {
         alert('Registrazione effettuata');
         window.location.reload();
-      })
+      }),
+      catchError(this.errors)
     );
   }
   getAllUsers() {
@@ -67,11 +72,13 @@ export class AuthService {
     localStorage.removeItem('user');
     this.router.navigate(['/login-page']);
   }
-
+  showError(err: string) {
+    this.toastr.error(err);
+  }
   private errors(err: HttpErrorResponse) {
     console.log(err);
-    alert(err.error.message);
-    return throwError(err.message);
+    this.showError(err.error);
+    return throwError(err.error.message);
 
     // switch (err.error) {
     //   case 'Email already exists':

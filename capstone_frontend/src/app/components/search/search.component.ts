@@ -9,11 +9,15 @@ import { MangaService } from 'src/app/service/manga.service';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-  allMangasFound!: Manga[];
+  allMangasFound: Manga[] = [];
+  showResultsVar: boolean = false;
   constructor(private mangaSrv: MangaService) {}
 
   ngOnInit(): void {}
-
+  showResults() {
+    if (this.showResultsVar) this.showResultsVar = false;
+    else this.showResultsVar = true;
+  }
   onSearch(form: NgForm) {
     const title = form.value.title;
     this.mangaSrv

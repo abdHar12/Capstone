@@ -55,8 +55,15 @@
   </div>
 </ng-container>
 <ng-template #makeTheAuth>
-  <p>You have to login to see the cart!</p>
-  <button (click)="openVerticallyCentered(content)">Login</button>
+  <div class="text-center my-5">
+    <h4>You have to login to see the cart!</h4>
+    <button
+      class="btn bg-black border-2 border-white rounded-0 text-white"
+      (click)="openVerticallyCentered(content)"
+    >
+      Login
+    </button>
+  </div>
 </ng-template>
 <ng-template #content let-modal>
   <div class="modal-header bg-black text-white">
@@ -68,7 +75,7 @@
       (click)="modal.dismiss('Cross click')"
     ></button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body bg-black">
     <app-login-form></app-login-form>
   </div>
   <div class="modal-footer bg-black"></div>

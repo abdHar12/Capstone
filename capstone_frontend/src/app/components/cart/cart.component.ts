@@ -4,6 +4,7 @@ import {
   Input,
   OnInit,
   TemplateRef,
+  ViewChild,
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -11,8 +12,10 @@ import { CartProduct } from 'src/app/module/cart-product';
 import { CartService } from 'src/app/service/cart.service';
 import { NavComponent } from '../nav/nav.component';
 import { AuthData } from 'src/app/module/authdata';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NavService } from 'src/app/service/nav.service';
+import { Subject, debounceTime } from 'rxjs';
+import { User } from 'src/app/module/user';
 
 @Component({
   selector: 'app-cart',
@@ -22,7 +25,7 @@ import { NavService } from 'src/app/service/nav.service';
 export class CartComponent implements OnInit {
   @Input() products: CartProduct[] = [];
   @Input() auth!: string;
-  viewModal!: boolean;
+
   private modalService = inject(NgbModal);
 
   constructor(
@@ -30,12 +33,9 @@ export class CartComponent implements OnInit {
     private router: Router,
     private navSrv: NavService
   ) {}
-  ngOnInit(): void {
-    this.viewModal = false;
-  }
+  ngOnInit(): void {}
   openVerticallyCentered(content: TemplateRef<any>) {
     this.modalService.open(content, { centered: true });
-    this.navSrv.dnoneDiv('cart-div', 'cart-button');
   }
   goToTheOrder() {
     this.router.navigateByUrl('/creation-order');
