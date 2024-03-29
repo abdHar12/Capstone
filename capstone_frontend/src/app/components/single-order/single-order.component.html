@@ -1,0 +1,61 @@
+<div
+  class="d-flex base-border flex-row justify-content-between mb-3 p-2 bg-black text-white"
+>
+  <div class="w-75 number-date-div">
+    <div>
+      <p>Order N°: {{ order.id }}</p>
+    </div>
+    <div>
+      <p class="mb-0">Date: {{ order.date }}</p>
+    </div>
+  </div>
+  <button
+    class="btn border-2 border-black rounded-0 align-self-center me-2 bg-black text-white border-white"
+    (click)="openScrollableContent(longContent); setProducts()"
+  >
+    All Info
+  </button>
+</div>
+<ng-template #longContent let-modal>
+  <div class="modal-header bg-black text-white">
+    <h4 class="modal-title">Order</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body position-relative">
+    <div class="position-sticky top-0 bg-white">
+      <div class="order-infos">
+        <div>
+          <p>Order: {{ order.id }}</p>
+        </div>
+        <div>
+          <p>Date: {{ order.date }}</p>
+        </div>
+        <div>
+          <p>Name: {{ order.name }}</p>
+        </div>
+        <div>
+          <p>Amount: {{ order.amount }}€</p>
+        </div>
+        <div>
+          <p>Status: {{ order.orderStatus }}</p>
+        </div>
+        <div>
+          <p>Payment: {{ order.paymentType }}</p>
+        </div>
+      </div>
+      <div class="mb-2 border-2 border-start-0 border-end-0 border-top-0">
+        <h3>Products:</h3>
+      </div>
+    </div>
+    <ng-container *ngFor="let product of products">
+      <app-single-product [product]="product" [productInCart]="false">
+      </app-single-product>
+    </ng-container>
+  </div>
+  <div class="modal-footer bg-black"></div>
+</ng-template>

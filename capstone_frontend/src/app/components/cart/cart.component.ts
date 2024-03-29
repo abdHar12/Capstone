@@ -37,6 +37,12 @@ export class CartComponent implements OnInit {
   openVerticallyCentered(content: TemplateRef<any>) {
     this.modalService.open(content, { centered: true });
   }
+  openScrollableContent(content: TemplateRef<any>) {
+    this.modalService.open(content, { scrollable: true });
+  }
+  dnoneDiv(divId: string, buttonId: string) {
+    this.navSrv.dnoneDiv(divId, buttonId);
+  }
   goToTheOrder() {
     this.router.navigateByUrl('/creation-order');
     let target = document.getElementById('cart-button') as HTMLButtonElement;
@@ -50,14 +56,5 @@ export class CartComponent implements OnInit {
     }
     let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
     cartDiv.style.display = 'none';
-  }
-
-  deleteFromCart(id: string) {
-    this.cartSrv.deleteFromCart(id).subscribe(() => {
-      this.products.forEach((el, index) => {
-        if (el.UUID === id) this.products.splice(index, 1);
-        window.location.reload();
-      });
-    });
   }
 }

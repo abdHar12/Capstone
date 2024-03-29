@@ -2,28 +2,6 @@
   height: 50px;
   border-top: 0;
 }
-#order-products-table {
-  border-top: 2px solid black;
-}
-.manga-name-div {
-  position: relative;
-  width: 45%;
-  flex-direction: row;
-  align-items: center;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  span {
-    position: absolute;
-  }
-}
-span {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-.info-div {
-  border-right: 2px solid black;
-}
 #empty-cart {
   height: 100%;
   width: 100%;

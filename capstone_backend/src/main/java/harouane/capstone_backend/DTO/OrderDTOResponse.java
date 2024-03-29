@@ -16,7 +16,6 @@ public class OrderDTOResponse {
     String date;
     String name;
     String amount;
-    String address;
     String orderStatus;
     String paymentType;
     String userId;

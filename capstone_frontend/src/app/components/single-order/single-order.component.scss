@@ -1,0 +1,22 @@
+.number-date-div {
+  div:first-of-type {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+  }
+}
+
+.modal-content {
+  width: 100% !important;
+}
+.modal-header,
+.modal-body,
+.modal-footer {
+  width: 100% !important;
+}
+.order-infos {
+  p {
+    margin-bottom: 0;
+  }
+}

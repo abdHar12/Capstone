@@ -6,6 +6,7 @@ import harouane.capstone_backend.entities.CartProduct;
 import harouane.capstone_backend.entities.Order;
 import harouane.capstone_backend.entities.User;
 import harouane.capstone_backend.exceptions.NotFoundException;
+import harouane.capstone_backend.repositories.OrderRepository;
 import harouane.capstone_backend.repositories.ProductRepository;
 import harouane.capstone_backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,7 @@ public class ProductService {
     @Autowired
     ProductRepository productDAO;
     @Autowired
-    UserRepository userDAO;
-    @Autowired
-    UserService userService;
+    OrderRepository orderDAO;
 
     public CartProduct findById(UUID id) {
         return productDAO.findById(id).orElseThrow(()-> new NotFoundException(id));
@@ -87,5 +86,15 @@ public class ProductService {
         CartProduct product= findById(uuid);
         product.setOrder(order);
         productDAO.save(product);
+    }
+
+    public List<ProductDTOResponse> findByOrderId(String orderId) {
+        List<CartProduct> products= new ArrayList<>(productDAO.findByOrder(findOrderById(UUID.fromString(orderId)))) ;
+        List<ProductDTOResponse> productDTOResponseList= new ArrayList<>();
+        products.forEach(cartProduct -> productDTOResponseList.add(createProductDTO(cartProduct)));
+        return productDTOResponseList;
+    }
+    public Order findOrderById(UUID uuid) {
+        return orderDAO.findById(uuid).orElseThrow(()-> new NotFoundException(uuid));
     }
 }

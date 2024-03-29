@@ -148,9 +148,9 @@ export class NavComponent implements OnInit, DoCheck {
     let userDiv = document.querySelector('#user-div') as HTMLDivElement;
     userDiv.style.setProperty('top', nav.offsetHeight.toString());
     let width;
-    if (windowWidth <= 767) width = nav.offsetWidth;
-    else if (windowWidth > 767 && windowWidth < 1200)
-      width = (nav.offsetWidth / 100) * 60;
+    if (windowWidth <= 870) width = nav.offsetWidth;
+    else if (windowWidth > 870 && windowWidth < 1200)
+      width = (nav.offsetWidth / 100) * 65;
     else width = (nav.offsetWidth / 100) * 40;
 
     userDiv.style.setProperty('width', width.toString() + 'px');

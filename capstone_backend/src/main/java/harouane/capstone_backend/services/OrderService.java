@@ -1,15 +1,13 @@
 package harouane.capstone_backend.services;
 
 import harouane.capstone_backend.DTO.OrderDTO;
-import harouane.capstone_backend.DTO.OrderDTOForUser;
 import harouane.capstone_backend.DTO.OrderDTOResponse;
-import harouane.capstone_backend.DTO.ProductDTOResponse;
 import harouane.capstone_backend.entities.Order;
 import harouane.capstone_backend.entities.OrderStatus;
 import harouane.capstone_backend.entities.PaymentType;
 import harouane.capstone_backend.entities.User;
+import harouane.capstone_backend.exceptions.NotFoundException;
 import harouane.capstone_backend.repositories.OrderRepository;
-import harouane.capstone_backend.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +27,6 @@ public class OrderService {
         order.setOrderStatus(OrderStatus.IN_PROGRESS);
         order.setAmount(Double.parseDouble(orderDTO.amount()));
         order.setName(orderDTO.name());
-        order.setAddress(orderDTO.address());
         order.setUser(user);
         order.setPaymentType(PaymentType.valueOf(orderDTO.paymentType()));
         order.setDate(LocalDate.now());
@@ -37,13 +34,15 @@ public class OrderService {
         orderDTO.products().forEach(product->{
             productService.updateOrder(UUID.fromString(product.getUUID()), order);
         });
-        return new OrderDTOResponse(order.getId().toString(), order.getName(), order.getDate().toString(), Double.toString(order.getAmount()), order.getAddress(), order.getOrderStatus().toString(), order.getPaymentType().toString(), order.getUser().getId().toString());
+        return new OrderDTOResponse(order.getId().toString(), order.getDate().toString(), order.getName(), Double.toString(order.getAmount()), order.getOrderStatus().toString(), order.getPaymentType().toString(), order.getUser().getId().toString());
     }
 
-    public List<OrderDTOForUser> getOrderByUser(User user) {
+    public List<OrderDTOResponse> getOrderByUser(User user) {
         List<Order> orders= new ArrayList<>(orderDAO.findByUser(user));
-        List<OrderDTOForUser> orderDTOForUserList=new ArrayList<>();
-        orders.forEach(order->orderDTOForUserList.add(new OrderDTOForUser(order.getId().toString(), order.getDate().toString(),order.getName(), Double.toString(order.getAmount()), order.getAddress())));
-        return orderDTOForUserList;
+        List<OrderDTOResponse> OrderDTOResponseList=new ArrayList<>();
+        orders.forEach(order->OrderDTOResponseList.add(new OrderDTOResponse(order.getId().toString(), order.getDate().toString(), order.getName(), Double.toString(order.getAmount()), order.getOrderStatus().toString(), order.getPaymentType().toString(), order.getUser().getId().toString())));
+        return OrderDTOResponseList;
     }
+
+
 }

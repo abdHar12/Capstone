@@ -21,7 +21,6 @@ public class Order {
     LocalDate date;
     String name;
     double amount;
-    String address;
     @Enumerated(EnumType.STRING)
     OrderStatus orderStatus;
     @Enumerated(EnumType.STRING)

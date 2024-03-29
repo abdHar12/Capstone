@@ -1,47 +1,40 @@
 <ng-container *ngIf="auth; else makeTheAuth">
   <div class="w-100 h-100 cart">
-    <div class="ps-3 pt-3">
-      <h2 class="d-flex mb-0">Cart:</h2>
+    <div
+      [ngClass]="{ 'border-0': products.length === 0 }"
+      class="position-sticky top-0 bg-white pb-4 base-border border-end-0 border-start-0"
+    >
+      <div class="pt-3 pe-3 close-btn">
+        <button
+          (click)="dnoneDiv('cart-div', 'cart-button')"
+          class="border-0 bg-white text-black fs-3"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="ps-3 pt-3">
+        <h2 class="d-flex mb-0">Cart:</h2>
+        <ng-container *ngIf="products.length > 0">
+          <div class="d-flex mt-3">
+            <button
+              (click)="openScrollableContent(longContent)"
+              class="mx-auto btn border-2 border-black"
+            >
+              Buy your Mangas
+            </button>
+          </div>
+        </ng-container>
+      </div>
     </div>
     <div class="p-3">
       <ng-container *ngIf="products.length > 0; else emptyCart">
         <ng-container *ngFor="let product of products">
-          <div class="d-flex flex-row single-product base-border mb-2">
-            <img [src]="product.imgManga" />
-            <div class="d-flex flex-grow-1 justify-content-between">
-              <div class="manga-name-div info-div p-1">
-                <span class="flex-grow-1 my-auto">{{
-                  product.titleManga
-                }}</span>
-              </div>
-              <div class="d-flex info-div p-1 flex-grow-1">
-                <span class="flex-grow-1">
-                  {{
-                    product.chapterNumber === "Unique Chapter"
-                      ? "Unique Chapter"
-                      : "Chapter: " + product.chapterNumber
-                  }}</span
-                >
-              </div>
-              <div class="d-flex p-1 info-div flex-grow-1">
-                <span class="flex-grow-1">{{ product.price }}€</span>
-              </div>
-            </div>
-            <div>
-              <button
-                (click)="deleteFromCart(product.UUID)"
-                class="w-100 h-100 bg-white text-black border-0 px-3"
-              >
-                <i class="bi bi-trash3-fill"></i>
-              </button>
-            </div>
-          </div>
+          <app-single-product
+            [product]="product"
+            [products]="products"
+            [productInCart]="true"
+          ></app-single-product>
         </ng-container>
-        <div class="d-flex mt-3">
-          <button (click)="goToTheOrder()" class="mx-auto">
-            Buy your Mangas
-          </button>
-        </div>
       </ng-container>
     </div>
     <ng-template #emptyCart>
@@ -77,6 +70,21 @@
   </div>
   <div class="modal-body bg-black">
     <app-login-form></app-login-form>
+  </div>
+  <div class="modal-footer bg-black"></div>
+</ng-template>
+<ng-template #longContent let-modal>
+  <div class="modal-header bg-black text-white">
+    <h4 class="modal-title">For the order</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body bg-black text-white">
+    <app-order-form></app-order-form>
   </div>
   <div class="modal-footer bg-black"></div>
 </ng-template>

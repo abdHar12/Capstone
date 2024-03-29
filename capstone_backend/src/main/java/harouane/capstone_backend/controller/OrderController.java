@@ -1,7 +1,6 @@
 package harouane.capstone_backend.controller;
 
 import harouane.capstone_backend.DTO.OrderDTO;
-import harouane.capstone_backend.DTO.OrderDTOForUser;
 import harouane.capstone_backend.DTO.OrderDTOResponse;
 import harouane.capstone_backend.entities.User;
 import harouane.capstone_backend.services.OrderService;
@@ -22,7 +21,7 @@ public class OrderController {
         return orderService.addSingleOrder(orderDTO, user);
     }
     @GetMapping("/user")
-    public List<OrderDTOForUser> getOrderByUser(@AuthenticationPrincipal User user){
+    public List<OrderDTOResponse> getOrderByUser(@AuthenticationPrincipal User user){
         return orderService.getOrderByUser(user);
     }
 }

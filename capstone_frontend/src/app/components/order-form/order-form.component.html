@@ -1,0 +1,59 @@
+<div
+  id="make-order-div"
+  class="w-100 mx-auto p-3 mt-1 d-flex flex-column justify-content-center"
+>
+  <ng-container *ngIf="products.length > 0; else noProducts">
+    <h2 class="mb-3 mt-2">Put the informations:</h2>
+    <form class="w-100" [formGroup]="orderForm" (ngSubmit)="onMakeTheOrder()">
+      <div class="mb-5">
+        <label for="inputFirstName" class="form-label">Name: </label>
+        <input
+          type="text"
+          name="firstName"
+          class="form-control base-border rounded-0 border-white bg-black text-white"
+          id="inputFirstName"
+          formControlName="firstName"
+        />
+      </div>
+      <div class="mb-5">
+        <label for="inputSurname" class="form-label">Last name:</label>
+        <input
+          type="text"
+          name="surname"
+          class="form-control base-border rounded-0 border-white bg-black text-white"
+          id="inputSurname"
+          formControlName="surname"
+        />
+      </div>
+      <select
+        class="custom-select mb-5 base-border border-white bg-black text-white"
+        (change)="changeTypeOfPayment($event)"
+        formControlName="typeOfPayment"
+      >
+        <option value="">Choose the type of payment</option>
+        <option *ngFor="let type of keys()">
+          {{ type }}
+        </option>
+      </select>
+      <div id="amount-div" class="bg-black text-white base-border w-100">
+        <span> Total Amount: {{ totalAmount }}€</span>
+      </div>
+      <ng-container *ngFor="let product of products">
+        <div>
+          <app-single-product
+            [product]="product"
+            [products]="products"
+            [productInCart]="true"
+          ></app-single-product>
+        </div>
+      </ng-container>
+
+      <div class="mt-4 mb-4 d-flex justify-content-center">
+        <button [disabled]="!orderForm.valid">Send the order</button>
+      </div>
+    </form>
+  </ng-container>
+  <ng-template #noProducts>
+    <h2 class="mb-3 mt-2">No products in the cart</h2>
+  </ng-template>
+</div>

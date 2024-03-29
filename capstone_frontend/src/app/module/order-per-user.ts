@@ -3,5 +3,7 @@ export interface OrderPerUser {
   date: string;
   name: string;
   amount: string;
-  address: string;
+  orderStatus: string;
+  paymentType: string;
+  userId: string;
 }

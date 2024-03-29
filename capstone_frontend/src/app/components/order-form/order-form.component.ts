@@ -7,15 +7,14 @@ import { CartService } from 'src/app/service/cart.service';
 import { OrderService } from 'src/app/service/order.service';
 
 @Component({
-  selector: 'app-order-page',
-  templateUrl: './order-page.component.html',
-  styleUrls: ['./order-page.component.scss'],
+  selector: 'app-order-form',
+  templateUrl: './order-form.component.html',
+  styleUrls: ['./order-form.component.scss'],
 })
-export class OrderPageComponent implements OnInit, DoCheck {
+export class OrderFormComponent implements OnInit, DoCheck {
   orderForm = this.fb.group({
     firstName: ['', [Validators.required]],
     surname: ['', [Validators.required]],
-    address: ['', [Validators.required]],
     typeOfPayment: ['', [Validators.required]],
   });
   products!: CartProduct[];
@@ -38,7 +37,11 @@ export class OrderPageComponent implements OnInit, DoCheck {
     this.products = this.cartSrv.getProducts();
     this.totalAmount = this.products
       .map((product) => Number.parseFloat(product.price))
-      .reduce((accumulator, number) => accumulator + number, 0);
+      .reduce(
+        (accumulator, number) =>
+          Number.parseFloat((accumulator + number).toFixed(2)),
+        0
+      );
   }
   keys(): Array<string> {
     var keys = Object.keys(this.paymentType);
@@ -50,7 +53,6 @@ export class OrderPageComponent implements OnInit, DoCheck {
         this.orderForm.controls['firstName'].value +
         ' ' +
         this.orderForm.controls['surname'].value,
-      address: this.orderForm.controls['address'].value,
       paymentType: this.orderForm.controls['typeOfPayment'].value,
       amount: this.totalAmount.toString(),
       products: this.products,

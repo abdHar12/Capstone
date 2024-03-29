@@ -15,7 +15,6 @@ export class OrderService {
   sendOrder(data: {
     name: string | null;
     amount: string;
-    address: string | null;
     paymentType: string | null;
     products: CartProduct[];
   }) {
@@ -24,5 +23,9 @@ export class OrderService {
 
   getOrderPerUser() {
     return this.http.get<OrderPerUser[]>(`${this.apiUrl}/orders/user`);
+  }
+
+  getProductsOfOrder(id: string) {
+    return this.http.get<CartProduct[]>(`${this.apiUrl}/products/order/${id}`);
   }
 }

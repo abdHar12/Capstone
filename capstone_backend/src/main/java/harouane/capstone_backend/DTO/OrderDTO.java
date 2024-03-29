@@ -17,7 +17,6 @@ import java.util.UUID;
 public record OrderDTO(
         String name,
        String amount,
-       String address,
        String paymentType,
 
         List<ProductDTOResponse> products

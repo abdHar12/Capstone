@@ -15,7 +15,7 @@ import { SingleMangaComponent } from './components/single-manga/single-manga.com
 import { MangaAllInfoComponent } from './components/manga-all-info/manga-all-info.component';
 import { ChapterComponent } from './components/chapter/chapter.component';
 import { CartComponent } from './components/cart/cart.component';
-import { OrderPageComponent } from './components/order-page/order-page.component';
+import { OrderFormComponent } from './components/order-form/order-form.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
@@ -24,6 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { ToastrModule } from 'ngx-toastr';
 import Swiper from 'swiper';
+import { SingleOrderComponent } from './components/single-order/single-order.component';
+import { SingleProductComponent } from './components/single-product/single-product.component';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
@@ -33,7 +35,7 @@ const routes: Routes = [
   },
   {
     path: 'creation-order',
-    component: OrderPageComponent,
+    component: OrderFormComponent,
     canActivate: [AuthGuard],
   },
 ];
@@ -48,10 +50,12 @@ const routes: Routes = [
     MangaAllInfoComponent,
     ChapterComponent,
     CartComponent,
-    OrderPageComponent,
+    OrderFormComponent,
     FooterComponent,
     SearchComponent,
     UserInfoComponent,
+    SingleOrderComponent,
+    SingleProductComponent,
   ],
   imports: [
     CommonModule,

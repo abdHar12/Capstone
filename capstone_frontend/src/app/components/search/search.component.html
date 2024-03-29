@@ -1,7 +1,8 @@
 <div
-  class="position-sticky top-0 bg-white z-3 pb-2 border-top-0 border-end-0 border-start-0"
+  [ngClass]="{ 'border-0': allMangasFound.length === 0 }"
+  class="position-sticky top-0 bg-white z-3 pb-2"
 >
-  <div class="d-flex w-100">
+  <div class="d-flex w-100 position-absolute">
     <div class="pt-3 pe-3 close-btn self ms-auto">
       <button
         (click)="dnoneDiv('search-div', 'search-button')"
@@ -13,11 +14,11 @@
   </div>
   <form
     [ngClass]="{ 'mb-5': allMangasFound.length === 0 && !showResultsVar }"
-    class="mx-auto mt-0"
+    class="mx-auto mt-0 pt-4"
     #searchForm="ngForm"
     (ngSubmit)="onSearch(searchForm)"
   >
-    <div class="input-group flex-grow-1 mt-3 mb-3 flex-column">
+    <div class="input-group flex-grow-1 mb-3 flex-column">
       <label for="inputTitle">SEARCH BY TITLE</label>
 
       <div class="d-flex">
@@ -28,7 +29,7 @@
           required
           ngModel
           type="text"
-          class="w-100 flex-grow-1 form-control rounded-0 base-border"
+          class="w-100 flex-grow-1 form-control rounded-0 base-border mt-3"
         />
         <button
           class="border-0 ms-2 bg-white"

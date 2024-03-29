@@ -44,7 +44,9 @@ export class UserInfoComponent implements OnInit {
       }
     });
   }
-
+  dnoneDiv(div: string, button: string) {
+    this.navSrv.dnoneDiv(div, button);
+  }
   openVerticallyCentered(content: TemplateRef<any>) {
     this.modalService.open(content, { centered: true });
   }

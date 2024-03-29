@@ -13,7 +13,6 @@ export interface Order {
   date: string;
   name: string;
   amount: string;
-  address: string;
   orderStatus: OrderStatus;
   paymentType: PaymentType;
   userId: string;

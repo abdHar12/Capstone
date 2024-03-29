@@ -51,4 +51,9 @@ public class CartProductController {
         System.out.println(titleManga+chapterNumber);
         return productService.findByTitleMangaAndChapterNumber(titleManga,chapterNumber, user);
     }
+    @GetMapping("/order/{orderId}")
+    public List<ProductDTOResponse> findByOrderId(@PathVariable String orderId){
+        return productService.findByOrderId(orderId);
+    }
+
 }

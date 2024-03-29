@@ -19,6 +19,8 @@ nav {
     border-top: 10px solid black;
     display: flex;
     color: black;
+    overflow-y: scroll;
+    max-height: 80vh;
     background-color: white;
     z-index: 90;
   }
@@ -36,30 +38,25 @@ nav {
   #user-div {
     position: absolute;
     right: 0;
-    border-top: 10px solid black;
     display: flex;
     color: black;
     background-color: white;
     z-index: 99;
     max-height: 80vh;
+    overflow-y: scroll;
 
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 869px) {
       width: 100% !important;
     }
-    @media screen and (min-width: 768px) and (max-width: 1199px) {
-      width: 60% !important;
+    @media screen and (min-width: 870px) and (max-width: 1199px) {
+      width: 65% !important;
     }
     @media screen and (min-width: 1200px) {
       width: 40% !important;
     }
   }
 }
-.close-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 99;
-}
+
 #user-button {
   font-size: 1.3rem;
   padding-top: 2.5px;
@@ -73,20 +70,22 @@ nav {
 }
 ::-webkit-scrollbar {
   width: 10px;
+  display: none;
 }
-.user
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+  z-index: 0;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
-  position: absolute;
+  z-index: 0;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+  z-index: 0;
 }

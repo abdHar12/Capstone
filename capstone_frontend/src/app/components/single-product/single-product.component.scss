@@ -1,0 +1,23 @@
+.div-img-product {
+  width: 50px;
+  max-height: 100px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+.delete-product-btn:hover {
+  border: 2px solid white !important;
+  border-left: 0 !important;
+  color: white !important;
+  background-color: black !important;
+}
+.title-product {
+  white-space: nowrap;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+  text-overflow: ellipsis !important;
+}

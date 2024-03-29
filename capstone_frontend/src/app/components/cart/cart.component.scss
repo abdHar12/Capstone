@@ -30,3 +30,13 @@
     }
   }
 }
+.btn:hover {
+  color: white !important;
+  background-color: black !important;
+}
+.close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 99;
+}
