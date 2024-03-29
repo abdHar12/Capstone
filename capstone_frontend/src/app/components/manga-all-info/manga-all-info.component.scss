@@ -1,4 +1,5 @@
 .container {
+  margin-top: 6rem;
   .div-with-avg-color {
     position: relative;
     display: flex;
@@ -75,6 +76,7 @@
     }
   }
 }
+
 .swiper-container::-webkit-scrollbar {
   display: none;
 }

@@ -26,7 +26,8 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "scripts": [],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ]
           },
           "configurations": {
@@ -90,9 +91,8 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": []
           }

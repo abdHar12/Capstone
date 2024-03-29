@@ -16,9 +16,11 @@ import {
 import { ngbPositioning } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CartProduct } from 'src/app/module/cart-product';
+import { OrderPerUser } from 'src/app/module/order-per-user';
 import { User } from 'src/app/module/user';
 import { CartService } from 'src/app/service/cart.service';
 import { NavService } from 'src/app/service/nav.service';
+import { OrderService } from 'src/app/service/order.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -31,13 +33,17 @@ export class NavComponent implements OnInit, DoCheck {
   prevRoute!: string;
   products: CartProduct[] = [];
   auth!: string;
+  innerWidth!: number;
   currentUser!: User;
+  orders!: OrderPerUser[];
+
   constructor(
     private router: Router,
     private authSrv: AuthService,
     private cartSrv: CartService,
     private navSrv: NavService,
-    private usrSrv: UserService
+    private usrSrv: UserService,
+    private ordersSrv: OrderService
   ) {}
   ngDoCheck(): void {
     this.router.events.subscribe((event: Event) => {
@@ -57,7 +63,11 @@ export class NavComponent implements OnInit, DoCheck {
       }
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.setUserDivWidth(window.innerWidth);
+    // console.log(window.innerWidth);
+    this.onResize();
+  }
 
   dnoneDiv(divId: string, buttonId: string) {
     this.navSrv.dnoneDiv(divId, buttonId);
@@ -66,6 +76,7 @@ export class NavComponent implements OnInit, DoCheck {
     this.usrSrv.getCurrentUser().subscribe((el) => {
       this.currentUser = el;
       console.log(this.currentUser);
+      this.ordersSrv.getOrderPerUser().subscribe((el) => (this.orders = el));
     });
   }
   getProducts() {
@@ -79,6 +90,9 @@ export class NavComponent implements OnInit, DoCheck {
     }
   }
   styleOfButton(target: EventTarget | null, divId: string): void {
+    // this.setUserDivWidth(window.innerWidth);
+    // console.log(window.innerWidth);
+
     if ((target as HTMLButtonElement)!.style.backgroundColor === 'white') {
       (target as HTMLButtonElement)!.style.backgroundColor = 'black';
       (target as HTMLButtonElement)!.style.color = 'white';
@@ -119,16 +133,26 @@ export class NavComponent implements OnInit, DoCheck {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(even: any) {
+  onResize() {
     let cartDiv = document.querySelector('#cart-div') as HTMLDivElement;
     let searchDiv = document.querySelector('#search-div') as HTMLDivElement;
-    let userDiv = document.querySelector('#user-div') as HTMLDivElement;
     let nav = document.querySelector('#nav-bar') as HTMLElement;
     cartDiv.style.setProperty('top', nav.offsetHeight.toString());
     cartDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
     searchDiv.style.setProperty('top', nav.offsetHeight.toString());
     searchDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
+    this.setUserDivWidth(window.innerWidth);
+  }
+  setUserDivWidth(windowWidth: number) {
+    let nav = document.querySelector('#nav-bar') as HTMLElement;
+    let userDiv = document.querySelector('#user-div') as HTMLDivElement;
     userDiv.style.setProperty('top', nav.offsetHeight.toString());
-    userDiv.style.setProperty('width', nav.offsetWidth.toString() + 'px');
+    let width;
+    if (windowWidth <= 767) width = nav.offsetWidth;
+    else if (windowWidth > 767 && windowWidth < 1200)
+      width = (nav.offsetWidth / 100) * 60;
+    else width = (nav.offsetWidth / 100) * 40;
+
+    userDiv.style.setProperty('width', width.toString() + 'px');
   }
 }

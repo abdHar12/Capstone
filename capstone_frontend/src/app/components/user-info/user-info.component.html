@@ -8,16 +8,18 @@
 >
 
 <ng-container *ngIf="user"
-  ><div class="w-50 mx-auto">
-    <div id="avatar-div" class="mx-auto pb-5 position-relative">
-      <div class="position-relative">
-        <img class="w-100" [src]="user.avatar" />
-        <button
-          class="bg-black text-white border-0 position-absolute bottom-0 end-0"
-          (click)="openVerticallyCentered(content)"
-        >
-          <i class="bi bi-pencil"></i>
-        </button>
+  ><div class="pe-0 mx-auto d-flex flex-column">
+    <div class="bg-black d-flex flex-column justify-content-center">
+      <div id="avatar-div" class="mt-3 mx-auto position-relative">
+        <div class="position-relative">
+          <img class="w-100" [src]="user.avatar" />
+          <button
+            class="bg-white text-black border-0 position-absolute bottom-0 end-0"
+            (click)="openVerticallyCentered(content)"
+          >
+            <i class="bi bi-pencil"></i>
+          </button>
+        </div>
       </div>
       <ng-template #content let-modal>
         <div class="modal-header bg-black text-white">
@@ -56,6 +58,52 @@
           </button>
         </div>
       </ng-template>
+      <div class="mb-3 d-flex flex-row justify-content-center gap-3">
+        <button class="btn rounded-0 border-2 border-white text-white">
+          Logout profile
+        </button>
+        <button class="btn rounded-0 border-2 border-white text-white">
+          Modify profile
+        </button>
+        <button class="btn rounded-0 border-2 border-white text-white">
+          Delete profile
+        </button>
+      </div>
+    </div>
+    <div id="user-info-div" class="text-start mt-3 ms-4">
+      <div>
+        <div>
+          <p>Username: {{ user.username }}</p>
+        </div>
+        <div>
+          <p>Email: {{ user.email }}</p>
+        </div>
+        <div>
+          <p>Name: {{ user.name }}</p>
+        </div>
+        <div>
+          <p>Surname: {{ user.surname }}</p>
+        </div>
+      </div>
+      <ng-container *ngIf="orders.length > 0">
+        <ng-container *ngFor="let order of orders">
+          <div>
+            <p>{{ order.id }}</p>
+          </div>
+          <div>
+            <p>{{ order.date }}</p>
+          </div>
+          <div>
+            <p>{{ order.name }}</p>
+          </div>
+          <div>
+            <p>{{ order.address }}</p>
+          </div>
+          <div>
+            <p>{{ order.amount }}</p>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
   </div></ng-container
 >

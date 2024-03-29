@@ -1,6 +1,7 @@
 package harouane.capstone_backend.services;
 
 import harouane.capstone_backend.DTO.OrderDTO;
+import harouane.capstone_backend.DTO.OrderDTOForUser;
 import harouane.capstone_backend.DTO.OrderDTOResponse;
 import harouane.capstone_backend.DTO.ProductDTOResponse;
 import harouane.capstone_backend.entities.Order;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,5 +38,12 @@ public class OrderService {
             productService.updateOrder(UUID.fromString(product.getUUID()), order);
         });
         return new OrderDTOResponse(order.getId().toString(), order.getName(), order.getDate().toString(), Double.toString(order.getAmount()), order.getAddress(), order.getOrderStatus().toString(), order.getPaymentType().toString(), order.getUser().getId().toString());
+    }
+
+    public List<OrderDTOForUser> getOrderByUser(User user) {
+        List<Order> orders= new ArrayList<>(orderDAO.findByUser(user));
+        List<OrderDTOForUser> orderDTOForUserList=new ArrayList<>();
+        orders.forEach(order->orderDTOForUserList.add(new OrderDTOForUser(order.getId().toString(), order.getDate().toString(),order.getName(), Double.toString(order.getAmount()), order.getAddress())));
+        return orderDTOForUserList;
     }
 }

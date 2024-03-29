@@ -10,6 +10,7 @@ import {
 import { NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, debounceTime } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { OrderPerUser } from 'src/app/module/order-per-user';
 import { User } from 'src/app/module/user';
 import { NavService } from 'src/app/service/nav.service';
 import { UserService } from 'src/app/service/user.service';
@@ -24,8 +25,8 @@ export class UserInfoComponent implements OnInit {
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert!: NgbAlert;
   successMessage = '';
   @Input() user!: User;
+  @Input() orders!: OrderPerUser[];
   private modalService = inject(NgbModal);
-
   file!: File;
   fileName: string = '';
   chooseFile: boolean = false;

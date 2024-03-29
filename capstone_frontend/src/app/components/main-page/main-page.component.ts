@@ -17,6 +17,7 @@ import { Author } from 'src/app/module/author';
 import { Manga } from 'src/app/module/manga';
 import { MangaData } from 'src/app/module/manga-data';
 import { MangaService } from 'src/app/service/manga.service';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-main-page',

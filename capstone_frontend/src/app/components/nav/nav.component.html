@@ -128,25 +128,17 @@
     style="display: none"
   >
     <app-search></app-search>
-    <div class="pt-3 pe-1 close-btn">
-      <button
-        (click)="dnoneDiv('search-div', 'search-button')"
-        class="border-0 bg-white text-black fs-3"
-      >
-        <i class="bi bi-x-lg"></i>
-      </button>
-    </div>
   </div>
   <div
     id="user-div"
     class="base-border position-absolute"
     style="display: none"
   >
-    <app-user-info [user]="currentUser"></app-user-info>
+    <app-user-info [user]="currentUser" [orders]="orders"></app-user-info>
     <div class="pt-3 pe-3 close-btn">
       <button
         (click)="dnoneDiv('user-div', 'user-button')"
-        class="border-0 bg-white text-black fs-3"
+        class="border-0 bg-black text-white fs-3"
       >
         <i class="bi bi-x-lg"></i>
       </button>

@@ -23,6 +23,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { ToastrModule } from 'ngx-toastr';
+import Swiper from 'swiper';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },

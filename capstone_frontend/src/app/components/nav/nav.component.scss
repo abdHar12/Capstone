@@ -1,10 +1,15 @@
 nav {
   margin-inline: auto;
-  position: sticky;
+  position: fixed;
   margin-top: 10px;
   z-index: 99;
   top: 10px;
   width: 95%;
+  transform: translate(-50%, 0);
+  left: 50%;
+
+  text-align: center;
+
   img {
     width: 80px;
   }
@@ -15,7 +20,7 @@ nav {
     display: flex;
     color: black;
     background-color: white;
-    z-index: 99;
+    z-index: 90;
   }
   #search-div {
     position: absolute;
@@ -23,9 +28,9 @@ nav {
     border-top: 10px solid black;
     display: flex;
     color: black;
+    overflow-y: scroll;
     background-color: white;
     z-index: 99;
-    overflow-y: scroll;
     max-height: 80vh;
   }
   #user-div {
@@ -36,8 +41,17 @@ nav {
     color: black;
     background-color: white;
     z-index: 99;
-    overflow-y: scroll;
     max-height: 80vh;
+
+    @media screen and (max-width: 767px) {
+      width: 100% !important;
+    }
+    @media screen and (min-width: 768px) and (max-width: 1199px) {
+      width: 60% !important;
+    }
+    @media screen and (min-width: 1200px) {
+      width: 40% !important;
+    }
   }
 }
 .close-btn {
@@ -69,6 +83,7 @@ nav {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
+  position: absolute;
 }
 
 /* Handle on hover */
