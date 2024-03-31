@@ -7,7 +7,7 @@
   >{{ successMessage }}</ngb-alert
 >
 
-<ng-container *ngIf="user"
+<ng-container *ngIf="user; else makeTheLogin"
   ><div class="pe-0 mx-auto d-flex flex-column">
     <div
       class="position-sticky top-0 bg-black d-flex flex-column justify-content-center"
@@ -71,10 +71,17 @@
         </div>
       </ng-template>
       <div class="mb-3 d-flex flex-row justify-content-center gap-3">
-        <button class="btn rounded-0 border-2 border-white text-white">
+        <button
+          class="btn rounded-0 border-2 border-white text-white"
+          (click)="logOut()"
+        >
           Logout profile
         </button>
-        <button class="btn rounded-0 border-2 border-white text-white">
+        <button
+          [ngClass]="{ 'text-black bg-white text-black': modifyProfileState }"
+          class="btn rounded-0 border-2 border-white text-white"
+          (click)="wantToModify()"
+        >
           Modify profile
         </button>
         <button class="btn rounded-0 border-2 border-white text-white">
@@ -84,26 +91,122 @@
     </div>
     <div id="user-info-div" class="text-start mt-3 px-3">
       <div>
-        <h3>User info:</h3>
-
-        <div>
-          <p>Username: {{ user.username }}</p>
-        </div>
-        <div>
-          <p>Email: {{ user.email }}</p>
-        </div>
-        <div>
-          <p>Name: {{ user.name }}</p>
-        </div>
-        <div>
-          <p>Surname: {{ user.surname }}</p>
-        </div>
-      </div>
-      <h3>All orders:</h3>
-      <ng-container *ngIf="orders.length > 0">
-        <ng-container *ngFor="let order of orders">
-          <app-single-order [order]="order"></app-single-order>
+        <ng-container
+          *ngIf="modifyProfileState === false; else modifyFormTemplate"
+        >
+          <h3>User info:</h3>
+          <div>
+            <p>Username: {{ user.username }}</p>
+          </div>
+          <div>
+            <p>Email: {{ user.email }}</p>
+          </div>
+          <div>
+            <p>Name: {{ user.name }}</p>
+          </div>
+          <div>
+            <p>Surname: {{ user.surname }}</p>
+          </div>
         </ng-container>
+        <ng-template #modifyFormTemplate>
+          <form class="w-100" [formGroup]="modifyForm" (ngSubmit)="onModify()">
+            <div>
+              <label for="inputUsername" class="form-label">Username: </label>
+              <input
+                type="text"
+                name="username"
+                class="form-control border-2 border-black rounded-0 text-black"
+                id="inputUsername"
+                formControlName="username"
+              />
+            </div>
+            <div>
+              <label for="inputFirstName" class="form-label">Name: </label>
+              <input
+                type="text"
+                name="firstName"
+                class="form-control border-2 rounded-0 border-black text-black"
+                id="inputFirstName"
+                formControlName="firstName"
+              />
+            </div>
+            <div>
+              <label for="inputSurname" class="form-label">Last name:</label>
+              <input
+                type="text"
+                name="surname"
+                class="form-control border-2 rounded-0 border-black text-black"
+                id="inputSurname"
+                formControlName="surname"
+              />
+            </div>
+            <div>
+              <label for="inputEmail" class="form-label">Email</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control border-2 border-black rounded-0 text-black"
+                id="inputEmail"
+                formControlName="email"
+              />
+            </div>
+            <div class="d-flex flex-row gap-1">
+              <div class="mt-4 mb-4 d-flex justify-content-center">
+                <button
+                  type="submit"
+                  class="btn rounded-0 border-2 bg-black text-white"
+                  [disabled]="!modifyForm.valid"
+                >
+                  Modify profile
+                </button>
+              </div>
+              <div class="mt-4 mb-4">
+                <button
+                  class="btn rounded-0 border-2 bg-white text-black"
+                  (click)="wantToModify()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </div>
+      <ng-container *ngIf="!modifyProfileState">
+        <h3>All orders:</h3>
+        <ng-container *ngIf="orders.length > 0; else noOrders">
+          <ng-container *ngFor="let order of orders">
+            <app-single-order [order]="order"></app-single-order>
+          </ng-container>
+        </ng-container>
+        <ng-template #noOrders><h3>No orders done</h3></ng-template>
       </ng-container>
-    </div></div
-></ng-container>
+    </div>
+  </div></ng-container
+>
+<ng-template #makeTheLogin>
+  <div class="py-5">
+    <h4>Login or make the registration to see your profile</h4>
+    <button
+      class="btn rounded-0 border-2 bg-black text-white"
+      (click)="openVerticallyCentered(contentLogin)"
+    >
+      Login or Register
+    </button>
+  </div>
+</ng-template>
+<ng-template #contentLogin let-modal>
+  <div class="modal-header bg-black text-white">
+    <h4 class="modal-title">Login:</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white border-2 border-wi"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body bg-black">
+    <app-login-form></app-login-form>
+  </div>
+  <div class="modal-footer bg-black"></div>
+</ng-template>

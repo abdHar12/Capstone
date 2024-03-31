@@ -5,9 +5,11 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import harouane.capstone_backend.DTO.RoleDTO;
 import harouane.capstone_backend.DTO.UserDTO;
+import harouane.capstone_backend.DTO.UserModifyDTO;
 import harouane.capstone_backend.entities.CartProduct;
 import harouane.capstone_backend.entities.Role;
 import harouane.capstone_backend.entities.User;
+import harouane.capstone_backend.exceptions.BadRequestException;
 import harouane.capstone_backend.exceptions.NotFoundException;
 import harouane.capstone_backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -68,6 +71,7 @@ public class UserService {
         return userDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Email "+ email + " not found"));
     }
 
+
     public UserDTO uploadAvatar(User currentUser, MultipartFile image) throws IOException {
         String avatarUrl = (String) cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap()).get("url");
         currentUser.setAvatar(avatarUrl);
@@ -89,6 +93,24 @@ public class UserService {
     }
 
     public UserDTO currentUser(User currentUser) {
+        return new UserDTO(currentUser.getId().toString(), currentUser.getUsername(), currentUser.getEmail(), currentUser.getPassword(), currentUser.getName(), currentUser.getSurname(), currentUser.getAvatar());
+    }
+
+    public UserDTO updateProfile(UserModifyDTO userCamps, User currentUser) throws Exception {
+        if (!Objects.equals(userCamps.getEmail(), currentUser.getEmail())) {
+            if (!userDAO.existsByEmail(userCamps.getEmail())) {
+                currentUser.setEmail(userCamps.getEmail());
+            } else throw new BadRequestException("Email not permitted");
+        } else currentUser.setEmail(userCamps.getEmail());
+
+        if (!Objects.equals(userCamps.getUsername(), currentUser.getUsername())) {
+            if (!userDAO.existsByUsername(userCamps.getUsername()   )) {
+                currentUser.setUsername(userCamps.getUsername());
+            } else throw new BadRequestException("Username not permitted");
+        } else currentUser.setUsername(userCamps.getUsername());
+        currentUser.setName(userCamps.getFirstName());
+        currentUser.setSurname(userCamps.getSurname());
+        userDAO.save(currentUser);
         return new UserDTO(currentUser.getId().toString(), currentUser.getUsername(), currentUser.getEmail(), currentUser.getPassword(), currentUser.getName(), currentUser.getSurname(), currentUser.getAvatar());
     }
 }

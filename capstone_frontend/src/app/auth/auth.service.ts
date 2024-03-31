@@ -70,14 +70,12 @@ export class AuthService {
   logout() {
     this.authSubj.next(null);
     localStorage.removeItem('user');
-    this.router.navigate(['/login-page']);
+    window.location.reload();
   }
-  showError(err: string) {
-    this.toastr.error(err);
-  }
+
   private errors(err: HttpErrorResponse) {
     console.log(err);
-    this.showError(err.error);
+    alert(err.error.message);
     return throwError(err.error.message);
 
     // switch (err.error) {

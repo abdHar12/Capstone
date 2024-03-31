@@ -3,6 +3,7 @@ package harouane.capstone_backend.controller;
 
 import harouane.capstone_backend.DTO.RoleDTO;
 import harouane.capstone_backend.DTO.UserDTO;
+import harouane.capstone_backend.DTO.UserModifyDTO;
 import harouane.capstone_backend.entities.User;
 import harouane.capstone_backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,5 +75,10 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public User updateRole(@PathVariable UUID UserId, @RequestBody RoleDTO role) throws Exception {
         return this.userService.updateRole(UserId, role);
+    }
+
+    @PatchMapping("/profile")
+    public UserDTO updateProfile(@RequestBody UserModifyDTO userCamps, @AuthenticationPrincipal User currentUser) throws Exception {
+        return this.userService.updateProfile(userCamps, currentUser);
     }
 }

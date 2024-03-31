@@ -16,7 +16,7 @@ public class Handler {
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorsPayload handle400(BadRequestException bd){
-        if (!bd.getErrorList().isEmpty()){
+        if (bd.getErrorList()!=null){
             List<String> errorList = bd.getErrorList().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
             return new ErrorsPayloadList(bd.getMessage(), LocalDate.now(), errorList);
         }else {

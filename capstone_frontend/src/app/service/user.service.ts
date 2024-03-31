@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { User } from '../module/user';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
+import { Form } from '@angular/forms';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +23,21 @@ export class UserService {
 
   uploadAvatar(data: FormData) {
     return this.http.patch<User>(`${this.apiUrl}/users/profile/upload`, data);
+  }
+  modifyUser(data: {
+    username: string;
+    firstName: string;
+    surname: string;
+    email: string;
+  }) {
+    return this.http
+      .patch<User>(`${this.apiUrl}/users/profile`, data)
+      .pipe(catchError(this.errors));
+  }
+
+  private errors(err: HttpErrorResponse) {
+    console.log(err);
+    alert(err.error.message);
+    return throwError(err.error.message);
   }
 }

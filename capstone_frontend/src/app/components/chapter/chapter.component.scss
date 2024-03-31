@@ -17,28 +17,26 @@
     text-overflow: ellipsis;
   }
 }
-
 .last-chapter {
-  @media screen and (max-width: 1199px) {
-    .card {
-      width: 35%;
-      height: 100%;
+  .img-div {
+    width: 15%;
+    img {
+      width: 100%;
     }
   }
-  @media screen and (min-width: 1200px) {
-    .card {
-      width: 25%;
-      height: 100%;
-    }
-  }
-  @media screen and (max-width: 992px) {
-    .card {
-      width: 40%;
-      margin-inline: auto;
-      margin-bottom: 8px;
+  .title-div {
+    width: 100%;
+    position: relative;
+    h5 {
+      width: 95%;
+      position: absolute;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }
+
 .not-last-chapter {
   .card {
     display: flex;
