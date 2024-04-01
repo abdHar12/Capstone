@@ -30,7 +30,11 @@ export class OrderFormComponent implements OnInit, DoCheck {
     this.products = this.cartSrv.getProducts();
     this.totalAmount = this.products
       .map((product) => Number.parseFloat(product.price))
-      .reduce((accumulator, number) => accumulator + number, 0);
+      .reduce(
+        (accumulator, number) =>
+          Number.parseFloat((accumulator + number).toFixed(2)),
+        0
+      );
   }
 
   ngOnInit(): void {
@@ -58,9 +62,10 @@ export class OrderFormComponent implements OnInit, DoCheck {
       products: this.products,
     };
     console.log(data);
-    this.orderSrv
-      .sendOrder(data)
-      .subscribe((el: any) => this.router.navigate(['/manga-all-info']));
+    this.orderSrv.sendOrder(data).subscribe((el: any) => {
+      window.location.reload();
+      alert('Order well done');
+    });
   }
 
   changeTypeOfPayment(e: any) {

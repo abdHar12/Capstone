@@ -59,7 +59,12 @@ export class UserInfoComponent implements OnInit, OnChanges {
       }
     });
   }
-
+  deleteProfile() {
+    this.userSrv.deleteProfile().subscribe(() => {
+      this.logOut();
+      alert('User deleted');
+    });
+  }
   onModify() {
     const data = {
       username: this.modifyForm.controls['username'].value,

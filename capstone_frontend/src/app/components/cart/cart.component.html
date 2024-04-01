@@ -42,20 +42,32 @@
         id="empty-cart"
         class="h-100 d-flex flex-column justify-content-center"
       >
-        <p class="text-center">Empty Cart</p>
+        <h4 class="text-center">Empty Cart</h4>
       </div>
     </ng-template>
   </div>
 </ng-container>
 <ng-template #makeTheAuth>
-  <div class="text-center my-5">
-    <h4>You have to login to see the cart!</h4>
-    <button
-      class="btn bg-black border-2 border-white rounded-0 text-white"
-      (click)="openVerticallyCentered(content)"
-    >
-      Login
-    </button>
+  <div class="position-relative py-5">
+    <div class="d-flex w-100 position-absolute top-0">
+      <div class="pt-3 pe-3 close-btn self ms-auto">
+        <button
+          (click)="dnoneDiv('cart-div', 'cart-button')"
+          class="border-0 bg-white text-black fs-3"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+    <div class="text-center">
+      <h4>You have to login to see the cart!</h4>
+      <button
+        class="btn bg-black rounded-0 text-white"
+        (click)="openVerticallyCentered(content)"
+      >
+        Login
+      </button>
+    </div>
   </div>
 </ng-template>
 <ng-template #content let-modal>

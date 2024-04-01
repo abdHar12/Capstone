@@ -43,11 +43,11 @@ export class MangaAllInfoComponent implements OnInit, DoCheck {
   ngDoCheck(): void {}
 
   ngOnInit(): void {
-    this.allSettingsAreDone = true;
+    this.allSettingsAreDone = false;
     this.doAllSettings();
     setTimeout(() => {
       this.allSettingsAreDone = true;
-    }, 5000);
+    }, 8000);
   }
 
   doAllSettings() {

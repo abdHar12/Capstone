@@ -34,6 +34,9 @@ export class UserService {
       .patch<User>(`${this.apiUrl}/users/profile`, data)
       .pipe(catchError(this.errors));
   }
+  deleteProfile() {
+    return this.http.delete(`${this.apiUrl}/users/profile`);
+  }
 
   private errors(err: HttpErrorResponse) {
     console.log(err);

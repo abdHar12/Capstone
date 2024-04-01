@@ -36,6 +36,7 @@ export class NavComponent implements OnInit, DoCheck {
   innerWidth!: number;
   currentUser!: User;
   orders!: OrderPerUser[];
+  allSettingsAreDone: boolean = false;
 
   constructor(
     private router: Router,
@@ -67,6 +68,13 @@ export class NavComponent implements OnInit, DoCheck {
     // this.setUserDivWidth(window.innerWidth);
     // console.log(window.innerWidth);
     this.onResize();
+    this.allSettingsAreDone = false;
+
+    setTimeout(() => {
+      console.log(this.allSettingsAreDone);
+      this.allSettingsAreDone = true;
+      console.log(this.allSettingsAreDone);
+    }, 5000);
   }
 
   dnoneDiv(divId: string, buttonId: string) {
