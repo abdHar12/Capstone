@@ -42,14 +42,14 @@ public class AuthService {
     }
 
     public UserRegisterDTO save(UserRegisterDTO user) {
-        userDAO.findByEmail(user.getSurname()).ifPresent(newUser ->{
+        if(userDAO.existsByEmail(user.getEmail())){
             throw new BadRequestException("The email is already in use");
-        });
-        userDAO.findByUsername(user.getSurname()).ifPresent(newUser ->{
+        };
+        if(userDAO.existsByUsername(user.getUsername())){
             throw new BadRequestException("The Username is already in use");
-        });
+        };
         String avatar =  "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=";
-        User newUser = new User(user.getSurname(), user.getSurname(), bcrypt.encode(user.getSurname()), user.getSurname(), user.getSurname(), avatar);
+        User newUser = new User(user.getUsername(), user.getEmail(), bcrypt.encode(user.getPassword()), user.getName(), user.getSurname(), avatar);
 
         User savedUser = userDAO.save(newUser);
         mailgunSender.sendRegistrationEmail(savedUser);
